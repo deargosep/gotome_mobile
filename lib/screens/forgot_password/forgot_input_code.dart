@@ -88,9 +88,13 @@ class Timer extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.w500),
           ),
         );
-      return Text(
-        'Запросить код повторно через ${seconds} сек.',
-        style: TextStyle(fontWeight: FontWeight.w500),
+      return Container(
+        width: 229,
+        child: Text(
+          'Запросить код повторно через ${seconds} сек.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+        ),
       );
     });
   }
