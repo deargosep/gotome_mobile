@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gotome/widgets/images/brand_icon.dart';
 
 class Input extends StatelessWidget {
   Input(
@@ -6,13 +7,15 @@ class Input extends StatelessWidget {
       String? this.label,
       TextEditingController? this.controller,
       ValueChanged<String>? this.onChanged,
-      bool? this.expanded})
+      bool? this.expanded,
+      String? this.icon})
       : super(key: key);
 
   String? label;
   TextEditingController? controller;
   ValueChanged<String>? onChanged;
   bool? expanded = false;
+  String? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +25,9 @@ class Input extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
+          suffixIcon: icon != null
+              ? Transform.scale(scale: 0.45, child: BrandIcon(icon: icon))
+              : null,
           alignLabelWithHint: true,
           labelText: label ?? '',
           labelStyle: TextStyle(

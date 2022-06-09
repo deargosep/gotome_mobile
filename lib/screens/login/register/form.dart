@@ -65,6 +65,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                   height: 16,
                 ),
                 Input(
+                  icon: 'calendar',
                   label: 'Дата рождения',
                 ),
                 SizedBox(
