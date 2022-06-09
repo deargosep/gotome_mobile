@@ -45,6 +45,7 @@ class AuthScreen extends StatelessWidget {
                     )))),
         Spacer(),
         BrandButton(
+          onPressed: () {},
           text: 'Вход',
           type: 'primary',
         ),

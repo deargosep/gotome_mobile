@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   flutter_svg: ^1.1.0
+  timer_builder: ^2.0.0
 
 dev_dependencies:
   icons_launcher: ^1.1.9

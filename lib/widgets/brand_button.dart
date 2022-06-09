@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class BrandButton extends StatelessWidget {
   final String text;
   final String type;
+  bool? disabled = false;
   var onPressed;
 
-  BrandButton(
-      {Key? key,
-      required String this.text,
-      required String this.type,
-      this.onPressed})
-      : super(key: key);
+  BrandButton({
+    Key? key,
+    required String this.text,
+    required String this.type,
+    this.onPressed,
+    bool? this.disabled,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,13 @@ class BrandButton extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: getColor(),
       child: InkWell(
-          onTap: onPressed,
+          onTap: () {
+            if (disabled == true) {
+              return null;
+            } else {
+              onPressed();
+            }
+          },
           child: Container(
             width: double.infinity,
             height: 50,

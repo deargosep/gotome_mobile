@@ -6,8 +6,8 @@ import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:gotome/widgets/images/logo.dart';
 import 'package:gotome/widgets/input.dart';
 
-class InputEmailScreen extends StatelessWidget {
-  const InputEmailScreen({Key? key}) : super(key: key);
+class InputNewPasswordsScreen extends StatelessWidget {
+  const InputNewPasswordsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +23,25 @@ class InputEmailScreen extends StatelessWidget {
         Logo(),
         Spacer(),
         Text(
-          'Введите e-mail, указанный в аккаунте',
+          'Введите новый пароль',
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
         ),
         SizedBox(
           height: 24,
         ),
         Input(
-          label: 'E-mail',
+          label: 'Новый пароль',
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Input(
+          label: 'Повторите пароль',
         ),
         Spacer(),
         BrandButton(
             onPressed: () {
-              Get.toNamed('auth/forgot/2');
+              Get.toNamed('/auth/');
             },
             text: 'Продолжить',
             type: 'primary'),
