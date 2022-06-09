@@ -6,8 +6,8 @@ import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:gotome/widgets/images/logo.dart';
 import 'package:gotome/widgets/input.dart';
 
-class InputNewPasswordsScreen extends StatelessWidget {
-  const InputNewPasswordsScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,34 +17,35 @@ class InputNewPasswordsScreen extends StatelessWidget {
         Align(
             alignment: Alignment.centerLeft,
             child: BrandIcon(icon: 'back_arrow')),
-        SizedBox(
-          height: 7,
-        ),
+        Spacer(),
         Logo(),
         Spacer(),
-        Text(
-          'Введите новый пароль',
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-        ),
-        SizedBox(
-          height: 24,
-        ),
         Input(
-          label: 'Новый пароль',
+          label: 'Никнейм',
         ),
         SizedBox(
           height: 16,
         ),
         Input(
-          label: 'Повторите пароль',
+          label: 'E-mail',
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Input(
+          label: 'Пароль',
+        ),
+        SizedBox(
+          height: 16,
         ),
         Spacer(),
         BrandButton(
-            onPressed: () {
-              Get.offAllNamed('/auth');
-            },
-            text: 'Продолжить',
-            type: 'primary'),
+          onPressed: () {
+            Get.toNamed('/register/form');
+          },
+          text: 'Продолжить',
+          type: 'primary',
+        ),
       ],
     ));
   }

@@ -15,9 +15,7 @@ class AuthScreen extends StatelessWidget {
       children: [
         Spacer(),
         Logo(),
-        SizedBox(
-          height: 105,
-        ),
+        Spacer(),
         Input(
           label: 'E-mail',
         ),

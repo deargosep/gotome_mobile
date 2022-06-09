@@ -7,9 +7,19 @@ import 'package:gotome/widgets/images/logo.dart';
 import 'package:gotome/widgets/input.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-class InputCodeScreen extends StatelessWidget {
+class InputCodeScreen extends StatefulWidget {
   InputCodeScreen({Key? key}) : super(key: key);
-  final TextEditingController controller = TextEditingController();
+
+  @override
+  State<InputCodeScreen> createState() => _InputCodeScreenState();
+}
+
+class _InputCodeScreenState extends State<InputCodeScreen> {
+  TextEditingController controller = TextEditingController();
+  String text = '';
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +43,11 @@ class InputCodeScreen extends StatelessWidget {
         ),
         Input(
           controller: controller,
+          onChanged: (value) {
+            setState(() {
+              text = value;
+            });
+          },
           label: 'Код',
         ),
         SizedBox(
@@ -46,7 +61,7 @@ class InputCodeScreen extends StatelessWidget {
             },
             text: 'Продолжить',
             type: 'primary',
-            disabled: controller.text.length < 6),
+            disabled: text.length < 6),
       ],
     ));
   }

@@ -25,7 +25,12 @@ class AuthRegisterScreen extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        BrandButton(text: 'Регистрация', type: 'secondary'),
+        BrandButton(
+            onPressed: () {
+              Get.toNamed('/register');
+            },
+            text: 'Регистрация',
+            type: 'secondary'),
       ],
     ));
   }

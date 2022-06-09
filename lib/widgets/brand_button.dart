@@ -33,6 +33,7 @@ class BrandButton extends StatelessWidget {
       child: InkWell(
           onTap: () {
             if (disabled == true) {
+              print('null');
               return null;
             } else {
               onPressed();
