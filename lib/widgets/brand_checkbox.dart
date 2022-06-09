@@ -111,11 +111,6 @@ class _BrandCheckboxState extends State<BrandCheckbox>
               }
             }
             return Container();
-            return SvgPicture.asset(
-              'assets/icons/check.svg',
-              color: getColor(),
-              fit: BoxFit.scaleDown,
-            );
           })),
     );
   }

@@ -41,7 +41,7 @@ class InputNewPasswordsScreen extends StatelessWidget {
         Spacer(),
         BrandButton(
             onPressed: () {
-              Get.offAllNamed('/auth');
+              Get.offAllNamed('/');
             },
             text: 'Продолжить',
             type: 'primary'),
