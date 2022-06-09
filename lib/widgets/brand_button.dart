@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 class BrandButton extends StatelessWidget {
-  const BrandButton(
-      {Key? key, required String this.text, required String this.type})
-      : super(key: key);
   final String text;
   final String type;
+  var onPressed;
+
+  BrandButton(
+      {Key? key,
+      required String this.text,
+      required String this.type,
+      this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +29,17 @@ class BrandButton extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: getColor(),
       child: InkWell(
-          onTap: () {},
+          onTap: onPressed,
           child: Container(
             width: double.infinity,
             height: 50,
             child: Center(
                 child: Text(
               text,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
             )),
           )),
     );

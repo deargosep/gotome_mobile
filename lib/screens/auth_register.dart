@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/brand_button.dart';
+import 'package:gotome/widgets/images/logo.dart';
 
-class AuthRegister extends StatelessWidget {
-  const AuthRegister({Key? key}) : super(key: key);
+class AuthRegisterScreen extends StatelessWidget {
+  const AuthRegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
+    return CustomScaffold(
         child: Column(
-          children: [
-            Spacer(),
-            SvgPicture.asset('assets/images/LOGO.svg'),
-            Spacer(),
-            BrandButton(text: 'Вход', type: 'primary'),
-            SizedBox(
-              height: 16,
-            ),
-            BrandButton(text: 'Регистрация', type: 'secondary'),
-          ],
+      children: [
+        Spacer(),
+        Logo(),
+        Spacer(),
+        BrandButton(
+          text: 'Вход',
+          type: 'primary',
+          onPressed: () {
+            Get.toNamed('/auth');
+          },
         ),
-      ),
+        SizedBox(
+          height: 16,
+        ),
+        BrandButton(text: 'Регистрация', type: 'secondary'),
+      ],
     ));
   }
 }
