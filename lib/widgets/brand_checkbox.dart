@@ -61,6 +61,11 @@ class _BrandCheckboxState extends State<BrandCheckbox>
           pressing = false;
         });
       },
+      onTapCancel: () {
+        setState(() {
+          pressing = false;
+        });
+      },
       onTap: () {
         widget.setState!();
       },

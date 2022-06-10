@@ -49,6 +49,11 @@ class _BrandButtonState extends State<BrandButton> {
             pressing = true;
           });
         },
+        onTapCancel: () {
+          setState(() {
+            pressing = false;
+          });
+        },
         onTap: () {
           if (widget.disabled == true) {
             print('null');
