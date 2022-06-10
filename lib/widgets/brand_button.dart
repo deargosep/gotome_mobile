@@ -5,14 +5,16 @@ class BrandButton extends StatefulWidget {
   final String type;
   bool? disabled = false;
   var onPressed;
+  final double? width;
 
-  BrandButton({
-    Key? key,
-    required String this.text,
-    required String this.type,
-    this.onPressed,
-    bool? this.disabled,
-  }) : super(key: key);
+  BrandButton(
+      {Key? key,
+      required String this.text,
+      required String this.type,
+      this.onPressed,
+      this.disabled,
+      this.width})
+      : super(key: key);
 
   @override
   State<BrandButton> createState() => _BrandButtonState();
@@ -67,7 +69,7 @@ class _BrandButtonState extends State<BrandButton> {
             borderRadius: BorderRadius.all(Radius.circular(10)),
             color: getColor(),
           ),
-          width: double.infinity,
+          width: widget.width ?? MediaQuery.of(context).size.width,
           height: 50,
           child: Center(
               child: Text(

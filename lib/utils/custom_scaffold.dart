@@ -42,7 +42,9 @@ class CustomScaffold extends StatelessWidget {
           child: noPadding == true
               ? child
               : Padding(
-                  padding: padding ?? EdgeInsets.fromLTRB(20, 40, 20, 20),
+                  padding: padding ??
+                      EdgeInsets.fromLTRB(20,
+                          40 + MediaQuery.of(context).viewInsets.top, 20, 20),
                   child: child)),
     );
   }

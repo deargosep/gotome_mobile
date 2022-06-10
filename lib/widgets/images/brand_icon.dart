@@ -21,7 +21,12 @@ class BrandIcon extends StatelessWidget {
         onTap: () {
           Get.back();
         },
-        child: SvgPicture.asset('assets/icons/${icon}.svg'),
+        child: SvgPicture.asset(
+          'assets/icons/${icon}.svg',
+          color: color,
+          height: height,
+          width: width,
+        ),
       );
     return SvgPicture.asset(
       'assets/icons/${icon}.svg',

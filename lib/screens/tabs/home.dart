@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:gotome/widgets/event_card.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -13,9 +13,10 @@ class HomeTab extends StatelessWidget {
       children: [
         // Header
         Container(
-          height: 76 +  MediaQuery.of(context).viewPadding.top,
+          height: 76 + MediaQuery.of(context).viewPadding.top,
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(16, 16 +  MediaQuery.of(context).viewPadding.top, 16, 16),
+          padding: EdgeInsets.fromLTRB(
+              16, 16 + MediaQuery.of(context).viewPadding.top, 16, 16),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(25),
@@ -39,24 +40,38 @@ class HomeTab extends StatelessWidget {
         Expanded(
             child: Content(list: [
           {
-            "item": 1,
+            "id": "123adssdad",
             "author": "HotLine",
             "author_role": "Организатор",
             "name": "Катаемся на велосипедах",
             "timedate": "03.06.2022 в 15:00",
             "location": "Наб. Реки Фонтанки, 3",
             "description":
-                "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!"
+                "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
+            "price": "Бесплатно",
+            "members": [
+              {"username": "MajEstic21"},
+              {"username": "Alice18"},
+              {"username": "Pavkl"},
+              {"username": "ForJik"},
+            ],
           },
           {
-            "item": 1,
+            "id": "123132sddsad",
             "author": "HotLine",
             "author_role": "Организатор",
             "name": "Катаемся на велосипедах",
             "timedate": "03.06.2022 в 15:00",
             "location": "Наб. Реки Фонтанки, 3",
             "description":
-                "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!"
+                "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
+            "price": "Бесплатно",
+            "members": [
+              {"username": "MajEstic21"},
+              {"username": "Alice18"},
+              {"username": "Pavkl"},
+              {"username": "ForJik"},
+            ],
           }
         ]))
       ],
@@ -65,8 +80,8 @@ class HomeTab extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  Content({Key? key, required List<Map> this.list}) : super(key: key);
-  List list;
+  Content({Key? key, required this.list}) : super(key: key);
+  List<Map<String, dynamic>> list;
   @override
   Widget build(BuildContext context) {
     if (list.isNotEmpty) {
@@ -80,143 +95,5 @@ class Content extends StatelessWidget {
           });
     }
     return Center(child: Text('Пока что событий нет'));
-  }
-}
-
-class EventCard extends StatelessWidget {
-  const EventCard({Key? key, required this.item}) : super(key: key);
-  final Map item;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 335,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(18)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.05),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 10),
-          )
-        ],
-      ),
-      child: Column(
-        children: [
-          // Header
-          Row(
-            children: [
-              SizedBox(
-                width: 16,
-              ),
-              CircleAvatar(
-                  //  IMAGE URL FROM $item
-                  ),
-              SizedBox(
-                width: 12,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item["author"],
-                    style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    item["author_role"],
-                    style: TextStyle(
-                        color: Color(0xFF9FA6BA),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          // Image cover
-          Container(
-            height: 132,
-            decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-          ), // TODO: should be an Image (backend)
-          // meta info
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    item['name'],
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Theme.of(context).accentColor),
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    BrandIcon(icon: 'clock'),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      item["timedate"],
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).accentColor),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    BrandIcon(icon: 'geo'),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      item["location"],
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).accentColor),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // description
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: Text(
-              "${item["description"].toString().substring(0, 108)}...",
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF6A7592)),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }

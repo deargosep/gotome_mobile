@@ -128,6 +128,7 @@ class _NewEventState extends State<NewEvent> {
           pressing = false;
         });
       },
+      onTap: widget.onTap,
       child: Container(
         height: 50,
         width: 75,
