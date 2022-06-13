@@ -16,7 +16,7 @@ class AuthRegisterScreen extends StatelessWidget {
         Logo(),
         Spacer(),
         BrandButton(
-          text: 'Вход',
+          text: 'auth'.tr,
           type: 'primary',
           onPressed: () {
             Get.toNamed('/auth');
@@ -29,7 +29,7 @@ class AuthRegisterScreen extends StatelessWidget {
             onPressed: () {
               Get.toNamed('/register');
             },
-            text: 'Регистрация',
+            text: 'register'.tr,
             type: 'secondary'),
       ],
     ));

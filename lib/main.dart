@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:gotome/screens/auth_register.dart';
 import 'package:gotome/screens/event/event_screen.dart';
 import 'package:gotome/screens/event/members.dart';
@@ -12,6 +13,7 @@ import 'package:gotome/screens/login/register/form.dart';
 import 'package:gotome/screens/login/register/register.dart';
 import 'package:gotome/screens/tabs/main.dart';
 
+import 'languages.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -29,6 +31,9 @@ void main() {
       GetPage(name: '/event', page: () => EventScreen()),
       GetPage(name: '/event/members', page: () => EventMembersScreen()),
     ],
+    translations: Languages(),
+    locale: Get.deviceLocale,
+    fallbackLocale: const Locale('ru', 'RU'),
     theme: ThemeClass.lightTheme,
     home: AuthRegisterScreen(),
   ));
