@@ -24,7 +24,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
 
     return CustomScaffold(
         scrollable: true,
-        child: Column(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(

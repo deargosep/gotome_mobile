@@ -24,7 +24,7 @@ class _InputCodeScreenState extends State<InputCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        child: Column(
+        body: Column(
       children: [
         Align(
             alignment: Alignment.centerLeft,

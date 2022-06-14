@@ -173,35 +173,43 @@ class EventScreen extends StatelessWidget {
                         height: 16,
                       ),
                       // TODO: should be an image
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 25,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item["author"]!,
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                item["author_role"]!,
-                                style: TextStyle(
-                                    color: Color(0xFF9FA6BA), fontSize: 14),
-                              )
-                            ],
-                          ),
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed('/profile_others',
+                              arguments: item["author_info"]);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 50,
+                              child: CircleAvatar(),
+                            ),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item["author"]!,
+                                  style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  item["author_role"]!,
+                                  style: TextStyle(
+                                      color: Color(0xFF9FA6BA), fontSize: 14),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 16,

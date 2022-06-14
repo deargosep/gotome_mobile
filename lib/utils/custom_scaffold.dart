@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class CustomScaffold extends StatelessWidget {
   CustomScaffold(
       {Key? key,
-      required Widget this.child,
+      required Widget this.body,
       bool? this.scrollable,
       bool? this.noPadding,
       EdgeInsets? this.padding})
       : super(key: key);
-  final child;
+  final body;
   bool? scrollable = false;
   bool? noPadding = false;
   EdgeInsets? padding = EdgeInsets.zero;
@@ -20,7 +20,7 @@ class CustomScaffold extends StatelessWidget {
           return Center(
             child: noPadding == true
                 ? SingleChildScrollView(
-                    child: child,
+                    child: body,
                   )
                 : Padding(
                     padding: padding ?? EdgeInsets.fromLTRB(20, 40, 20, 20),
@@ -29,7 +29,7 @@ class CustomScaffold extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Container(
                           height: MediaQuery.of(context).size.height - 60,
-                          child: child,
+                          child: body,
                         ),
                       ),
                     )),
@@ -40,12 +40,12 @@ class CustomScaffold extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: noPadding == true
-              ? child
+              ? body
               : Padding(
                   padding: padding ??
                       EdgeInsets.fromLTRB(20,
                           40 + MediaQuery.of(context).viewInsets.top, 20, 20),
-                  child: child)),
+                  child: body)),
     );
   }
 }

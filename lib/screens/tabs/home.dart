@@ -42,7 +42,17 @@ class HomeTab extends StatelessWidget {
           {
             "id": "123adssdad",
             "author": "HotLine",
+            "authorId": "12222",
             "author_role": "Организатор",
+            "author_info": {
+              "author_name": "Игорь",
+              "author_username": "HotLine",
+              "author_age": 24,
+              "author_country": "Россия",
+              "author_city": "Москва",
+              "author_description":
+                  "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+            },
             "name": "Катаемся на велосипедах",
             "timedate": "03.06.2022 в 15:00",
             "location": "Наб. Реки Фонтанки, 3",
@@ -59,7 +69,17 @@ class HomeTab extends StatelessWidget {
           {
             "id": "123132sddsad",
             "author": "HotLine",
+            "authorId": "12222",
             "author_role": "Организатор",
+            "author_info": {
+              "author_username": "HotLine",
+              "author_name": "Игорь",
+              "author_age": 24,
+              "author_country": "Россия",
+              "author_city": "Москва",
+              "author_description":
+                  "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+            },
             "name": "Катаемся на велосипедах",
             "timedate": "03.06.2022 в 15:00",
             "location": "Наб. Реки Фонтанки, 3",

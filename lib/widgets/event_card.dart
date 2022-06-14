@@ -29,40 +29,55 @@ class EventCard extends StatelessWidget {
           child: Column(
             children: [
               // Header
-              Row(
-                children: [
-                  SizedBox(
-                    width: 16,
-                  ),
-                  CircleAvatar(
-                      //  IMAGE URL FROM $item
-                      ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/profile_others', arguments: item["authorId"]);
+                },
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/profile_others',
+                        arguments: item["author_info"]);
+                  },
+                  child: Row(
                     children: [
-                      Text(
-                        item["author"]!,
-                        style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Container(
+                        height: 41,
+                        width: 41,
+                        child: CircleAvatar(
+                            //  IMAGE URL FROM $item
+                            ),
                       ),
                       SizedBox(
-                        height: 4,
+                        width: 12,
                       ),
-                      Text(
-                        item["author_role"]!,
-                        style: TextStyle(
-                            color: Color(0xFF9FA6BA),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400),
-                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item["author"]!,
+                            style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            item["author_role"]!,
+                            style: TextStyle(
+                                color: Color(0xFF9FA6BA),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 16,

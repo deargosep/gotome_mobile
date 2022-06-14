@@ -41,8 +41,10 @@ class EventMembersScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           // TODO: image (backend)
-                          CircleAvatar(
-                            radius: 30,
+                          Container(
+                            width: 56,
+                            height: 56,
+                            child: CircleAvatar(),
                           ),
                           SizedBox(
                             width: 16,
