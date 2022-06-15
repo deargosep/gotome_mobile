@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gotome/screens/tabs/home/home.dart';
+import 'package:gotome/screens/tabs/profile/profile.dart';
 import 'package:gotome/widgets/bottom_bar.dart';
 
 class BarScreen extends StatefulWidget {
@@ -19,9 +20,7 @@ class _BarScreenState extends State<BarScreen> {
     Text(
       '2',
     ),
-    Text(
-      '3',
-    ),
+    MyProfileScreen()
   ];
 
   void _onItemTapped(int index) {

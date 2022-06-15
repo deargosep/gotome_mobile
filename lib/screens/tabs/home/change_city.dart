@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
-import 'package:gotome/widgets/header_title.dart';
+import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/input.dart';
 
 class ChangeCityScreen extends StatelessWidget {

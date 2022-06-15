@@ -29,7 +29,10 @@ class ProfileOtherScreen extends StatelessWidget {
             ),
             Text(
               author["author_username"]!,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).accentColor),
             ),
             SizedBox(
               height: 24,

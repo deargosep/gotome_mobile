@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 class BrandButton extends StatefulWidget {
   final String text;
   final String type;
-  bool? disabled = false;
-  var onPressed;
-  final double? width;
+  final disabled;
+  final onPressed;
+  final width;
+  final textAlign;
+  final textStyle;
 
   BrandButton(
       {Key? key,
       required String this.text,
       required String this.type,
       this.onPressed,
-      this.disabled,
-      this.width})
+      this.disabled = false,
+      this.width,
+      this.textAlign = 'center',
+      this.textStyle})
       : super(key: key);
 
   @override
@@ -24,6 +28,9 @@ class _BrandButtonState extends State<BrandButton> {
   bool pressing = false;
   @override
   Widget build(BuildContext context) {
+    var style = widget.textStyle ??
+        TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15);
     Color getColor() {
       if (widget.disabled == true) {
         return Color(0xFF797A94);
@@ -71,12 +78,24 @@ class _BrandButtonState extends State<BrandButton> {
           ),
           width: widget.width ?? MediaQuery.of(context).size.width,
           height: 50,
-          child: Center(
-              child: Text(
-            widget.text,
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-          )),
+          child: widget.textAlign == 'center'
+              ? Center(
+                  child: Text(
+                  widget.text,
+                  style: style,
+                ))
+              : widget.textAlign == 'left'
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 16.5, 20, 16.5),
+                      child: Text(
+                        widget.text,
+                        style: style,
+                      ),
+                    )
+                  : Text(
+                      widget.text,
+                      style: style,
+                    ),
         ));
   }
 }

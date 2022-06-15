@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:gotome/widgets/header_title.dart';
+import 'package:gotome/widgets/header.dart';
 
 class EventMembersScreen extends StatelessWidget {
   EventMembersScreen({Key? key}) : super(key: key);
