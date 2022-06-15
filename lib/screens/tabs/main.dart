@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gotome/screens/tabs/home.dart';
 import 'package:gotome/widgets/bottom_bar.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class BarScreen extends StatefulWidget {
+  const BarScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<BarScreen> createState() => _BarScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _BarScreenState extends State<BarScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeTab(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/auth_register.dart';
 import 'package:gotome/screens/event/event_screen.dart';
@@ -17,10 +16,9 @@ import 'languages.dart';
 import 'theme/theme.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark); // 1
   runApp(GetMaterialApp(
     getPages: [
-      GetPage(name: '/main', page: () => MainScreen()),
+      GetPage(name: '/', page: () => BarScreen()),
       GetPage(name: '/auth_register', page: () => AuthRegisterScreen()),
       GetPage(name: '/auth', page: () => AuthScreen()),
       GetPage(name: '/auth/forgot/1', page: () => InputEmailScreen()),
@@ -36,6 +34,5 @@ void main() {
     locale: Get.deviceLocale,
     fallbackLocale: const Locale('ru', 'RU'),
     theme: ThemeClass.lightTheme,
-    home: AuthRegisterScreen(),
   ));
 }

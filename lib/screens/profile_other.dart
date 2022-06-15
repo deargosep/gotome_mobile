@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
@@ -9,6 +10,7 @@ class ProfileOtherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return CustomScaffold(
       body: DefaultTabController(
         length: 2,

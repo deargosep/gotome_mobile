@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gotome/widgets/event_card.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     const textStyle = TextStyle(
         fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white);
     const textStyleBold = TextStyle(

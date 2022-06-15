@@ -44,7 +44,7 @@ class AuthScreen extends StatelessWidget {
         Spacer(),
         BrandButton(
           onPressed: () {
-            Get.offAllNamed('/main');
+            Get.offAllNamed('/');
           },
           text: 'Вход',
           type: 'primary',

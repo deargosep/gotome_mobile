@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 
@@ -7,6 +8,7 @@ class EventMembersScreen extends StatelessWidget {
   final item = Get.arguments;
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
         body: Padding(
       padding: EdgeInsets.fromLTRB(
