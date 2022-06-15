@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:gotome/widgets/header_title.dart';
 
 class EventMembersScreen extends StatelessWidget {
   EventMembersScreen({Key? key}) : super(key: key);
@@ -15,22 +15,8 @@ class EventMembersScreen extends StatelessWidget {
           0, 38 + MediaQuery.of(context).viewInsets.top, 0, 0),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Row(
-              children: [
-                BrandIcon(
-                  icon: 'back_arrow',
-                ),
-                SizedBox(
-                  width: 26,
-                ),
-                Text(
-                  'Список участников',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                )
-              ],
-            ),
+          Header(
+            text: 'Список участников',
           ),
           Expanded(
             child: ListView.builder(

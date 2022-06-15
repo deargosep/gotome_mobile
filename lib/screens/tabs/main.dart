@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gotome/screens/tabs/home.dart';
+import 'package:gotome/screens/tabs/home/home.dart';
 import 'package:gotome/widgets/bottom_bar.dart';
 
 class BarScreen extends StatefulWidget {

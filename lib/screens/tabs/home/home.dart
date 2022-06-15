@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:gotome/widgets/event_card.dart';
 
 class HomeTab extends StatelessWidget {
@@ -24,18 +25,21 @@ class HomeTab extends StatelessWidget {
                   bottomLeft: Radius.circular(25),
                   bottomRight: Radius.circular(25)),
               color: Theme.of(context).primaryColor),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'События в городе',
-                style: textStyle,
-              ),
-              Text(
-                'Москва',
-                style: textStyleBold,
-              )
-            ],
+          child: GestureDetector(
+            onTap: (){Get.toNamed('/change_city');},
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'События в городе',
+                  style: textStyle,
+                ),
+                Text(
+                  'Москва',
+                  style: textStyleBold,
+                )
+              ],
+            ),
           ),
         ),
         // List

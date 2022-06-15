@@ -10,6 +10,7 @@ import 'package:gotome/screens/login/auth/auth.dart';
 import 'package:gotome/screens/login/register/form.dart';
 import 'package:gotome/screens/login/register/register.dart';
 import 'package:gotome/screens/profile_other.dart';
+import 'package:gotome/screens/tabs/home/change_city.dart';
 import 'package:gotome/screens/tabs/main.dart';
 
 import 'languages.dart';
@@ -29,6 +30,7 @@ void main() {
       GetPage(name: '/event', page: () => EventScreen()),
       GetPage(name: '/event/members', page: () => EventMembersScreen()),
       GetPage(name: '/profile_others', page: () => ProfileOtherScreen()),
+      GetPage(name: '/change_city', page: () => ChangeCityScreen()),
     ],
     translations: Languages(),
     locale: Get.deviceLocale,
