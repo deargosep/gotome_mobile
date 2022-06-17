@@ -19,6 +19,14 @@ class MyProfileScreen extends StatelessWidget {
       "city": "Москва",
       "description":
           "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+      "gender": "Мужской",
+      "birthday": "12.06.1998",
+      "author_name": "Игорь",
+      "author_age": 24,
+      "author_country": "Россия",
+      "author_city": "Москва",
+      "author_description":
+          "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
     };
     return CustomScaffold(
       noPadding: true,
@@ -86,7 +94,9 @@ class MyProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: 32,
                 ),
-                ListOfOptions(),
+                ListOfOptions(
+                    //  TODO: this should be a global variable, not to being passed around widgets
+                    user: user),
                 SizedBox(
                   height: 32,
                 ),
@@ -112,8 +122,8 @@ class MyProfileScreen extends StatelessWidget {
 }
 
 class ListOfOptions extends StatelessWidget {
-  const ListOfOptions({Key? key}) : super(key: key);
-
+  const ListOfOptions({Key? key, required this.user}) : super(key: key);
+  final user;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -121,7 +131,7 @@ class ListOfOptions extends StatelessWidget {
         Option(
           text: "Моя анкета",
           onTap: () {
-            Get.toNamed('/profile/info');
+            Get.toNamed('/profile/info', arguments: user);
           },
         ),
         SizedBox(

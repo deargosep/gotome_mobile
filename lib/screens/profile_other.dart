@@ -126,7 +126,10 @@ class Info extends StatelessWidget {
         ),
         Text(
           author["author_name"]!,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Theme.of(context).accentColor),
         ),
         SizedBox(
           height: 24,
@@ -140,7 +143,10 @@ class Info extends StatelessWidget {
         ),
         Text(
           author["author_age"].toString(),
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Theme.of(context).accentColor),
         ),
         SizedBox(
           height: 24,
@@ -154,7 +160,10 @@ class Info extends StatelessWidget {
         ),
         Text(
           author["author_country"],
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Theme.of(context).accentColor),
         ),
         SizedBox(
           height: 24,
@@ -168,7 +177,10 @@ class Info extends StatelessWidget {
         ),
         Text(
           author["author_city"],
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Theme.of(context).accentColor),
         ),
         SizedBox(
           height: 24,
@@ -182,7 +194,10 @@ class Info extends StatelessWidget {
         ),
         Text(
           author["author_description"]!,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Theme.of(context).accentColor),
         ),
       ],
     );

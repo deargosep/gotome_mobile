@@ -5,6 +5,7 @@ class Input extends StatelessWidget {
   Input(
       {Key? key,
       String? this.label,
+      this.defaultText = '',
       TextEditingController? this.controller,
       ValueChanged<String>? this.onChanged,
       bool? this.expanded,
@@ -12,6 +13,7 @@ class Input extends StatelessWidget {
       : super(key: key);
 
   String? label;
+  String? defaultText;
   TextEditingController? controller;
   ValueChanged<String>? onChanged;
   bool? expanded = false;
@@ -24,6 +26,7 @@ class Input extends StatelessWidget {
       maxLines: expanded == true ? 3 : 1,
       controller: controller,
       onChanged: onChanged,
+      initialValue: defaultText,
       decoration: InputDecoration(
           suffixIcon: icon != null
               ? Transform.scale(scale: 0.45, child: BrandIcon(icon: icon))

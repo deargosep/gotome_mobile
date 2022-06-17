@@ -12,6 +12,8 @@ import 'package:gotome/screens/login/register/register.dart';
 import 'package:gotome/screens/profile_other.dart';
 import 'package:gotome/screens/tabs/home/change_city.dart';
 import 'package:gotome/screens/tabs/main.dart';
+import 'package:gotome/screens/tabs/profile/profile_edit.dart';
+import 'package:gotome/screens/tabs/profile/profile_info.dart';
 
 import 'languages.dart';
 import 'theme/theme.dart';
@@ -31,6 +33,9 @@ void main() {
       GetPage(name: '/event/members', page: () => EventMembersScreen()),
       GetPage(name: '/profile_others', page: () => ProfileOtherScreen()),
       GetPage(name: '/change_city', page: () => ChangeCityScreen()),
+      // TODO: nested screens in 'tabs' main screens
+      GetPage(name: '/profile/edit', page: () => ProfileEditScreen()),
+      GetPage(name: '/profile/info', page: () => ProfileInfoScreen()),
     ],
     translations: Languages(),
     locale: Get.deviceLocale,

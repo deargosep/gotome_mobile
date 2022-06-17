@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BrandButton extends StatefulWidget {
   final String text;
-  final String type;
+  final type;
   final disabled;
   final onPressed;
   final width;
@@ -12,7 +12,7 @@ class BrandButton extends StatefulWidget {
   BrandButton(
       {Key? key,
       required String this.text,
-      required String this.type,
+      this.type = 'primary',
       this.onPressed,
       this.disabled = false,
       this.width,
