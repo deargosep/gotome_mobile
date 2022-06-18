@@ -3,16 +3,52 @@ import 'package:get/get.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard({Key? key, required this.item}) : super(key: key);
-  final Map<String, dynamic> item;
+  const EventCard({Key? key, this.item}) : super(key: key);
+  final item;
   @override
   Widget build(BuildContext context) {
+    const defaultItem = {
+      "id": "123adssdad",
+      "author": "HotLine",
+      "authorId": "12222",
+      "author_role": "Организатор",
+      "author_info": {
+        "author_name": "Игорь",
+        "author_username": "HotLine",
+        "author_age": 24,
+        "author_country": "Россия",
+        "author_city": "Москва",
+        "author_description":
+            "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+      },
+      "name": "Катаемся на велосипедах",
+      "timedate": "03.06.2022 в 15:00",
+      "location": "Наб. Реки Фонтанки, 3",
+      "description":
+          "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
+      "price": "Бесплатно",
+      "members": [
+        {"username": "MajEstic21"},
+        {"username": "Alice18"},
+        {"username": "Pavkl"},
+        {"username": "ForJik"},
+      ],
+    };
+    // Map getItem() {
+    // if (item == null) {
+    //   return defaultItem;
+    // } else {
+    //   return item;
+    // }
+    // }
+
+    final Map usedItem = defaultItem;
     return Material(
       color: Colors.white,
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(18)),
         onTap: () {
-          Get.toNamed('/event', arguments: item);
+          Get.toNamed('/event', arguments: usedItem);
         },
         child: Container(
           height: 335,
@@ -31,12 +67,13 @@ class EventCard extends StatelessWidget {
               // Header
               GestureDetector(
                 onTap: () {
-                  Get.toNamed('/profile_others', arguments: item["authorId"]);
+                  Get.toNamed('/profile_others',
+                      arguments: usedItem["authorId"]);
                 },
                 child: GestureDetector(
                   onTap: () {
                     Get.toNamed('/profile_others',
-                        arguments: item["author_info"]);
+                        arguments: usedItem["author_info"]);
                   },
                   child: Row(
                     children: [
@@ -57,7 +94,7 @@ class EventCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            item["author"]!,
+                            usedItem["author"],
                             style: TextStyle(
                                 color: Theme.of(context).accentColor,
                                 fontSize: 12,
@@ -67,7 +104,7 @@ class EventCard extends StatelessWidget {
                             height: 4,
                           ),
                           Text(
-                            item["author_role"]!,
+                            usedItem["author_role"],
                             style: TextStyle(
                                 color: Color(0xFF9FA6BA),
                                 fontSize: 12,
@@ -97,7 +134,7 @@ class EventCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        item['name'] ?? "",
+                        usedItem['name'],
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
@@ -114,7 +151,7 @@ class EventCard extends StatelessWidget {
                           width: 12,
                         ),
                         Text(
-                          item["timedate"] ?? "",
+                          usedItem["timedate"],
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -132,7 +169,7 @@ class EventCard extends StatelessWidget {
                           width: 12,
                         ),
                         Text(
-                          item["location"] ?? "",
+                          usedItem["location"],
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -147,7 +184,7 @@ class EventCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 child: Text(
-                  "${item["description"].toString().substring(0, 108)}...",
+                  "${usedItem["description"].toString().substring(0, 108)}...",
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,

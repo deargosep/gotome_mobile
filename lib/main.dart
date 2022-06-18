@@ -33,6 +33,7 @@ void main() {
       GetPage(name: '/event/members', page: () => EventMembersScreen()),
       GetPage(name: '/profile_others', page: () => ProfileOtherScreen()),
       GetPage(name: '/change_city', page: () => ChangeCityScreen()),
+      GetPage(name: '/filters', page: () => ChangeCityScreen()),
       // TODO: nested screens in 'tabs' main screens
       GetPage(name: '/profile/edit', page: () => ProfileEditScreen()),
       GetPage(name: '/profile/info', page: () => ProfileInfoScreen()),

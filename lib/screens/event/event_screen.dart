@@ -11,22 +11,25 @@ class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     return Scaffold(
-      bottomNavigationBar: BottomPanel(child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          BrandButton(
-            text: 'Откликнуться',
-            type: 'primary',
-            width: 161,
-          ),
-          BrandButton(
-            text: 'Поделиться',
-            type: 'secondary',
-            width: 161,
-          )
-        ],
-      ),),
+      bottomNavigationBar: BottomPanel(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            BrandButton(
+              text: 'Откликнуться',
+              type: 'primary',
+              width: 161.0,
+            ),
+            BrandButton(
+              text: 'Поделиться',
+              type: 'secondary',
+              width: 161.0,
+            )
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Stack(
