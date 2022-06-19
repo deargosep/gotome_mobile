@@ -26,7 +26,9 @@ class HomeTab extends StatelessWidget {
                   bottomRight: Radius.circular(25)),
               color: Theme.of(context).primaryColor),
           child: GestureDetector(
-            onTap: (){Get.toNamed('/change_city');},
+            onTap: () {
+              Get.toNamed('/change_city');
+            },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -71,6 +73,7 @@ class HomeTab extends StatelessWidget {
               {"username": "Pavkl"},
               {"username": "ForJik"},
             ],
+            "opened_from_profile": false
           },
           {
             "id": "123132sddsad",
@@ -98,6 +101,7 @@ class HomeTab extends StatelessWidget {
               {"username": "Pavkl"},
               {"username": "ForJik"},
             ],
+            "opened_from_profile": false
           }
         ]))
       ],

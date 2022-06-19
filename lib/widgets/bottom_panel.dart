@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomPanel extends StatelessWidget {
-  const BottomPanel({Key? key, this.child}) : super(key: key);
+  const BottomPanel({Key? key, this.child, this.height}) : super(key: key);
   final child;
+  final height;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,6 +15,7 @@ class BottomPanel extends StatelessWidget {
             offset: Offset(0, 8),
           )
         ]),
+        height: height,
         width: MediaQuery.of(context).size.width,
         // height: 83,
         child: Padding(

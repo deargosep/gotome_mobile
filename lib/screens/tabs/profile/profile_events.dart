@@ -73,7 +73,7 @@ class ProfileEventsScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: History(),
+              child: History(fromMyProfile: true),
             ),
           )
         ],

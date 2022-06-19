@@ -195,10 +195,39 @@ class Info extends StatelessWidget {
 }
 
 class History extends StatelessWidget {
-  const History({Key? key}) : super(key: key);
-
+  const History({Key? key, this.fromMyProfile}) : super(key: key);
+  final fromMyProfile;
   @override
   Widget build(BuildContext context) {
+    print(fromMyProfile);
+    var item = {
+      "id": "123adssdad",
+      "author": "HotLine",
+      "authorId": "12222",
+      "author_role": "Организатор",
+      "author_info": {
+        "author_name": "Игорь",
+        "author_username": "HotLine",
+        "author_age": 24,
+        "author_country": "Россия",
+        "author_city": "Москва",
+        "author_description":
+            "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+      },
+      "name": "Катаемся на велосипедах",
+      "timedate": "03.06.2022 в 15:00",
+      "location": "Наб. Реки Фонтанки, 3",
+      "description":
+          "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
+      "price": "Бесплатно",
+      "members": [
+        {"username": "MajEstic21"},
+        {"username": "Alice18"},
+        {"username": "Pavkl"},
+        {"username": "ForJik"},
+      ],
+      "opened_from_profile": true
+    };
     //TODO
     return ListView(
       children: [
@@ -237,7 +266,11 @@ class History extends StatelessWidget {
             physics: ScrollPhysics(),
             itemCount: 1,
             itemBuilder: (context, index) {
-              return Opacity(opacity: 0.35, child: EventCard());
+              return Opacity(
+                  opacity: 0.35,
+                  child: EventCard(
+                    item: fromMyProfile == true ? item : null,
+                  ));
             }),
       ],
     );

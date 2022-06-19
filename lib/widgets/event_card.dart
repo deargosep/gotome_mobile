@@ -33,6 +33,7 @@ class EventCard extends StatelessWidget {
         {"username": "Pavkl"},
         {"username": "ForJik"},
       ],
+      "opened_from_profile": false
     };
     // Map getItem() {
     // if (item == null) {
@@ -42,7 +43,7 @@ class EventCard extends StatelessWidget {
     // }
     // }
 
-    final Map usedItem = defaultItem;
+    final Map usedItem = item ?? defaultItem;
     return Material(
       color: Colors.white,
       child: InkWell(

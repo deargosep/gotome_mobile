@@ -4,31 +4,51 @@ import 'package:get/get.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 class EventScreen extends StatelessWidget {
   EventScreen({Key? key}) : super(key: key);
-  final item = Get.arguments;
+  final Map item = Get.arguments;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-
     return Scaffold(
       bottomNavigationBar: BottomPanel(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BrandButton(
-              text: 'Откликнуться',
-              type: 'primary',
-              width: 161.0,
-            ),
-            BrandButton(
-              text: 'Поделиться',
-              type: 'secondary',
-              width: 161.0,
-            )
-          ],
-        ),
+        height: item["author"] == 'HotLine' ? 146.0 : 83.0,
+        child: item["author"] == 'HotLine'
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BrandButton(
+                    text: 'Список желающих',
+                    type: 'primary',
+                    onPressed: () {
+                      var localItem = {...item};
+                      localItem["isOwner"] = true;
+                      Get.toNamed('/event/members', arguments: localItem);
+                    },
+                  ),
+                  BrandButton(
+                    text: 'Редактировать событие',
+                    type: 'secondary',
+                  )
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  BrandButton(
+                    text: 'Откликнуться',
+                    type: 'primary',
+                    width: 161.0,
+                  ),
+                  BrandButton(
+                    text: 'Поделиться',
+                    type: 'secondary',
+                    width: 161.0,
+                  )
+                ],
+              ),
       ),
       body: Column(
         children: [
@@ -117,7 +137,9 @@ class EventScreen extends StatelessWidget {
                                     color: Theme.of(context).accentColor),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  MapsLauncher.launchQuery(item["location"]);
+                                },
                                 child: Text(
                                   'Смотреть на карте',
                                   style: TextStyle(

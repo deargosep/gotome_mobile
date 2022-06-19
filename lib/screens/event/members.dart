@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/widgets/header.dart';
+import 'package:gotome/widgets/images/brand_icon.dart';
 
 class EventMembersScreen extends StatelessWidget {
   EventMembersScreen({Key? key}) : super(key: key);
@@ -16,7 +17,9 @@ class EventMembersScreen extends StatelessWidget {
       child: Column(
         children: [
           Header(
-            text: 'Список участников',
+            text: item["isChat"] == true
+                ? 'Участники чата'
+                : 'Список ${item["isOwner"] ? "желающих" : "участников"}',
           ),
           Expanded(
             child: ListView.builder(
@@ -27,21 +30,38 @@ class EventMembersScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // TODO: image (backend)
-                          Container(
-                            width: 56,
-                            height: 56,
-                            child: CircleAvatar(),
+                          Row(
+                            children: [
+                              Container(
+                                width: 56,
+                                height: 56,
+                                child: CircleAvatar(),
+                              ),
+                              SizedBox(
+                                width: 16,
+                              ),
+                              Text(
+                                item["members"][index]["username"],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          Text(
-                            item["members"][index]["username"],
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          )
+                          Builder(builder: (context) {
+                            if (!item["isOwner"]) return Container();
+                            return Row(
+                              children: [
+                                BrandIcon(icon: 'accept'),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                BrandIcon(icon: 'decline')
+                              ],
+                            );
+                          })
                         ],
                       ),
                     ),

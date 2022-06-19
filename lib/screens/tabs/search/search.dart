@@ -79,6 +79,7 @@ class Search extends StatelessWidget {
         {"username": "Pavkl"},
         {"username": "ForJik"},
       ],
+      "opened_from_profile": false
     };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
