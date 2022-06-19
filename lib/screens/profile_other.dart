@@ -237,7 +237,7 @@ class History extends StatelessWidget {
             physics: ScrollPhysics(),
             itemCount: 1,
             itemBuilder: (context, index) {
-              return EventCard();
+              return Opacity(opacity: 0.35, child: EventCard());
             }),
       ],
     );

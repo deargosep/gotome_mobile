@@ -30,7 +30,9 @@ class CustomScaffold extends StatelessWidget {
                     padding: padding ??
                         EdgeInsets.fromLTRB(
                             noHorPadding == true ? 0 : 20,
-                            noVerPadding == true ? 0 : 40,
+                            noVerPadding == true
+                                ? 0
+                                : 32 + MediaQuery.of(context).viewInsets.top,
                             20,
                             noVerPadding == true ? 0 : 20),
                     child: Align(
@@ -56,8 +58,8 @@ class CustomScaffold extends StatelessWidget {
                           noHorPadding == true ? 0 : 20,
                           noVerPadding == true
                               ? 0
-                              : 40 + MediaQuery.of(context).viewInsets.top,
-                          20,
+                              : 32 + MediaQuery.of(context).viewInsets.top,
+                          noHorPadding == true ? 0 : 20,
                           noVerPadding == true ? 0 : 20),
                   child: body)),
     );

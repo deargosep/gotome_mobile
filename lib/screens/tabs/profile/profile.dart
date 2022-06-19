@@ -139,14 +139,18 @@ class ListOfOptions extends StatelessWidget {
         ),
         Option(
           text: "Мои события",
-          onTap: () {},
+          onTap: () {
+            Get.toNamed('/profile/events', arguments: user);
+          },
         ),
         SizedBox(
           height: 16,
         ),
         Option(
           text: "Поддержка",
-          onTap: () {},
+          onTap: () {
+            Get.toNamed('/profile/support', arguments: user);
+          },
         ),
         SizedBox(
           height: 32,

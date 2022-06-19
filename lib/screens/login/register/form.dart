@@ -94,7 +94,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                   children: [
                     BrandCheckbox(
                       checked: checked,
-                      setState: check,
+                      onChanged: check,
                     ),
                     SizedBox(
                       width: 13,

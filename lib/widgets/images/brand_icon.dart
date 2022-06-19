@@ -8,12 +8,15 @@ class BrandIcon extends StatelessWidget {
       required this.icon,
       Color? this.color,
       this.width,
-      this.height})
+      this.height,
+      this.fit = BoxFit.contain
+      })
       : super(key: key);
   final icon;
   Color? color;
   double? width;
   double? height;
+  final fit;
   @override
   Widget build(BuildContext context) {
     if (icon == 'back_arrow')
@@ -23,6 +26,7 @@ class BrandIcon extends StatelessWidget {
         },
         child: SvgPicture.asset(
           'assets/icons/${icon}.svg',
+          fit: fit,
           color: color,
           height: height,
           width: width,

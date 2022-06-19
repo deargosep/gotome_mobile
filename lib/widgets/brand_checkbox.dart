@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gotome/widgets/images/brand_icon.dart';
 
 class BrandCheckbox extends StatefulWidget {
   BrandCheckbox(
       {Key? key,
       bool? this.valid,
-      VoidCallback? this.setState,
-      required bool this.checked})
+      VoidCallback? this.onChanged,
+      required bool this.checked,
+      this.noSquare})
       : super(key: key);
 
   bool? valid;
-  VoidCallback? setState;
+  VoidCallback? onChanged;
   bool checked;
+  final noSquare;
 
   @override
   State<BrandCheckbox> createState() => _BrandCheckboxState();
@@ -46,6 +48,7 @@ class _BrandCheckboxState extends State<BrandCheckbox>
         case false:
           return Color(0xFFEE3838);
         default:
+          if (pressing) return Color(0xFF777DFF);
           return Color(0xFF3840EE);
       }
     }
@@ -67,7 +70,7 @@ class _BrandCheckboxState extends State<BrandCheckbox>
         });
       },
       onTap: () {
-        widget.setState!();
+        widget.onChanged!();
       },
       child: Container(
           height: 22,
@@ -76,40 +79,40 @@ class _BrandCheckboxState extends State<BrandCheckbox>
               borderRadius: BorderRadius.all(Radius.circular(5)),
               border: Border.all(color: getColor(), width: 1.5)),
           child: Builder(builder: (context) {
-            if (widget.checked == false) {
-              if (pressing) {
-                return ScaleTransition(
-                    scale: _tween.animate(_animation),
-                    child: Container(
-                      margin: EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(2)),
-                        color: getColor(),
-                      ),
-                    ));
-              } else {
-                return Container(
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    color: getColor(),
-                  ),
-                );
-              }
-            }
+            // if (widget.checked == false) {
+            //   if (pressing) {
+            //     return ScaleTransition(
+            //         scale: _tween.animate(_animation),
+            //         child: Container(
+            //           margin: EdgeInsets.all(3),
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.all(Radius.circular(2)),
+            //             color: getColor(),
+            //           ),
+            //         ));
+            //   } else {
+            //     return Container(
+            //       margin: EdgeInsets.all(3),
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.all(Radius.circular(2)),
+            //         color: getColor(),
+            //       ),
+            //     );
+            //   }
+            // }
             if (widget.checked == true) {
               if (pressing) {
                 return ScaleTransition(
                   scale: _tween.animate(_animation),
-                  child: SvgPicture.asset(
-                    'assets/icons/check.svg',
+                  child: BrandIcon(
+                    icon: 'check',
                     color: getColor(),
                     fit: BoxFit.scaleDown,
                   ),
                 );
               } else {
-                return SvgPicture.asset(
-                  'assets/icons/check.svg',
+                return BrandIcon(
+                  icon: 'check',
                   color: getColor(),
                   fit: BoxFit.scaleDown,
                 );
