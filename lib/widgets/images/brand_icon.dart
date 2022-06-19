@@ -9,8 +9,7 @@ class BrandIcon extends StatelessWidget {
       Color? this.color,
       this.width,
       this.height,
-      this.fit = BoxFit.contain
-      })
+      this.fit})
       : super(key: key);
   final icon;
   Color? color;
@@ -26,7 +25,7 @@ class BrandIcon extends StatelessWidget {
         },
         child: SvgPicture.asset(
           'assets/icons/${icon}.svg',
-          fit: fit,
+          fit: fit ?? BoxFit.contain,
           color: color,
           height: height,
           width: width,

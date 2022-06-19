@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BottomPanel extends StatelessWidget {
-  const BottomPanel({Key? key, this.child, this.height}) : super(key: key);
+  const BottomPanel({Key? key, required this.child, this.height})
+      : super(key: key);
   final child;
   final height;
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gotome/screens/tabs/home/home.dart';
 import 'package:gotome/screens/tabs/profile/profile.dart';
 import 'package:gotome/screens/tabs/search/search.dart';
@@ -42,7 +43,7 @@ class _BarScreenState extends State<BarScreen> {
         bottomNavigationBar: BottomBar(
             onTap: _onItemTapped,
             onCenterTap: () {
-              print('lol');
+              Get.toNamed('/event/create/1');
             },
             currentIndex: _selectedIndex)
         // BottomNavigationBar(

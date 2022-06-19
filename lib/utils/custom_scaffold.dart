@@ -8,18 +8,27 @@ class CustomScaffold extends StatelessWidget {
       bool? this.noPadding,
       this.noHorPadding,
       this.noVerPadding,
-      EdgeInsets? this.padding})
+      this.noBottomPadding,
+      this.noTopPadding,
+      this.onlyTopPadding,
+      EdgeInsets? this.padding,
+      this.bottomNavigationBar})
       : super(key: key);
   final body;
   bool? scrollable = false;
   bool? noPadding = false;
   bool? noHorPadding = false;
   bool? noVerPadding = false;
+  bool? noBottomPadding = false;
+  bool? noTopPadding = false;
+  bool? onlyTopPadding = false;
   EdgeInsets? padding = EdgeInsets.zero;
+  final bottomNavigationBar;
   @override
   Widget build(BuildContext context) {
     if (scrollable == true) {
       return Scaffold(
+        bottomNavigationBar: bottomNavigationBar,
         body: LayoutBuilder(builder: (context, constraint) {
           return Center(
             child: noPadding == true
@@ -27,14 +36,26 @@ class CustomScaffold extends StatelessWidget {
                     child: body,
                   )
                 : Padding(
-                    padding: padding ??
-                        EdgeInsets.fromLTRB(
-                            noHorPadding == true ? 0 : 20,
-                            noVerPadding == true
-                                ? 0
-                                : 32 + MediaQuery.of(context).viewInsets.top,
-                            20,
-                            noVerPadding == true ? 0 : 20),
+                    padding: onlyTopPadding == true
+                        ? EdgeInsets.only(
+                            top: 32 + MediaQuery.of(context).viewInsets.top)
+                        : padding ??
+                            EdgeInsets.fromLTRB(
+                                noHorPadding == true ? 0 : 20,
+                                noVerPadding == true
+                                    ? 0
+                                    : noTopPadding == true
+                                        ? 0
+                                        : 32 +
+                                            MediaQuery.of(context)
+                                                .viewInsets
+                                                .top,
+                                20,
+                                noVerPadding == true
+                                    ? 0
+                                    : noBottomPadding == true
+                                        ? 0
+                                        : 20),
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: SingleChildScrollView(
@@ -53,14 +74,20 @@ class CustomScaffold extends StatelessWidget {
           child: noPadding == true
               ? body
               : Padding(
-                  padding: padding ??
+                  padding: onlyTopPadding == true ? EdgeInsets.only(top:32 + MediaQuery.of(context).viewInsets.top): padding ??
                       EdgeInsets.fromLTRB(
                           noHorPadding == true ? 0 : 20,
                           noVerPadding == true
                               ? 0
-                              : 32 + MediaQuery.of(context).viewInsets.top,
+                              : noTopPadding == true
+                                  ? 0
+                                  : 32 + MediaQuery.of(context).viewInsets.top,
                           noHorPadding == true ? 0 : 20,
-                          noVerPadding == true ? 0 : 20),
+                          noVerPadding == true
+                              ? 0
+                              : noBottomPadding == true
+                                  ? 0
+                                  : 20),
                   child: body)),
     );
   }

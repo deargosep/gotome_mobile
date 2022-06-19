@@ -3,6 +3,15 @@ import 'package:get/get.dart';
 import 'package:gotome/screens/auth_register.dart';
 import 'package:gotome/screens/event/event_screen.dart';
 import 'package:gotome/screens/event/members.dart';
+import 'package:gotome/screens/event_create/A.dart';
+import 'package:gotome/screens/event_create/B.dart';
+import 'package:gotome/screens/event_create/C.dart';
+import 'package:gotome/screens/event_create/D.dart';
+import 'package:gotome/screens/event_create/E.dart';
+import 'package:gotome/screens/event_create/F.dart';
+import 'package:gotome/screens/event_create/G.dart';
+import 'package:gotome/screens/event_create/select_date.dart';
+import 'package:gotome/screens/event_create/select_interval.dart';
 import 'package:gotome/screens/forgot_password/forgot_input_code.dart';
 import 'package:gotome/screens/forgot_password/forgot_input_email.dart';
 import 'package:gotome/screens/forgot_password/forgot_input_new_passwords.dart';
@@ -42,6 +51,19 @@ void main() {
       // TODO: nested screens in 'tabs' main screens
       GetPage(name: '/profile/events', page: () => ProfileEventsScreen()),
       GetPage(name: '/profile/info', page: () => ProfileInfoScreen()),
+      // EVENT CREATE series
+      GetPage(name: '/event/create/1', page: () => ACEScreen()),
+      GetPage(name: '/event/create/2', page: () => BCEScreen()),
+      GetPage(name: '/event/create/3', page: () => CCEScreen()),
+      GetPage(name: '/event/create/4', page: () => DCEScreen()),
+      GetPage(name: '/event/create/5', page: () => ECEScreen()),
+      GetPage(name: '/event/create/6', page: () => FCEScreen()),
+      GetPage(name: '/event/create/7', page: () => GCEScreen()),
+      GetPage(
+          name: '/event/create/select_date', page: () => SelectDateScreen()),
+      GetPage(
+          name: '/event/create/select_interval',
+          page: () => SelectIntervalScreen()),
     ],
     translations: Languages(),
     locale: Get.deviceLocale,
