@@ -97,7 +97,7 @@ class EventCard extends StatelessWidget {
                           Text(
                             usedItem["author"],
                             style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -139,7 +139,7 @@ class EventCard extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
-                            color: Theme.of(context).accentColor),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
                     SizedBox(
@@ -156,7 +156,7 @@ class EventCard extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         )
                       ],
                     ),
@@ -174,7 +174,7 @@ class EventCard extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         )
                       ],
                     ),

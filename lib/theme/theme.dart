@@ -5,14 +5,12 @@ class ThemeClass {
   static ThemeData lightTheme = ThemeData(
     fontFamily: 'TTNormsPro',
     primaryColor: Color(0xFF3840EE),
-    accentColor: Color(0xFF2C3C65),
     scaffoldBackgroundColor: Colors.white,
     inputDecorationTheme:
         const InputDecorationTheme(filled: true, fillColor: Color(0xFFF8F8F8)),
     appBarTheme: AppBarTheme(
-      backwardsCompatibility: false, // 1
       systemOverlayStyle: SystemUiOverlayStyle.dark, // 2
-    ),
+    ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF2C3C65)),
     // cardColor: Color(0xFFE4F3F7),
     // textTheme: TextTheme(caption: TextStyle(color: Colors.white)),
     // primaryIconTheme: IconThemeData(color: Colors.black, size: 24),

@@ -56,7 +56,7 @@ class _ACEScreenState extends State<ACEScreen> {
                   Text(
                     'Укажите категорию',
                     style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontSize: 16,
                         fontWeight: FontWeight.w500),
                   ),

@@ -36,7 +36,7 @@ class ProfileOtherScreen extends StatelessWidget {
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).accentColor),
+                  color: Theme.of(context).colorScheme.secondary),
             ),
             SizedBox(
               height: 24,
@@ -119,7 +119,7 @@ class Info extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
         SizedBox(
           height: 24,
@@ -136,7 +136,7 @@ class Info extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
         SizedBox(
           height: 24,
@@ -153,7 +153,7 @@ class Info extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
         SizedBox(
           height: 24,
@@ -170,7 +170,7 @@ class Info extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
         SizedBox(
           height: 24,
@@ -187,7 +187,7 @@ class Info extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
       ],
     );
@@ -236,7 +236,7 @@ class History extends StatelessWidget {
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
         SizedBox(
           height: 16,
@@ -256,7 +256,7 @@ class History extends StatelessWidget {
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).accentColor),
+              color: Theme.of(context).colorScheme.secondary),
         ),
         SizedBox(
           height: 16,

@@ -41,7 +41,7 @@ class _CCEScreenState extends State<CCEScreen> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
-                        color: Theme.of(context).accentColor),
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                   SizedBox(
                     height: 24,

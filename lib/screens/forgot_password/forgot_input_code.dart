@@ -42,7 +42,6 @@ class _InputCodeScreenState extends State<InputCodeScreen> {
           height: 24,
         ),
         Input(
-          controller: controller,
           onChanged: (value) {
             setState(() {
               text = value;

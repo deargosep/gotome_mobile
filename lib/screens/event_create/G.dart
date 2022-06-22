@@ -39,7 +39,7 @@ class _GCEScreenState extends State<GCEScreen> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
-                        color: Theme.of(context).accentColor),
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                   SizedBox(
                     height: 24,
@@ -65,7 +65,7 @@ class _GCEScreenState extends State<GCEScreen> {
                 //TODO: upload event
                 //
                 // ----
-                Get.offAllNamed('/', arguments: {"image": '', ...prevData});
+                Get.offAllNamed('/bar', arguments: {"image": '', ...prevData});
               },
             ))
           ],

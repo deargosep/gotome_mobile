@@ -30,7 +30,7 @@ class Header extends StatelessWidget {
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
-                color: Theme.of(context).accentColor),
+                color: Theme.of(context).colorScheme.secondary),
           )
         ],
       ),

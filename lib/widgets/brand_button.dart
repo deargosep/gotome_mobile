@@ -41,7 +41,7 @@ class _BrandButtonState extends State<BrandButton> {
           return Theme.of(context).primaryColor;
         case 'secondary':
           if (pressing) return Color(0xFF172548);
-          return Theme.of(context).accentColor;
+          return Theme.of(context).colorScheme.secondary;
         default:
           return Theme.of(context).primaryColor;
       }

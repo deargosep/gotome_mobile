@@ -87,7 +87,7 @@ class EventScreen extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                       ),
                       SizedBox(
@@ -108,7 +108,7 @@ class EventScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).accentColor),
+                                color: Theme.of(context).colorScheme.secondary),
                           )
                         ],
                       ),
@@ -134,7 +134,7 @@ class EventScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).accentColor),
+                                    color: Theme.of(context).colorScheme.secondary),
                               ),
                               InkWell(
                                 onTap: () {
@@ -170,7 +170,7 @@ class EventScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).accentColor),
+                                color: Theme.of(context).colorScheme.secondary),
                           )
                         ],
                       ),
@@ -236,7 +236,7 @@ class EventScreen extends StatelessWidget {
                                 Text(
                                   item["author"]!,
                                   style: TextStyle(
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context).colorScheme.secondary,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500),
                                 ),

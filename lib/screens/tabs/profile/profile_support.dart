@@ -46,7 +46,7 @@ class ProfileSupportScreen extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                         SizedBox(
                           height: 8,

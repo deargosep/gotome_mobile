@@ -59,7 +59,7 @@ class ChangeCityScreen extends StatelessWidget {
                 text: 'Далее',
                 type: 'primary',
                 onPressed: () {
-                  Get.offAllNamed('/');
+                  Get.offAllNamed('/bar');
                 },
               ),
             )
