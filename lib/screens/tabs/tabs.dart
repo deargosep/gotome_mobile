@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/screens/tabs/chat/chats.dart';
 import 'package:gotome/screens/tabs/home/home.dart';
 import 'package:gotome/screens/tabs/profile/profile.dart';
 import 'package:gotome/screens/tabs/search/search.dart';
@@ -16,13 +17,11 @@ class _BarScreenState extends State<BarScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     //Home
-    HomeTab(),
+    HomeScreen(),
     //Search
     SearchScreen(),
     //Chat
-    Text(
-      '2',
-    ),
+    ChatsScreen(),
     //Profile
     MyProfileScreen()
   ];

@@ -74,20 +74,24 @@ class CustomScaffold extends StatelessWidget {
           child: noPadding == true
               ? body
               : Padding(
-                  padding: onlyTopPadding == true ? EdgeInsets.only(top:32 + MediaQuery.of(context).viewInsets.top): padding ??
-                      EdgeInsets.fromLTRB(
-                          noHorPadding == true ? 0 : 20,
-                          noVerPadding == true
-                              ? 0
-                              : noTopPadding == true
+                  padding: onlyTopPadding == true
+                      ? EdgeInsets.only(
+                          top: 32 + MediaQuery.of(context).viewInsets.top)
+                      : padding ??
+                          EdgeInsets.fromLTRB(
+                              noHorPadding == true ? 0 : 20,
+                              noVerPadding == true
                                   ? 0
-                                  : 32 + MediaQuery.of(context).viewInsets.top,
-                          noHorPadding == true ? 0 : 20,
-                          noVerPadding == true
-                              ? 0
-                              : noBottomPadding == true
+                                  : noTopPadding == true
+                                      ? 0
+                                      : 32 +
+                                          MediaQuery.of(context).viewInsets.top,
+                              noHorPadding == true ? 0 : 20,
+                              noVerPadding == true
                                   ? 0
-                                  : 20),
+                                  : noBottomPadding == true
+                                      ? 0
+                                      : 20),
                   child: body)),
     );
   }

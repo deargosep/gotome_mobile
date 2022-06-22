@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 
-class EventMembersScreen extends StatelessWidget {
-  EventMembersScreen({Key? key}) : super(key: key);
+class MembersScreen extends StatelessWidget {
+  MembersScreen({Key? key}) : super(key: key);
   final item = Get.arguments;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    if (item == null) return Scaffold();
     return Scaffold(
         body: Padding(
       padding: EdgeInsets.fromLTRB(
