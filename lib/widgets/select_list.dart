@@ -23,7 +23,7 @@ class SelectList extends StatelessWidget {
           child: Row(
             children: [
               BrandSelect(
-                  setState: () {
+                  onChanged: () {
                     onChange(items.values.elementAt(0));
                   },
                   checked: value == items.values.elementAt(0)),
@@ -50,7 +50,7 @@ class SelectList extends StatelessWidget {
           child: Row(
             children: [
               BrandSelect(
-                  setState: () {
+                  onChanged: () {
                     onChange(items.values.elementAt(1));
                   },
                   checked: value == items.values.elementAt(1)),
@@ -77,7 +77,7 @@ class SelectList extends StatelessWidget {
           child: Row(
             children: [
               BrandSelect(
-                  setState: () {
+                  onChanged: () {
                     onChange(items.values.elementAt(2));
                   },
                   checked: value == items.values.elementAt(2)),

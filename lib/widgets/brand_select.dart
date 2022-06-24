@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class BrandSelect extends StatefulWidget {
-  BrandSelect({Key? key, required this.setState, required bool this.checked})
+  BrandSelect({Key? key, required this.onChanged, required bool this.checked})
       : super(key: key);
 
-  final setState;
+  final onChanged;
   bool checked;
 
   @override
@@ -60,9 +62,15 @@ class _BrandSelectState extends State<BrandSelect>
         });
       },
       onTap: () {
-        if (!widget.checked) {
-          widget.setState!();
-        }
+        setState(() {
+          pressing = true;
+        });
+        Timer(Duration(milliseconds: 50), () {
+          setState(() {
+            pressing = false;
+          });
+        });
+        widget.onChanged!();
       },
       child: Align(
         alignment: Alignment.centerLeft,

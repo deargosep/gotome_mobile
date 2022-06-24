@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:gotome/widgets/images/brand_icon.dart';
 
 class BrandCheckbox extends StatefulWidget {
   BrandCheckbox(
@@ -70,6 +71,14 @@ class _BrandCheckboxState extends State<BrandCheckbox>
         });
       },
       onTap: () {
+        setState(() {
+          pressing = true;
+        });
+        Timer(Duration(milliseconds: 50), () {
+          setState(() {
+            pressing = false;
+          });
+        });
         widget.onChanged!();
       },
       child: Container(
@@ -79,42 +88,47 @@ class _BrandCheckboxState extends State<BrandCheckbox>
               borderRadius: BorderRadius.all(Radius.circular(5)),
               border: Border.all(color: getColor(), width: 1.5)),
           child: Builder(builder: (context) {
-            // if (widget.checked == false) {
-            //   if (pressing) {
-            //     return ScaleTransition(
-            //         scale: _tween.animate(_animation),
-            //         child: Container(
-            //           margin: EdgeInsets.all(3),
-            //           decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.all(Radius.circular(2)),
-            //             color: getColor(),
-            //           ),
-            //         ));
-            //   } else {
-            //     return Container(
-            //       margin: EdgeInsets.all(3),
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.all(Radius.circular(2)),
-            //         color: getColor(),
-            //       ),
-            //     );
-            //   }
-            // }
+            if (widget.checked == false) {
+              if (pressing) {
+                return ScaleTransition(
+                    scale: _tween.animate(_animation),
+                    child: Container(
+                      margin: EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(2)),
+                        color: getColor(),
+                      ),
+                    ));
+              } else {
+                return Container();
+                return Container(
+                  margin: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                    color: getColor(),
+                  ),
+                );
+              }
+            }
             if (widget.checked == true) {
               if (pressing) {
                 return ScaleTransition(
                   scale: _tween.animate(_animation),
-                  child: BrandIcon(
-                    icon: 'check',
-                    color: getColor(),
-                    fit: BoxFit.scaleDown,
+                  child: Container(
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(2)),
+                      color: getColor(),
+                    ),
                   ),
                 );
               } else {
-                return BrandIcon(
-                  icon: 'check',
-                  color: getColor(),
-                  fit: BoxFit.scaleDown,
+                return Container(
+                  margin: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                    color: getColor(),
+                  ),
                 );
               }
             }
