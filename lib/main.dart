@@ -34,8 +34,8 @@ import 'theme/theme.dart';
 void main() {
   runApp(GetMaterialApp(
     getPages: [
-      GetPage(name: '/bar', page: () => BarScreen()),
       GetPage(name: '/', page: () => AuthRegisterScreen()),
+      GetPage(name: '/bar', page: () => BarScreen()),
       GetPage(name: '/auth', page: () => AuthScreen()),
       GetPage(name: '/auth/forgot/1', page: () => InputEmailScreen()),
       GetPage(name: '/auth/forgot/2', page: () => InputCodeScreen()),

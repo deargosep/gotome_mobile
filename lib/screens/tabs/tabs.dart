@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/tabs/chat/chats.dart';
 import 'package:gotome/screens/tabs/home/home.dart';
@@ -34,6 +37,10 @@ class _BarScreenState extends State<BarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarIconBrightness: Platform.operatingSystem == 'ios'
+            ? Brightness.dark
+            : Brightness.light));
     return Scaffold(
         // backgroundColor: Color(0xFFEAEAEA),
         body: Center(

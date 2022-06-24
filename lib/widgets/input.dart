@@ -12,7 +12,8 @@ class Input extends StatelessWidget {
       String? this.icon,
       this.borderRadius,
       this.width,
-      this.height})
+      this.height,
+      this.onFieldSubmitted})
       : super(key: key);
 
   String? label;
@@ -24,6 +25,7 @@ class Input extends StatelessWidget {
   final borderRadius;
   final width;
   final height;
+  final onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,9 @@ class Input extends StatelessWidget {
       height: height,
       width: width,
       child: TextFormField(
+        onFieldSubmitted: (text) {
+          onFieldSubmitted(text);
+        },
         minLines: expanded == true ? 3 : 1,
         maxLines: expanded == true ? 3 : 1,
         controller: controller,

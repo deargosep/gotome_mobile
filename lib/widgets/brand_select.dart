@@ -65,7 +65,7 @@ class _BrandSelectState extends State<BrandSelect>
         setState(() {
           pressing = true;
         });
-        Timer(Duration(milliseconds: 50), () {
+        Timer(Duration(milliseconds: 10), () {
           setState(() {
             pressing = false;
           });

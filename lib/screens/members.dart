@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
@@ -9,7 +8,7 @@ class MembersScreen extends StatelessWidget {
   final item = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     if (item == null) return Scaffold();
     return Scaffold(
         body: Padding(
@@ -24,7 +23,7 @@ class MembersScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: item["members"].length,
+              itemCount: item["members"]?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [

@@ -114,7 +114,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
             ),
             BrandButton(
               onPressed: () {
-                Get.offAllNamed('/');
+                if (checked) Get.offAllNamed('/');
               },
               text: 'Продолжить',
               type: 'primary',

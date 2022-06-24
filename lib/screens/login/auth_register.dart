@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/brand_button.dart';
@@ -9,6 +12,10 @@ class AuthRegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarIconBrightness: Platform.operatingSystem == 'ios'
+            ? Brightness.dark
+            : Brightness.light));
     return CustomScaffold(
         body: Column(
       children: [

@@ -5,11 +5,81 @@ import 'package:gotome/widgets/images/brand_icon.dart';
 
 import '../../../widgets/input.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  ScrollController _scrollController = ScrollController();
+
+  _scrollToBottom() {
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
+  var currentUser = "HotLine2";
+  var messages = [
+    {
+      "text": 'Как у всех дела?',
+      "user": "HotLine",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+    {
+      "text": 'Все гуд, спасибо!',
+      "user": "HotLine2",
+    },
+  ];
+  @override
   Widget build(BuildContext context) {
+    void onChangedSM(newMessages) {
+      setState(() {
+        messages = newMessages;
+      });
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+
     return Scaffold(
         body: Column(
       children: [
@@ -17,50 +87,60 @@ class ChatScreen extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView(
-              reverse: true,
-              children: [
-                Message(
-                  isMine: true,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Message(
-                  isMine: false,
-                ),
-              ],
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: messages.length,
+                reverse: true,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  int reverseIndex = messages.length - 1 - index;
+                  return Column(
+                    children: [
+                      Message(item: messages[reverseIndex]),
+                      SizedBox(
+                        height: 16,
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),
-        SizedBox(
-          height: 16,
-        ),
-        BottomPanel(height: 83.0, child: SendMessage())
+        BottomPanel(
+            height: 83.0,
+            child: SendMessage(
+              messages: messages,
+              onChanged: onChangedSM,
+            ))
       ],
     ));
   }
 }
 
 class Message extends StatelessWidget {
-  const Message({Key? key, this.isMine = false}) : super(key: key);
-  final isMine;
+  const Message({Key? key, required this.item}) : super(key: key);
+  final Map item;
   @override
   Widget build(BuildContext context) {
-    final text = isMine ? 'Все гуд, спасибо!' : 'Как у всех дела?';
+    bool isMine() {
+      return item["user"] == "HotLine2";
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        !isMine ? Container() : Spacer(),
-        isMine
+        !isMine() ? Container() : Spacer(),
+        isMine()
             ? Container()
             : Container(
                 height: 38,
                 width: 38,
                 child: CircleAvatar(),
               ),
-        isMine
+        isMine()
             ? Container()
             : SizedBox(
                 width: 12,
@@ -68,13 +148,13 @@ class Message extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-              color: isMine ? Color(0xFFE5DCFF) : Color(0xFFEFEFEF),
+              color: isMine() ? Color(0xFFE5DCFF) : Color(0xFFEFEFEF),
               borderRadius: BorderRadius.all(Radius.circular(8))),
           child: Column(
             crossAxisAlignment:
-                isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                isMine() ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              isMine
+              isMine()
                   ? Container()
                   : Text(
                       'HotLine',
@@ -83,13 +163,13 @@ class Message extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: Theme.of(context).colorScheme.secondary),
                     ),
-              isMine
+              isMine()
                   ? Container()
                   : SizedBox(
                       height: 8,
                     ),
               Text(
-                text,
+                item["text"],
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Theme.of(context).colorScheme.secondary),
@@ -104,12 +184,12 @@ class Message extends StatelessWidget {
             ],
           ),
         ),
-        !isMine
+        !isMine()
             ? Container()
             : SizedBox(
                 width: 12,
               ),
-        !isMine
+        !isMine()
             ? Container()
             : Container(
                 height: 38,
@@ -122,10 +202,22 @@ class Message extends StatelessWidget {
 }
 
 class SendMessage extends StatelessWidget {
-  const SendMessage({Key? key}) : super(key: key);
-
+  const SendMessage({Key? key, this.onChanged, this.messages})
+      : super(key: key);
+  final onChanged;
+  final messages;
   @override
   Widget build(BuildContext context) {
+    void sendMessage(String text) {
+      print(text);
+      // TODO: use actual user
+      var localMessages = <Map<String, String>>[
+        ...messages,
+        {"text": text, "user": "HotLine2"}
+      ];
+      onChanged(localMessages);
+    }
+
     return Row(
       children: [
         BrandIcon(icon: 'add', height: 25, width: 25, color: Color(0xFF9FA6BA)),
@@ -134,6 +226,7 @@ class SendMessage extends StatelessWidget {
         ),
         Expanded(
           child: Input(
+            onFieldSubmitted: sendMessage,
             height: 40.0,
             borderRadius: BorderRadius.all(Radius.circular(20)),
             label: 'Введите сообщение',
@@ -149,36 +242,37 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed('/members', arguments: {
-          "isChat": true,
-        });
-      },
-      child: Container(
-          height: 76 + MediaQuery.of(context).viewPadding.top,
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(
-              16, 10 + MediaQuery.of(context).viewPadding.top, 16, 0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(25),
-                  bottomRight: Radius.circular(25)),
-              color: Theme.of(context).primaryColor),
-          child: Row(
-            children: [
-              BrandIcon(
-                icon: 'back_arrow',
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 26,
-              ),
-              Container(height: 38, width: 38, child: CircleAvatar()),
-              SizedBox(
-                width: 16,
-              ),
-              Column(
+    return Container(
+        height: 76 + MediaQuery.of(context).viewPadding.top,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(
+            16, 10 + MediaQuery.of(context).viewPadding.top, 16, 0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25)),
+            color: Theme.of(context).primaryColor),
+        child: Row(
+          children: [
+            BrandIcon(
+              icon: 'back_arrow',
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 26,
+            ),
+            Container(height: 38, width: 38, child: CircleAvatar()),
+            SizedBox(
+              width: 16,
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed('/members', arguments: {
+                  // "id":asdsad,
+                  "isChat": true,
+                });
+              },
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -210,8 +304,8 @@ class _Header extends StatelessWidget {
                   )
                 ],
               ),
-            ],
-          )),
-    );
+            ),
+          ],
+        ));
   }
 }

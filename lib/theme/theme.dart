@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ThemeClass {
   static ThemeData lightTheme = ThemeData(
@@ -8,9 +7,9 @@ class ThemeClass {
     scaffoldBackgroundColor: Colors.white,
     inputDecorationTheme:
         const InputDecorationTheme(filled: true, fillColor: Color(0xFFF8F8F8)),
-    appBarTheme: AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle.dark, // 2
-    ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF2C3C65)),
+    // appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+    colorScheme:
+        ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF2C3C65)),
     // cardColor: Color(0xFFE4F3F7),
     // textTheme: TextTheme(caption: TextStyle(color: Colors.white)),
     // primaryIconTheme: IconThemeData(color: Colors.black, size: 24),

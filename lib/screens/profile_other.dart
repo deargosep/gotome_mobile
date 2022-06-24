@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/event_card.dart';
@@ -12,7 +11,7 @@ class ProfileOtherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return CustomScaffold(
       padding: EdgeInsets.fromLTRB(
           20, 40 + MediaQuery.of(context).viewInsets.top, 20, 0),

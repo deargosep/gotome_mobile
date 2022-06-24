@@ -74,7 +74,7 @@ class _BrandCheckboxState extends State<BrandCheckbox>
         setState(() {
           pressing = true;
         });
-        Timer(Duration(milliseconds: 50), () {
+        Timer(Duration(milliseconds: 10), () {
           setState(() {
             pressing = false;
           });
@@ -101,13 +101,6 @@ class _BrandCheckboxState extends State<BrandCheckbox>
                     ));
               } else {
                 return Container();
-                return Container(
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    color: getColor(),
-                  ),
-                );
               }
             }
             if (widget.checked == true) {
