@@ -67,18 +67,25 @@ class _InputCodeScreenState extends State<InputCodeScreen> {
   }
 }
 
-class Timer extends StatelessWidget {
+class Timer extends StatefulWidget {
+  @override
+  State<Timer> createState() => _TimerState();
+}
+
+class _TimerState extends State<Timer> {
   CountdownController controller = CountdownController(autoStart: true);
+
   @override
   Widget build(BuildContext context) {
     return Countdown(
-      seconds: 5,
+      seconds: 60,
       controller: controller,
       build: (BuildContext context, double time) {
         if (time.seconds.inSeconds == 0)
           return InkWell(
             onTap: () {
               controller.restart();
+              controller.start();
             },
             child: Text(
               'Запросить код повторно',
