@@ -12,6 +12,8 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollView = ScrollController();
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -19,6 +21,8 @@ class SearchScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(
               0, 40 + MediaQuery.of(context).viewInsets.top, 0, 0),
           child: NestedScrollView(
+              physics: ScrollPhysics(),
+              controller: scrollView,
               headerSliverBuilder: (context, value) {
                 return [
                   SliverToBoxAdapter(
@@ -52,7 +56,9 @@ class SearchScreen extends StatelessWidget {
                   )
                 ];
               },
-              body: TabBarView(children: [Search(), OnMap()])),
+              body: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [Search(), OnMap()])),
         ),
       ),
     );
@@ -165,7 +171,7 @@ class OnMap extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        GeoMap()
+        Expanded(child: GeoMap())
       ],
     );
   }
