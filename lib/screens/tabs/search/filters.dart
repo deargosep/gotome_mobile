@@ -16,6 +16,8 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
+  TextEditingController date = TextEditingController();
+
   var checkedGender = 'none';
   void selectGender(gender) {
     setState(() {
@@ -80,6 +82,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   Input(
                     label: 'Дата проведения',
                     icon: 'calendar',
+                    controller: date,
+                    onTapCalendar: (text) {
+                      date.text = text;
+                    },
                   ),
                   SizedBox(
                     height: 32,

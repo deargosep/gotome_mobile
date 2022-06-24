@@ -9,15 +9,38 @@ class BrandIcon extends StatelessWidget {
       Color? this.color,
       this.width,
       this.height,
-      this.fit})
+      this.fit,
+      this.onTapCalendar})
       : super(key: key);
   final icon;
   Color? color;
   double? width;
   double? height;
   final fit;
+  final onTapCalendar;
   @override
   Widget build(BuildContext context) {
+    DateTime selectedDate = DateTime.now();
+    if (icon == 'calendar')
+      return InkWell(
+        onTap: () async {
+          final DateTime? picked = await showDatePicker(
+              context: context,
+              initialDate: selectedDate,
+              firstDate: DateTime(1950, 1),
+              lastDate: DateTime(2045));
+          if (picked != null && picked != selectedDate) {
+            onTapCalendar("${picked.day}.${picked.month}.${picked.year}");
+          }
+        },
+        child: SvgPicture.asset(
+          'assets/icons/${icon}.svg',
+          fit: fit ?? BoxFit.contain,
+          color: color,
+          height: height,
+          width: width,
+        ),
+      );
     if (icon == 'back_arrow')
       return InkWell(
         onTap: () {

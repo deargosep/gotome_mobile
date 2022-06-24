@@ -13,7 +13,8 @@ class Input extends StatelessWidget {
       this.borderRadius,
       this.width,
       this.height,
-      this.onFieldSubmitted})
+      this.onFieldSubmitted,
+      this.onTapCalendar})
       : super(key: key);
 
   String? label;
@@ -26,6 +27,7 @@ class Input extends StatelessWidget {
   final width;
   final height;
   final onFieldSubmitted;
+  final onTapCalendar;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +42,15 @@ class Input extends StatelessWidget {
         maxLines: expanded == true ? 3 : 1,
         controller: controller,
         onChanged: onChanged,
-        initialValue: defaultText,
+        // initialValue: defaultText ?? '',
         decoration: InputDecoration(
             contentPadding: height != null
                 ? EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0)
                 : null,
             suffixIcon: icon != null
-                ? Transform.scale(scale: 0.45, child: BrandIcon(icon: icon))
+                ? Transform.scale(
+                    scale: 0.45,
+                    child: BrandIcon(icon: icon, onTapCalendar: onTapCalendar))
                 : null,
             alignLabelWithHint: true,
             labelText: label ?? '',

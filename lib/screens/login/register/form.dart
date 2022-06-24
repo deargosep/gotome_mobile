@@ -15,6 +15,7 @@ class RegisterFormScreen extends StatefulWidget {
 
 class _RegisterFormScreenState extends State<RegisterFormScreen> {
   bool checked = false;
+  TextEditingController birthday = TextEditingController();
   @override
   Widget build(BuildContext context) {
     void check() {
@@ -68,6 +69,10 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                 Input(
                   icon: 'calendar',
                   label: 'Дата рождения',
+                  controller: birthday,
+                  onTapCalendar: (text) {
+                    birthday.text = text;
+                  },
                 ),
                 SizedBox(
                   height: 16,

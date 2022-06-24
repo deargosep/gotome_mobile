@@ -6,9 +6,16 @@ import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/input.dart';
 
-class ProfileEditScreen extends StatelessWidget {
+class ProfileEditScreen extends StatefulWidget {
   const ProfileEditScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
+}
+
+class _ProfileEditScreenState extends State<ProfileEditScreen> {
+  final TextEditingController birthday =
+      TextEditingController(text: Get.arguments["birthday"]);
   @override
   Widget build(BuildContext context) {
     final user = Get.arguments;
@@ -92,6 +99,10 @@ class ProfileEditScreen extends StatelessWidget {
                 ),
                 Input(
                   icon: 'calendar',
+                  controller: birthday,
+                  onTapCalendar: (value) {
+                    birthday.text = value;
+                  },
                   defaultText: user["birthday"],
                 ),
                 SizedBox(
@@ -118,7 +129,9 @@ class ProfileEditScreen extends StatelessWidget {
           ),
           BottomPanel(
             child: BrandButton(
-              onPressed: (){Get.back();},
+                onPressed: () {
+                  Get.back();
+                },
                 text: 'Применить'),
           )
         ],

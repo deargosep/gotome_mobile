@@ -15,8 +15,8 @@ class SelectIntervalScreen extends StatefulWidget {
 
 class _SelectIntervalScreenState extends State<SelectIntervalScreen> {
   final prevData = Get.arguments;
-  var intervalStart = '';
-  var intervalEnd = '';
+  final TextEditingController intervalStart = TextEditingController();
+  final TextEditingController intervalEnd = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,9 @@ class _SelectIntervalScreenState extends State<SelectIntervalScreen> {
                   Input(
                     icon: 'calendar',
                     label: 'Начало проведения',
-                    onChanged: (text) {
-                      setState(() {
-                        intervalStart = text;
-                      });
+                    controller: intervalStart,
+                    onTapCalendar: (text) {
+                      intervalStart.text = text;
                     },
                   ),
                   SizedBox(
@@ -61,10 +60,9 @@ class _SelectIntervalScreenState extends State<SelectIntervalScreen> {
                   Input(
                     icon: 'calendar',
                     label: 'Окончание проведения',
-                    onChanged: (text) {
-                      setState(() {
-                        intervalEnd = text;
-                      });
+                    controller: intervalEnd,
+                    onTapCalendar: (text) {
+                      intervalEnd.text = text;
                     },
                   ),
                 ],
@@ -77,8 +75,8 @@ class _SelectIntervalScreenState extends State<SelectIntervalScreen> {
               onPressed: () {
                 Get.toNamed('/event/create/5', arguments: {
                   "selectedDateInterval": {
-                    "intervalStart": intervalStart,
-                    "intervalEnd": intervalEnd
+                    "intervalStart": intervalStart.text,
+                    "intervalEnd": intervalEnd.text
                   },
                   ...prevData
                 });

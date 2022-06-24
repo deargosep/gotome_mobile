@@ -15,8 +15,7 @@ class SelectDateScreen extends StatefulWidget {
 
 class _SelectDateScreenState extends State<SelectDateScreen> {
   final prevData = Get.arguments;
-  var date = '';
-  TextEditingController controller = TextEditingController();
+  TextEditingController date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +48,9 @@ class _SelectDateScreenState extends State<SelectDateScreen> {
                   Input(
                     icon: 'calendar',
                     label: 'Дата',
-                    onChanged: (text) {
-                      setState(() {
-                        date = text;
-                      });
+                    controller: date,
+                    onTapCalendar: (text) {
+                      date.text = text;
                     },
                   ),
                 ],
@@ -64,7 +62,7 @@ class _SelectDateScreenState extends State<SelectDateScreen> {
               text: 'Далее',
               onPressed: () {
                 Get.toNamed('/event/create/5',
-                    arguments: {"selectedDatePrecise": date, ...prevData});
+                    arguments: {"selectedDatePrecise": date.text, ...prevData});
               },
             ))
           ],
