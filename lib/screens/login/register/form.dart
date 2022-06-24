@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/brand_checkbox.dart';
@@ -112,7 +113,9 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
               ],
             ),
             BrandButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.offAllNamed('/');
+              },
               text: 'Продолжить',
               type: 'primary',
             ),

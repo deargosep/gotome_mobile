@@ -43,29 +43,24 @@ class SelectList extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        GestureDetector(
-          onTap: () {
-            onChange(items.values.elementAt(1));
-          },
-          child: Row(
-            children: [
-              BrandSelect(
-                  onChanged: () {
-                    onChange(items.values.elementAt(1));
-                  },
-                  checked: value == items.values.elementAt(1)),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                items.keys.elementAt(1),
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF6A7592),
-                    fontSize: 14),
-              )
-            ],
-          ),
+        Row(
+          children: [
+            BrandSelect(
+                onChanged: () {
+                  onChange(items.values.elementAt(1));
+                },
+                checked: value == items.values.elementAt(1)),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              items.keys.elementAt(1),
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF6A7592),
+                  fontSize: 14),
+            )
+          ],
         ),
         SizedBox(
           height: 16,

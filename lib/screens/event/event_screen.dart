@@ -25,7 +25,7 @@ class EventScreen extends StatelessWidget {
                     onPressed: () {
                       var localItem = {...item};
                       localItem["isOwner"] = true;
-                      Get.toNamed('/event/members', arguments: localItem);
+                      Get.toNamed('/members', arguments: localItem);
                     },
                   ),
                   BrandButton(
@@ -134,7 +134,9 @@ class EventScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).colorScheme.secondary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
                               ),
                               InkWell(
                                 onTap: () {
@@ -236,7 +238,9 @@ class EventScreen extends StatelessWidget {
                                 Text(
                                   item["author"]!,
                                   style: TextStyle(
-                                      color: Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -299,7 +303,7 @@ class EventScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.toNamed('/event/members', arguments: item);
+                              Get.toNamed('/members', arguments: item);
                             },
                             child: Row(
                               children: [

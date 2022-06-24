@@ -13,28 +13,23 @@ class BrandCheckboxListTile extends StatelessWidget {
   final onChanged;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onChanged(!value);
-      },
-      child: Row(
-        children: [
-          BrandCheckbox(
-            checked: value,
-            onChanged: () {
-              onChanged(!value);
-            },
-          ),
-          SizedBox(
-            width: 13,
-          ),
-          Text(
-            title,
-            style: TextStyle(
-                color: Color(0xFF6A7592), fontWeight: FontWeight.w500),
-          )
-        ],
-      ),
+    return Row(
+      children: [
+        BrandCheckbox(
+          checked: value,
+          onChanged: () {
+            onChanged(!value);
+          },
+        ),
+        SizedBox(
+          width: 13,
+        ),
+        Text(
+          title,
+          style:
+              TextStyle(color: Color(0xFF6A7592), fontWeight: FontWeight.w500),
+        )
+      ],
     );
   }
 }
