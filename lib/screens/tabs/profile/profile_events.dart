@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/profile_other.dart';
-import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/header.dart';
 
 class ProfileEventsScreen extends StatelessWidget {
@@ -9,8 +8,7 @@ class ProfileEventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = Get.arguments;
-    return CustomScaffold(
-      noPadding: true,
+    return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,7 +64,7 @@ class ProfileEventsScreen extends StatelessWidget {
               ],
             ),
           ),
-          Divider(),
+          Divider(thickness: 2, color: Color(0xFFF8F8F8),),
           SizedBox(
             height: 32,
           ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gotome/screens/profile_other.dart';
-import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/header.dart';
-import 'package:gotome/widgets/map.dart';
 import 'package:gotome/widgets/search_input.dart';
-import 'package:gotome/widgets/top_tab.dart';
+
+import '../../../widgets/map.dart';
+import '../../../widgets/top_tab.dart';
+import '../../profile_other.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -14,40 +14,45 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: CustomScaffold(
-        padding: EdgeInsets.fromLTRB(
-            0, 40 + MediaQuery.of(context).viewInsets.top, 0, 0),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Header(
-                    withPadding: false,
-                    text: 'Поиск',
-                  ),
-                  SizedBox(
-                    height: 57,
-                  ),
-                  TabsSwitch(
-                    children: [
-                      TopTab(
-                        text: 'Списком',
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(
+              0, 40 + MediaQuery.of(context).viewInsets.top, 0, 0),
+          child: NestedScrollView(
+              headerSliverBuilder: (context, value) {
+                return [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          Header(
+                            withPadding: false,
+                            text: 'Поиск',
+                          ),
+                          SizedBox(
+                            height: 57,
+                          ),
+                          TabsSwitch(
+                            children: [
+                              TopTab(
+                                text: 'Списком',
+                              ),
+                              TopTab(
+                                text: 'На карте',
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 24,
+                          )
+                        ],
                       ),
-                      TopTab(
-                        text: 'На карте',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 35,
-            ),
-            Expanded(child: TabBarView(children: [Search(), OnMap()]))
-          ],
+                    ),
+                  )
+                ];
+              },
+              body: TabBarView(children: [Search(), OnMap()])),
         ),
       ),
     );
@@ -87,6 +92,7 @@ class Search extends StatelessWidget {
       ],
       "opened_from_profile": false
     };
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -97,17 +103,47 @@ class Search extends StatelessWidget {
             height: 24,
           ),
           Expanded(
-            child: ListView.builder(itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  EventCard(item: item),
-                  SizedBox(
-                    height: 24,
-                  )
-                ],
-              );
-            }),
+            child: ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                EventCard(item: item),
+                SizedBox(
+                  height: 24,
+                ),
+                EventCard(item: item),
+                SizedBox(
+                  height: 24,
+                ),
+                EventCard(item: item),
+                SizedBox(
+                  height: 24,
+                ),
+                EventCard(item: item),
+                SizedBox(
+                  height: 24,
+                ),
+                EventCard(item: item),
+                SizedBox(
+                  height: 24,
+                ),
+              ],
+            ),
           )
+          // ListView.builder(
+          //     // shrinkWrap: true,
+          //     physics: NeverScrollableScrollPhysics(),
+          //     itemCount: 2,
+          //     itemBuilder: (context, index) {
+          //       return Column(
+          //         children: [
+          //           EventCard(item: item),
+          //           SizedBox(
+          //             height: 24,
+          //           )
+          //         ],
+          //       );
+          //     })
         ],
       ),
     );
@@ -129,7 +165,7 @@ class OnMap extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        Flexible(child: GeoMap())
+        GeoMap()
       ],
     );
   }
