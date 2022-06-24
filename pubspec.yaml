@@ -42,6 +42,7 @@ dependencies:
   maps_launcher: ^2.0.1
   latlong2: ^0.8.1
   flutter_map: ^1.1.0
+  timer_count_down: ^2.2.1
 
 dev_dependencies:
   icons_launcher: ^1.1.9

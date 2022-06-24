@@ -5,7 +5,8 @@ import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:gotome/widgets/images/logo.dart';
 import 'package:gotome/widgets/input.dart';
-import 'package:timer_builder/timer_builder.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 class InputCodeScreen extends StatefulWidget {
   InputCodeScreen({Key? key}) : super(key: key);
@@ -67,34 +68,33 @@ class _InputCodeScreenState extends State<InputCodeScreen> {
 }
 
 class Timer extends StatelessWidget {
+  CountdownController controller = CountdownController(autoStart: true);
   @override
   Widget build(BuildContext context) {
-    int seconds = 61;
-    void requestCode() {
-      seconds = 61;
-    }
-
-    return TimerBuilder.periodic(Duration(seconds: 1), //updates every second
-        builder: (context) {
-      if (seconds > 0) {
-        seconds--;
-      }
-      if (seconds == 0)
-        return InkWell(
-          onTap: requestCode,
+    return Countdown(
+      seconds: 5,
+      controller: controller,
+      build: (BuildContext context, double time) {
+        if (time.seconds.inSeconds == 0)
+          return InkWell(
+            onTap: () {
+              controller.restart();
+            },
+            child: Text(
+              'Запросить код повторно',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+          );
+        return Container(
+          width: 229,
           child: Text(
-            'Запросить код повторно',
-            style: TextStyle(fontWeight: FontWeight.w500),
+            'Запросить код повторно через ${time.seconds.inSeconds} сек.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
           ),
         );
-      return Container(
-        width: 229,
-        child: Text(
-          'Запросить код повторно через ${seconds} сек.',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-        ),
-      );
-    });
+      },
+      interval: Duration(milliseconds: 100),
+    );
   }
 }
