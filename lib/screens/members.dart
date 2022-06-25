@@ -19,7 +19,7 @@ class MembersScreen extends StatelessWidget {
           Header(
             text: item["isChat"] == true
                 ? 'Участники чата'
-                : 'Список ${item["isOwner"] ? "желающих" : "участников"}',
+                : 'Список ${item["isOwner"] != null ? "желающих" : "участников"}',
           ),
           Expanded(
             child: ListView.builder(
@@ -51,7 +51,8 @@ class MembersScreen extends StatelessWidget {
                             ],
                           ),
                           Builder(builder: (context) {
-                            if (!item["isOwner"]) return Container();
+                            if (item["isOwner"] != null && !item["isOwner"])
+                              return Container();
                             return Row(
                               children: [
                                 BrandIcon(icon: 'accept'),

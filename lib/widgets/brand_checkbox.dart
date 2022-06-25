@@ -74,7 +74,7 @@ class _BrandCheckboxState extends State<BrandCheckbox>
         setState(() {
           pressing = true;
         });
-        Timer(Duration(milliseconds: 10), () {
+        Timer(Duration(milliseconds: 50), () {
           setState(() {
             pressing = false;
           });

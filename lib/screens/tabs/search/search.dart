@@ -1,19 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
+import 'package:gotome/widgets/tabbar_switch.dart';
 
 import '../../../widgets/map.dart';
 import '../../../widgets/top_tab.dart';
-import '../../profile_other.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen>
+    with TickerProviderStateMixin {
+  late TabController controller;
+  var currentIndex = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(
+        vsync: this,
+        length: 2,
+        initialIndex: Get.arguments != null && Get.arguments["initialIndex"]
+            ? Get.arguments["initialIndex"]
+            : 0);
+    controller.addListener(() {
+      print(controller.index);
+      setState(() {
+        currentIndex = controller.index;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     ScrollController scrollView = ScrollController();
-
+    final arguments = Get.arguments;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -21,7 +54,7 @@ class SearchScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(
               0, 40 + MediaQuery.of(context).viewInsets.top, 0, 0),
           child: NestedScrollView(
-              physics: ScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               controller: scrollView,
               headerSliverBuilder: (context, value) {
                 return [
@@ -38,6 +71,10 @@ class SearchScreen extends StatelessWidget {
                             height: 57,
                           ),
                           TabsSwitch(
+                            controller: controller,
+                            initialIndex: arguments != null
+                                ? arguments["initialIndex"]
+                                : null,
                             children: [
                               TopTab(
                                 text: 'Списком',
@@ -57,6 +94,7 @@ class SearchScreen extends StatelessWidget {
                 ];
               },
               body: TabBarView(
+                  controller: controller,
                   physics: NeverScrollableScrollPhysics(),
                   children: [Search(), OnMap()])),
         ),
@@ -171,7 +209,7 @@ class OnMap extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        Expanded(child: GeoMap())
+        SizedBox(height:MediaQuery.of(context).size.height, child:GeoMap())
       ],
     );
   }

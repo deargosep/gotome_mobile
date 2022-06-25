@@ -5,9 +5,30 @@ import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:gotome/widgets/top_tab.dart';
 
-class ProfileOtherScreen extends StatelessWidget {
+import '../widgets/tabbar_switch.dart';
+
+class ProfileOtherScreen extends StatefulWidget {
   ProfileOtherScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileOtherScreen> createState() => _ProfileOtherScreenState();
+}
+
+class _ProfileOtherScreenState extends State<ProfileOtherScreen>
+    with TickerProviderStateMixin {
   final author = Get.arguments;
+  late TabController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +62,7 @@ class ProfileOtherScreen extends StatelessWidget {
               height: 24,
             ),
             TabsSwitch(
+              controller: controller,
               children: [
                 TopTab(
                   text: 'Информация',
@@ -63,37 +85,6 @@ class ProfileOtherScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class TabsSwitch extends StatefulWidget {
-  const TabsSwitch({Key? key, this.labels, this.children}) : super(key: key);
-  final labels;
-  final children;
-  @override
-  State<TabsSwitch> createState() => _TabsSwitchState();
-}
-
-class _TabsSwitchState extends State<TabsSwitch> {
-  var currentIndex;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0xFFF8F8F8),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      child: TabBar(
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorWeight: 0,
-          indicator: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          splashBorderRadius: BorderRadius.all(Radius.circular(20)),
-          unselectedLabelColor: Color(0xFF6A7592),
-          labelColor: Colors.white,
-          tabs: widget.children),
     );
   }
 }

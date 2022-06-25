@@ -123,6 +123,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
               },
               text: 'Продолжить',
               type: 'primary',
+              disabled: !checked,
             ),
           ],
         ));

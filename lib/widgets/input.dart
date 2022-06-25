@@ -42,7 +42,7 @@ class Input extends StatelessWidget {
         maxLines: expanded == true ? 3 : 1,
         controller: controller,
         onChanged: onChanged,
-        // initialValue: defaultText ?? '',
+        initialValue: controller != null ? null : defaultText,
         decoration: InputDecoration(
             contentPadding: height != null
                 ? EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0)
