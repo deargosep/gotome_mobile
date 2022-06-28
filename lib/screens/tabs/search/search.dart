@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/screens/tabs/search/map.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
 import 'package:gotome/widgets/tabbar_switch.dart';
 
-import '../../../widgets/map.dart';
+import '../../../widgets/geomap.dart';
 import '../../../widgets/top_tab.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -18,22 +19,24 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   late TabController controller;
-  var currentIndex = 1;
 
   @override
   void initState() {
     super.initState();
     controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: Get.arguments != null && Get.arguments["initialIndex"]
-            ? Get.arguments["initialIndex"]
-            : 0);
+      vsync: this,
+      length: 2,
+    );
     controller.addListener(() {
       print(controller.index);
-      setState(() {
-        currentIndex = controller.index;
-      });
+      if (controller.index == 1) {
+        Get.to(() => MapScreen(),
+            fullscreenDialog: false,
+            popGesture: true,
+            transition: Transition.noTransition);
+        controller.index = 0;
+        DefaultTabController.of(context)?.animateTo(0);
+      }
     });
   }
 
@@ -72,9 +75,6 @@ class _SearchScreenState extends State<SearchScreen>
                           ),
                           TabsSwitch(
                             controller: controller,
-                            initialIndex: arguments != null
-                                ? arguments["initialIndex"]
-                                : null,
                             children: [
                               TopTab(
                                 text: 'Списком',
@@ -94,9 +94,9 @@ class _SearchScreenState extends State<SearchScreen>
                 ];
               },
               body: TabBarView(
-                  controller: controller,
                   physics: NeverScrollableScrollPhysics(),
-                  children: [Search(), OnMap()])),
+                  controller: controller,
+                  children: [Search(), _FakeOnMap()])),
         ),
       ),
     );
@@ -147,6 +147,7 @@ class Search extends StatelessWidget {
             height: 24,
           ),
           Expanded(
+            // TODO: turn into builder, when there will be backend
             child: ListView(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -194,6 +195,27 @@ class Search extends StatelessWidget {
   }
 }
 
+class _FakeOnMap extends StatelessWidget {
+  const _FakeOnMap({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SearchInput(),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Container()
+      ],
+    );
+  }
+}
+
 class OnMap extends StatelessWidget {
   const OnMap({Key? key}) : super(key: key);
 
@@ -209,7 +231,7 @@ class OnMap extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        SizedBox(height:MediaQuery.of(context).size.height, child:GeoMap())
+        Expanded(child: GeoMap())
       ],
     );
   }

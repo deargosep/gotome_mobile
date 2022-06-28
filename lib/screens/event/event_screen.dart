@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 
 class EventScreen extends StatelessWidget {
   EventScreen({Key? key}) : super(key: key);
@@ -139,7 +138,8 @@ class EventScreen extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  MapsLauncher.launchQuery(item["location"]);
+                                  Get.toNamed('/search/map',
+                                      arguments: item["location"]);
                                 },
                                 child: Text(
                                   'Смотреть на карте',

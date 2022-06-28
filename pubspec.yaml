@@ -45,6 +45,12 @@ dependencies:
   timer_count_down: ^2.2.1
   google_maps_flutter: ^2.1.8
   measured_size: ^1.0.0
+  geocoding: ^2.0.4
+  flutter_cache_manager: ^3.3.0
+  permission_handler: ^10.0.0
+  meta: ^1.7.0
+  location: ^4.4.0
+  custom_info_window: ^1.0.1
 
 dev_dependencies:
   icons_launcher: ^1.1.9

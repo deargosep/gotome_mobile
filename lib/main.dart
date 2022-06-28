@@ -26,6 +26,7 @@ import 'package:gotome/screens/tabs/profile/profile_events.dart';
 import 'package:gotome/screens/tabs/profile/profile_info.dart';
 import 'package:gotome/screens/tabs/profile/profile_support.dart';
 import 'package:gotome/screens/tabs/search/filters.dart';
+import 'package:gotome/screens/tabs/search/map.dart';
 import 'package:gotome/screens/tabs/tabs.dart';
 
 import 'languages.dart';
@@ -47,9 +48,11 @@ void main() {
       GetPage(name: '/profile_others', page: () => ProfileOtherScreen()),
       GetPage(name: '/change_city', page: () => ChangeCityScreen()),
       GetPage(name: '/filters', page: () => FiltersScreen()),
+      GetPage(name: '/search/map', page: () => MapScreen()),
       GetPage(name: '/profile/edit', page: () => ProfileEditScreen()),
       GetPage(name: '/profile/support', page: () => ProfileSupportScreen()),
       GetPage(name: '/chat', page: () => ChatScreen()),
+      // Map
       // TODO: nested screens in 'tabs' main screens
       GetPage(name: '/profile/events', page: () => ProfileEventsScreen()),
       GetPage(name: '/profile/info', page: () => ProfileInfoScreen()),

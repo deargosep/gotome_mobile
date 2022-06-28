@@ -5,8 +5,13 @@ import 'images/brand_icon.dart';
 import 'input.dart';
 
 class SearchInput extends StatelessWidget {
-  const SearchInput({Key? key}) : super(key: key);
-
+  const SearchInput({
+    Key? key,
+    this.onChanged,
+    this.controller,
+  }) : super(key: key);
+  final onChanged;
+  final controller;
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gotome/widgets/top_tab.dart';
 
 class TabsSwitch extends StatefulWidget {
   const TabsSwitch(
@@ -6,12 +7,14 @@ class TabsSwitch extends StatefulWidget {
       this.labels,
       this.children,
       this.initialIndex,
-      required this.controller})
+      required this.controller,
+      this.mockupOnly})
       : super(key: key);
   final labels;
   final children;
   final initialIndex;
   final TabController controller;
+  final mockupOnly;
   @override
   State<TabsSwitch> createState() => _TabsSwitchState();
 }
@@ -45,7 +48,16 @@ class _TabsSwitchState extends State<TabsSwitch> with TickerProviderStateMixin {
           splashBorderRadius: BorderRadius.all(Radius.circular(20)),
           unselectedLabelColor: Color(0xFF6A7592),
           labelColor: Colors.white,
-          tabs: widget.children),
+          tabs: widget.mockupOnly == true
+              ? [
+                  TopTab(
+                    text: 'Списком',
+                  ),
+                  TopTab(
+                    text: 'На карте',
+                  ),
+                ]
+              : widget.children),
     );
   }
 }
