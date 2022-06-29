@@ -28,9 +28,25 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Location>> getLocations() async {
+    List locationList = [
+      {
+        "id": 111,
+        "lat": 59.9386443693454,
+        "lng": 30.34124824247019,
+        "title": "Катаемся на велосипедах",
+        "datetime": "03.06.2022 в 15:00"
+      },
+      {
+        "id": 11,
+        "lat": 55.68873830008359,
+        "lng": 37.5838732576966,
+        "title": "Катаемся на велосипедах",
+        "datetime": "03.06.2022 в 15:00"
+      }
+    ];
+    Future<Location> getLocations() async {
       List<Location> location = await locationFromAddress(address);
-      return location;
+      return location[0];
     }
 
     return Scaffold(
@@ -71,13 +87,23 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                   ),
                 ),
           Expanded(
-              child: FutureBuilder<List<Location>>(
-            future: getLocations(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return GeoMap();
-              return GeoMap(locations: snapshot.data);
-            },
-          ))
+              child: address != null && address != ''
+                  ? FutureBuilder<dynamic>(
+                      future: getLocations(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return Container();
+                        }
+                        if (snapshot.data != null)
+                          return GeoMap(
+                            withLocation: true,
+                            location: snapshot.data,
+                            locations: locationList,
+                          );
+                        return Container();
+                      },
+                    )
+                  : GeoMap(locations: locationList, withLocation: false))
         ],
       ),
     );

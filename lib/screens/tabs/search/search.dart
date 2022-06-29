@@ -6,7 +6,6 @@ import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
 import 'package:gotome/widgets/tabbar_switch.dart';
 
-import '../../../widgets/geomap.dart';
 import '../../../widgets/top_tab.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -211,27 +210,6 @@ class _FakeOnMap extends StatelessWidget {
           height: 16,
         ),
         Container()
-      ],
-    );
-  }
-}
-
-class OnMap extends StatelessWidget {
-  const OnMap({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SearchInput(),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Expanded(child: GeoMap())
       ],
     );
   }
