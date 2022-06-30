@@ -33,6 +33,7 @@ class RegisterScreen extends StatelessWidget {
           height: 16,
         ),
         Input(
+          obscureText: true,
           label: 'Пароль',
         ),
         SizedBox(

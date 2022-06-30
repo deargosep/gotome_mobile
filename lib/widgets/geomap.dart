@@ -1,35 +1,28 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:math' show cos, sqrt, asin;
-import 'dart:typed_data';
-import 'dart:ui' as ui;
+import 'dart:ui';
 
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gotome/utils/bitmap.dart';
+import 'package:gotome/utils/calculate_distance.dart';
+import 'package:gotome/utils/event.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:location/location.dart';
 
 class GeoMap extends StatefulWidget {
-  const GeoMap(
-      {Key? key,
-      this.location,
-      required this.withLocation,
-      required this.locations})
-      : super(key: key);
-  final location;
-  final List locations;
-  final bool withLocation;
+  const GeoMap({Key? key, this.selectedLocation}) : super(key: key);
+  final selectedLocation;
   @override
   State<GeoMap> createState() => GeoMapState();
 }
 
 class GeoMapState extends State<GeoMap> {
-  Completer<GoogleMapController> _controller = Completer();
-  var currentLocation = {};
+  late ClusterManager _manager;
   CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
 
@@ -37,339 +30,322 @@ class GeoMapState extends State<GeoMap> {
   var distance = 0;
   var distanceId = "0";
 
-  Location _location = new Location();
+  var currentGeo;
+
+  Completer<GoogleMapController> _controller = Completer();
+  Location location = new Location();
   late StreamSubscription<LocationData> locationSubscription;
-  @override
-  void initState() {
-    super.initState();
-    locationSubscription = _location.onLocationChanged.listen((locationData) {
-      setState(() {
-        currentLocation = {
-          "longitude": locationData.longitude,
-          "latitude": locationData.latitude
-        };
-      });
-      generateMarkers();
-    });
-  }
 
-  @override
-  void dispose() {
-    if (!mounted) locationSubscription.cancel();
-    super.dispose();
-  }
-  // __________________________________________
-
-  late BitmapDescriptor customIcon;
-  Future<BitmapDescriptor> createCustomMarkerBitmapWithNameAndImage(
-      String imagePath, Size size, String name) async {
-    ui.PictureRecorder recorder = new ui.PictureRecorder();
-    Canvas canvas = new Canvas(recorder);
-
-    final double shadowWidth = 15.0;
-    final double borderWidth = 2.5;
-    final double imageOffset = shadowWidth + borderWidth;
-
-    final Radius radius = Radius.circular(size.width / 2);
-
-    final Paint shadowCirclePaint = Paint()
-      ..color = Theme.of(context).primaryColor.withAlpha(180);
-
-    // Add shadow circle
-    canvas.drawRRect(
-        RRect.fromRectAndCorners(
-          Rect.fromLTWH(
-              size.width / 8, size.width / 2, size.width, size.height),
-          topLeft: radius,
-          topRight: radius,
-          bottomLeft: radius,
-          bottomRight: radius,
-        ),
-        shadowCirclePaint);
-    //
-    // // TEXT BOX BACKGROUND
-    // Paint textBgBoxPaint = Paint()..color = Theme.of(context).primaryColor;
-    //
-    // Rect rect = Rect.fromLTWH(
-    //   0,
-    //   0,
-    //   tp.width + 35,
-    //   50,
-    // );
-    //
-    // canvas.drawRRect(
-    //   RRect.fromRectAndRadius(rect, Radius.circular(10.0)),
-    //   textBgBoxPaint,
-    // );
-
-    //ADD TEXT WITH ALIGN TO CANVAS
-    // tp.paint(canvas, new Offset(20.0, 5.0));
-
-    /* Do your painting of the custom icon here, including drawing text, shapes, etc. */
-
-    Rect oval = Rect.fromLTWH(35, 78, size.width - (imageOffset * 2),
-        size.height - (imageOffset * 2));
-
-    // ADD  PATH TO OVAL IMAGE
-    canvas.clipPath(Path()..addOval(oval));
-
-    ui.Image image = await getImageFromPath(imagePath);
-    paintImage(canvas: canvas, image: image, rect: oval, fit: BoxFit.fitWidth);
-
-    ui.Picture p = recorder.endRecording();
-    ByteData? pngBytes = await (await p.toImage(300, 300))
-        .toByteData(format: ui.ImageByteFormat.png);
-
-    Uint8List data = Uint8List.view(pngBytes!.buffer);
-
-    return BitmapDescriptor.fromBytes(data);
-  }
-
-  Future<ui.Image> getImageFromPath(String imagePath) async {
-    File imageFile = File(imagePath);
-
-    Uint8List imageBytes = imageFile.readAsBytesSync();
-
-    final Completer<ui.Image> completer = new Completer();
-
-    ui.decodeImageFromList(imageBytes, (ui.Image img) {
-      return completer.complete(img);
-    });
-
-    return completer.future;
-  }
-
-  Future<BitmapDescriptor> getMarkerIcon(String image, String name) async {
-    if (image != null) {
-      final File markerImageFile =
-          await DefaultCacheManager().getSingleFile(image);
-      Size s = Size(120, 120);
-
-      var icon = await createCustomMarkerBitmapWithNameAndImage(
-          markerImageFile.path, s, name);
-      return icon;
-    } else {
-      return BitmapDescriptor.defaultMarker;
-    }
-  }
-  //________________________________________________________
+  Set<Marker> markers = Set();
 
   late final CameraPosition _moscow = CameraPosition(
     target: LatLng(55.7558, 37.6173),
     zoom: 14.4746,
   );
 
-  late final CameraPosition locationPos = CameraPosition(
-      target: LatLng(
-          widget.withLocation
-              ? widget.location.latitude
-              : _moscow.target.latitude,
-          widget.withLocation
-              ? widget.location.longitude
-              : _moscow.target.longitude),
-      zoom: 14.4746);
+  List<Event> locations = [
+    Event(
+        id: "311",
+        name: "Катаемся на велосипедах",
+        latLng: LatLng(55.7629454067186, 37.560531197596134),
+        datetime: "03.06.2022 в 15:00"),
+    Event(
+        id: "122",
+        name: "Катаемся на велосипедах2",
+        latLng: LatLng(59.9386443693454, 30.34124824247019),
+        datetime: "03.06.2022 в 15:00"),
+  ];
 
-  late final CameraPosition userLocation = CameraPosition(
-      target: LatLng(currentLocation["latitude"] ?? _moscow.target.latitude,
-          currentLocation["longitude"] ?? _moscow.target.longitude),
-      zoom: 14.4746);
+  @override
+  void initState() {
+    super.initState();
+    _manager = _initClusterManager();
+    locationSubscription = location.onLocationChanged.listen((event) {
+      if (mounted) {
+        setState(() {
+          currentGeo = LatLng(event.latitude!, event.longitude!);
+        });
+        _updateUserMarker(LatLng(event.latitude!, event.longitude!));
+      }
+    });
+  }
 
-  Set<Marker>? _markers = <Marker>{};
+  @override
+  void dispose() {
+    if (!mounted) locationSubscription.cancel();
+    _customInfoWindowController.dispose();
+    super.dispose();
+  }
 
-  void generateMarkers() async {
-    var localMarkers = <Marker>{};
+  ClusterManager _initClusterManager() {
+    return ClusterManager<Event>(
+      locations,
+      _updateMarkers,
+      markerBuilder: _markerBuilder,
+    );
+  }
 
-    var locationsList = [
-      ...widget.locations,
-      {
-        "id": 124.2,
-        "lat": _moscow.target.latitude,
-        "lng": _moscow.target.longitude,
-        "title": "moscow",
-      },
-      !currentLocation.isEmpty
-          ? {
-              "id": "user",
-              "lat": currentLocation["latitude"],
-              "lng": currentLocation["longitude"]
-            }
-          : null
-    ];
-
-    double calculateDistance(lat1, lon1, lat2, lon2) {
-      var p = 0.017453292519943295;
-      var c = cos;
-      var a = 0.5 -
-          c((lat2 - lat1) * p) / 2 +
-          c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-      return 12742 * asin(sqrt(a));
+  void _updateUserMarker(LatLng myGeo) {
+    var userEvent = Event(isUser: true, id: "user", latLng: myGeo);
+    var element = locations.firstWhereOrNull((element) => element.id == "user");
+    if (element == null) {
+      locations.add(userEvent);
     }
-
+    if (element != null) {
+      var index = locations.indexOf(element);
+      locations[index] = userEvent;
+    }
+    _manager.setItems(locations);
     if (distanceId != "0") {
-      var myLoc = locationsList
-          .firstWhere((element) => element["id"].toString() == distanceId);
-      var calculatedDistance = calculateDistance(currentLocation["latitude"],
-          currentLocation["longitude"], myLoc["lat"], myLoc["lng"]);
-      setState(() {
-        distance = num.parse(calculatedDistance.toStringAsFixed(2)).toInt();
-      });
+      var myLoc = locations.firstWhere((element) => element.id == distanceId);
+      var calculatedDistance = calculateDistance(
+          currentGeo.latitude,
+          currentGeo.longitude,
+          myLoc.location.latitude,
+          myLoc.location.longitude);
+      if (mounted)
+        setState(() {
+          distance = num.parse(calculatedDistance.toStringAsFixed(2)).toInt();
+        });
     }
+  }
 
-    for (var location in locationsList) {
-      if (location != null) {
-        localMarkers.add(Marker(
-            markerId: MarkerId(location["id"].toString()),
-            position: LatLng(double.parse(location["lat"].toString()),
-                double.parse(location["lng"]!.toString())),
-            icon: location["id"] != "user"
-                ? await bitmapDescriptorFromSvgAsset(
-                    context, 'assets/icons/geo_user.svg')
-                : await getMarkerIcon(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuIavvjuQFB38Se2ZNa0GkZ1Gol3C5OwioHA&usqp=CAU",
-                    "JASSABELLE"),
-            onTap: () {
-              if (location["id"] != "user") {
-                _customInfoWindowController.addInfoWindow!(
-                    Container(
-                        width: 171,
-                        height: 60,
-                        padding: EdgeInsets.all(10),
+  void _updateMarkers(
+    Set<Marker> markers,
+  ) async {
+    print('Updated ${markers.length} markers');
+    if (mounted)
+      setState(() {
+        this.markers = markers;
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<PermissionStatus>(
+        future: location.requestPermission(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Container();
+          return Stack(
+            children: [
+              FutureBuilder<LocationData>(
+                future: location.getLocation(),
+                builder: (context, secSnapshot) {
+                  print(secSnapshot.data);
+                  print(snapshot.data);
+                  if (!secSnapshot.hasData &&
+                      (snapshot.data == PermissionStatus.granted ||
+                          snapshot.data == PermissionStatus.grantedLimited))
+                    return Container();
+                  return GoogleMap(
+                      mapType: MapType.normal,
+                      initialCameraPosition: snapshot.data ==
+                                  PermissionStatus.granted ||
+                              snapshot.data == PermissionStatus.grantedLimited
+                          ? CameraPosition(
+                              target: LatLng(
+                                secSnapshot.data!.latitude!,
+                                secSnapshot.data!.longitude!,
+                              ),
+                              zoom: 14)
+                          : widget.selectedLocation != null
+                              ? CameraPosition(
+                                  target: LatLng(
+                                      widget.selectedLocation.latitude,
+                                      widget.selectedLocation.longitude),
+                                  zoom: 14)
+                              : _moscow,
+                      markers: markers,
+                      onMapCreated: (GoogleMapController controller) {
+                        _customInfoWindowController.googleMapController =
+                            controller;
+                        _controller.complete(controller);
+                        _manager.setMapId(controller.mapId);
+                      },
+                      onTap: (LatLng loc) {
+                        _customInfoWindowController.hideInfoWindow!();
+                      },
+                      onCameraMove: (position) {
+                        _manager.onCameraMove(position);
+                        _customInfoWindowController.onCameraMove!();
+                      },
+                      onCameraIdle: _manager.updateMap);
+                },
+              ),
+              Container(
+                child: CustomInfoWindow(
+                  controller: _customInfoWindowController,
+                  height: 60,
+                  width: 171,
+                  offset: 50,
+                ),
+              ),
+              distanceOverlay != true
+                  ? Container()
+                  : Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 40,
+                        width: 181,
+                        margin: EdgeInsets.only(bottom: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                topLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              location["title"],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: Center(
+                            child: Text(
+                          'От вас: ${distance} км.',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 18),
+                        )),
+                      ))
+            ],
+          );
+        });
+    // floatingActionButton: FloatingActionButton(
+    //   onPressed: () {
+    //     _manager.setItems(<Event>[
+    //       for (int i = 0; i < 30; i++)
+    //         Event(
+    //             id: "$i",
+    //             name: 'New Place ${DateTime.now()} $i',
+    //             latLng: LatLng(48.858265 + i * 0.01, 2.350107),
+    //             datetime: DateTime.now().toString())
+    //     ]);
+    //   },
+    //   child: Icon(Icons.update),
+    // ),
+  }
+
+  Future<Marker> Function(Cluster<Event>) get _markerBuilder =>
+      (cluster) async {
+        List<dynamic> localList = [...cluster.items];
+        Event currentElement = localList.first;
+        return Marker(
+          markerId: MarkerId(cluster.getId()),
+          position: cluster.location,
+          onTap: () {
+            if (!cluster.isMultiple &&
+                localList.firstWhere((element) => element.isUser,
+                        orElse: () => null) ==
+                    null &&
+                localList.firstWhere(
+                        (element) => element.location == cluster.location,
+                        orElse: () => null) !=
+                    null) {
+              _customInfoWindowController.addInfoWindow!(
+                  Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 151,
+                            child: Text(
+                              cluster.items.first.name,
+                              maxLines: 1,
                               style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.secondary,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500),
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                BrandIcon(icon: 'clock'),
-                                SizedBox(
-                                  width: 8,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              BrandIcon(
+                                icon: 'clock',
+                                height: 11,
+                                width: 11,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                currentElement.datetime,
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  fontSize: 12,
                                 ),
-                                Text(
-                                  location["datetime"],
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        )),
-                    LatLng(location["lat"], location["lng"]));
-                var calculatedDistance = calculateDistance(
-                    currentLocation["latitude"],
-                    currentLocation["longitude"],
-                    location["lat"],
-                    location["lng"]);
-                setState(() {
-                  distanceOverlay = true;
-                  distanceId = location["id"].toString();
-                  distance =
-                      num.parse(calculatedDistance.toStringAsFixed(2)).toInt();
-                });
-              }
-            }));
-      }
-    }
-
-    if (mounted) {
-      locationSubscription.resume();
-      setState(() {
-        _markers = localMarkers;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Location().hasPermission(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return Stack(children: [
-            GoogleMap(
-              initialCameraPosition: !widget.withLocation
-                  ? userLocation
-                  : CameraPosition(
-                      target: LatLng(locationPos.target.latitude,
-                          locationPos.target.longitude),
-                      zoom: 14.4746),
-              onMapCreated: (GoogleMapController controller) {
-                _customInfoWindowController.googleMapController = controller;
-                _controller.complete(controller);
-                generateMarkers();
-              },
-              markers: _markers!,
-              onTap: (l) {
-                setState(() {
-                  distanceOverlay = false;
-                  distanceId = "0";
-                  distance = 0;
-                });
-                _customInfoWindowController.hideInfoWindow!();
-              },
-              onCameraMove: (position) {
-                _customInfoWindowController.onCameraMove!();
-              },
-              // ),
-              // floatingActionButton: FloatingActionButton.extended(
-              //   onPressed: _goToTheLake,
-              //   label: Text('To the lake!'),
-              //   icon: Icon(Icons.directions_boat),
-              // ),
-            ),
-            CustomInfoWindow(
-              controller: _customInfoWindowController,
-              height: 75,
-              width: 150,
-              offset: 50,
-            ),
-            distanceOverlay != true
-                ? Container()
-                : Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 40,
-                      width: 181,
-                      margin: EdgeInsets.only(bottom: 16),
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: Center(
-                          child: Text(
-                        'От вас: ${distance} км.',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontSize: 18),
+                              )
+                            ],
+                          )
+                        ],
                       )),
-                    ))
-          ]);
-        });
-  }
+                  currentElement.location);
+              if (currentGeo != null) {
+                var calculatedDistance = calculateDistance(
+                    currentGeo.latitude,
+                    currentGeo.longitude,
+                    currentElement.location.latitude,
+                    currentElement.location.longitude);
+                if (mounted)
+                  setState(() {
+                    distanceOverlay = true;
+                    distanceId = currentElement.id.toString();
+                    distance = num.parse(calculatedDistance.toStringAsFixed(2))
+                        .toInt();
+                  });
+              }
+            }
+          },
+          icon: !cluster.isMultiple &&
+                  localList.firstWhere((el) => el.isUser, orElse: () => null) !=
+                      null
+              ? await getMarkerIcon(
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuIavvjuQFB38Se2ZNa0GkZ1Gol3C5OwioHA&usqp=CAU",
+                  context)
+              : await _getMarkerBitmap(cluster.isMultiple ? 125 : 75,
+                  text: cluster.isMultiple ? cluster.count.toString() : null),
+        );
+      };
 
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
+  Future<BitmapDescriptor> _getMarkerBitmap(int size, {String? text}) async {
+    if (kIsWeb) size = (size / 2).floor();
+
+    final PictureRecorder pictureRecorder = PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    final Paint paint1 = Paint()
+      ..color = Theme.of(context).primaryColor.withOpacity(0.65);
+    final Paint paint2 = Paint()..color = Theme.of(context).primaryColor;
+
+    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
+    canvas.drawCircle(Offset(size / 2, size / 2), size / 3, paint2);
+
+    if (text != null) {
+      TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
+      painter.text = TextSpan(
+        text: text,
+        style: TextStyle(
+            fontSize: size / 2.5,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+      );
+      painter.layout();
+      painter.paint(
+        canvas,
+        Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
+      );
+    }
+
+    final img = await pictureRecorder.endRecording().toImage(size, size);
+    final data = await img.toByteData(format: ImageByteFormat.png) as ByteData;
+
+    return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
+  }
 }

@@ -4,6 +4,7 @@ import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:gotome/widgets/top_tab.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../widgets/tabbar_switch.dart';
 
@@ -207,6 +208,7 @@ class History extends StatelessWidget {
       "name": "Катаемся на велосипедах",
       "timedate": "03.06.2022 в 15:00",
       "location": "Наб. Реки Фонтанки, 3",
+      "location_coords": LatLng(59.9386443693454, 30.34124824247019),
       "description":
           "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
       "price": "Бесплатно",

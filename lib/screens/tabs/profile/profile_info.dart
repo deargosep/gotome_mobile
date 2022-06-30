@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/profile_other.dart';
+import 'package:gotome/utils/bottombar_wrap.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/header.dart';
 
@@ -11,12 +12,12 @@ class ProfileInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Get.arguments;
     return CustomScaffold(
+      bottomNavigationBar: BottomBarWrap(currentTab: 3),
       noPadding: true,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
             child: Column(
               children: [
                 Header(
@@ -69,7 +70,7 @@ class ProfileInfoScreen extends StatelessWidget {
           ),
           Divider(),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
               children: [
                 SizedBox(

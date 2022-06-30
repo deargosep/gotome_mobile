@@ -139,7 +139,7 @@ class EventScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Get.toNamed('/search/map',
-                                      arguments: item["location"]);
+                                      arguments: item["location_coords"]);
                                 },
                                 child: Text(
                                   'Смотреть на карте',

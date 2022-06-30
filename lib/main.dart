@@ -36,7 +36,11 @@ void main() {
   runApp(GetMaterialApp(
     getPages: [
       GetPage(name: '/', page: () => AuthRegisterScreen()),
-      GetPage(name: '/bar', page: () => BarScreen()),
+      GetPage(
+        name: '/bar',
+        page: () => BarScreen(),
+        transition: Transition.noTransition,
+      ),
       GetPage(name: '/auth', page: () => AuthScreen()),
       GetPage(name: '/auth/forgot/1', page: () => InputEmailScreen()),
       GetPage(name: '/auth/forgot/2', page: () => InputCodeScreen()),

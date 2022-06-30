@@ -6,6 +6,7 @@ class Input extends StatelessWidget {
       {Key? key,
       String? this.label,
       this.defaultText = '',
+      this.obscureText,
       TextEditingController? this.controller,
       ValueChanged<String>? this.onChanged,
       bool? this.expanded,
@@ -19,6 +20,7 @@ class Input extends StatelessWidget {
 
   String? label;
   String? defaultText;
+  bool? obscureText = false;
   TextEditingController? controller;
   ValueChanged<String>? onChanged;
   bool? expanded = false;
@@ -26,7 +28,7 @@ class Input extends StatelessWidget {
   final borderRadius;
   final width;
   final height;
-  final onFieldSubmitted;
+  final Function(String)? onFieldSubmitted;
   final onTapCalendar;
 
   @override
@@ -36,8 +38,10 @@ class Input extends StatelessWidget {
       width: width,
       child: TextFormField(
         onFieldSubmitted: (text) {
-          onFieldSubmitted(text);
+          print(text);
+          onFieldSubmitted!(text);
         },
+        obscureText: obscureText == true,
         minLines: expanded == true ? 3 : 1,
         maxLines: expanded == true ? 3 : 1,
         controller: controller,

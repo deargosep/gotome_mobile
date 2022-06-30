@@ -51,6 +51,10 @@ dependencies:
   meta: ^1.7.0
   location: ^4.4.0
   custom_info_window: ^1.0.1
+  google_maps_cluster_manager: ^3.0.0+1
+  fluster: ^1.2.0
+  google_geocoding: ^0.2.0
+  dio: ^4.0.6
 
 dev_dependencies:
   icons_launcher: ^1.1.9
@@ -160,7 +164,7 @@ flutter_native_splash:
   # 640 pixels in diameter.
   # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
   # 768 pixels in diameter.
-    image: assets/images/splashscreen.png
+    image: assets/icons/icon_gotome.png
 
   # Splash screen background color.
     color: "#ffffff"

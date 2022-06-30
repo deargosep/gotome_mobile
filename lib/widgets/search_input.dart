@@ -5,13 +5,12 @@ import 'images/brand_icon.dart';
 import 'input.dart';
 
 class SearchInput extends StatelessWidget {
-  const SearchInput({
-    Key? key,
-    this.onChanged,
-    this.controller,
-  }) : super(key: key);
+  const SearchInput(
+      {Key? key, this.onChanged, this.controller, this.onComplete})
+      : super(key: key);
   final onChanged;
   final controller;
+  final Function(String)? onComplete;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -20,6 +19,9 @@ class SearchInput extends StatelessWidget {
         children: [
           Expanded(
             child: Input(
+              onFieldSubmitted: (text) {
+                onComplete!(text);
+              },
               borderRadius: BorderRadius.all(Radius.circular(20)),
               height: 40.0,
               label: 'Поиск',

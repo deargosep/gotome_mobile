@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/widgets/event_card.dart';
+import 'package:latlong2/latlong.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -31,6 +32,7 @@ class HomeScreen extends StatelessWidget {
             "name": "Катаемся на велосипедах",
             "timedate": "03.06.2022 в 15:00",
             "location": "Наб. Реки Фонтанки, 3",
+            "location_coords": LatLng(59.9386443693454, 30.34124824247019),
             "description":
                 "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
             "price": "Бесплатно",
@@ -59,6 +61,7 @@ class HomeScreen extends StatelessWidget {
             "name": "Катаемся на велосипедах",
             "timedate": "03.06.2022 в 15:00",
             "location": "Наб. Реки Фонтанки, 3",
+            "location_coords": LatLng(59.9386443693454, 30.34124824247019),
             "description":
                 "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
             "price": "Бесплатно",

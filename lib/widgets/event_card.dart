@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:latlong2/latlong.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({Key? key, this.item}) : super(key: key);
   final item;
   @override
   Widget build(BuildContext context) {
-    const defaultItem = {
+    var defaultItem = {
       "id": "123adssdad",
       "author": "HotLine",
       "authorId": "12222",
@@ -24,6 +25,7 @@ class EventCard extends StatelessWidget {
       "name": "Катаемся на велосипедах",
       "timedate": "03.06.2022 в 15:00",
       "location": "Наб. Реки Фонтанки, 3",
+      "location_coords": LatLng(59.9386443693454, 30.34124824247019),
       "description":
           "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
       "price": "Бесплатно",

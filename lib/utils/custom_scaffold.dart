@@ -70,6 +70,7 @@ class CustomScaffold extends StatelessWidget {
       );
     }
     return Scaffold(
+      bottomNavigationBar: bottomNavigationBar,
       body: Center(
           child: noPadding == true
               ? body

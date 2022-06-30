@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:get/get.dart';
-import 'package:gotome/widgets/geomap.dart';
+import 'package:get/get.dart' hide Response;
+import 'package:gotome/utils/bottombar_wrap.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
 import 'package:gotome/widgets/tabbar_switch.dart';
+
+import '../../../widgets/geomap.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -24,35 +25,21 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     });
   }
 
-  final address = Get.arguments;
+  final coords = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    List locationList = [
-      {
-        "id": 111,
-        "lat": 59.9386443693454,
-        "lng": 30.34124824247019,
-        "title": "Катаемся на велосипедах",
-        "datetime": "03.06.2022 в 15:00"
-      },
-      {
-        "id": 11,
-        "lat": 55.68873830008359,
-        "lng": 37.5838732576966,
-        "title": "Катаемся на велосипедах",
-        "datetime": "03.06.2022 в 15:00"
-      }
-    ];
-    Future<Location> getLocations() async {
-      List<Location> location = await locationFromAddress(address);
-      return location[0];
+    void filterDots(query) {
+      print(query);
     }
 
     return Scaffold(
+      bottomNavigationBar: BottomBarWrap(
+        currentTab: 1,
+      ),
       body: Column(
         children: [
-          address != null && address != ''
+          coords != null && coords != ''
               ? Container()
               : Padding(
                   padding: EdgeInsets.only(
@@ -76,7 +63,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                             SizedBox(
                               height: 24,
                             ),
-                            SearchInput()
+                            SearchInput(onComplete: filterDots)
                           ],
                         ),
                       ),
@@ -87,23 +74,13 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                   ),
                 ),
           Expanded(
-              child: address != null && address != ''
-                  ? FutureBuilder<dynamic>(
-                      future: getLocations(),
-                      builder: (context, snapshot) {
-                        if (snapshot.data == null) {
-                          return Container();
-                        }
-                        if (snapshot.data != null)
-                          return GeoMap(
-                            withLocation: true,
-                            location: snapshot.data,
-                            locations: locationList,
-                          );
-                        return Container();
-                      },
+              child: coords != null && coords != ''
+                  ? GeoMap(
+                      selectedLocation: coords,
                     )
-                  : GeoMap(locations: locationList, withLocation: false))
+                  : GeoMap()
+              // GeoMap(locations: locationList, withLocation: false)
+              )
         ],
       ),
     );

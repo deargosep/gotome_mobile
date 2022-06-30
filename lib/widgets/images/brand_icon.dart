@@ -10,7 +10,8 @@ class BrandIcon extends StatelessWidget {
       this.width,
       this.height,
       this.fit,
-      this.onTapCalendar})
+      this.onTapCalendar,
+      this.onTap})
       : super(key: key);
   final icon;
   Color? color;
@@ -18,6 +19,7 @@ class BrandIcon extends StatelessWidget {
   double? height;
   final fit;
   final onTapCalendar;
+  final onTap;
   @override
   Widget build(BuildContext context) {
     DateTime selectedDate = DateTime.now();
@@ -54,11 +56,14 @@ class BrandIcon extends StatelessWidget {
           width: width,
         ),
       );
-    return SvgPicture.asset(
-      'assets/icons/${icon}.svg',
-      color: color,
-      height: height,
-      width: width,
+    return InkWell(
+      onTap: onTap,
+      child: SvgPicture.asset(
+        'assets/icons/${icon}.svg',
+        color: color,
+        height: height,
+        width: width,
+      ),
     );
   }
 }

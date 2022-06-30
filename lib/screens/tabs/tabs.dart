@@ -17,8 +17,8 @@ class BarScreen extends StatefulWidget {
 }
 
 class _BarScreenState extends State<BarScreen> {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  int _selectedIndex = Get.arguments ?? 0;
+  static const List<Widget> _tabs = <Widget>[
     //Home
     HomeScreen(),
     //Search
@@ -44,7 +44,7 @@ class _BarScreenState extends State<BarScreen> {
     return Scaffold(
         // backgroundColor: Color(0xFFEAEAEA),
         body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: _tabs.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomBar(
             onTap: _onItemTapped,
