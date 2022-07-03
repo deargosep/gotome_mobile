@@ -23,7 +23,7 @@ class MembersScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: item["members"]?.length ?? 0,
+              itemCount: item["members"].length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [

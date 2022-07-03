@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 
 class Input extends StatelessWidget {
-  Input(
-      {Key? key,
-      String? this.label,
-      this.defaultText = '',
-      this.obscureText,
-      TextEditingController? this.controller,
-      ValueChanged<String>? this.onChanged,
-      bool? this.expanded,
-      String? this.icon,
-      this.borderRadius,
-      this.width,
-      this.height,
-      this.onFieldSubmitted,
-      this.onTapCalendar})
-      : super(key: key);
+  Input({
+    Key? key,
+    String? this.label,
+    this.defaultText = '',
+    this.obscureText,
+    TextEditingController? this.controller,
+    ValueChanged<String>? this.onChanged,
+    bool? this.expanded,
+    String? this.icon,
+    this.borderRadius,
+    this.width,
+    this.height,
+    this.onFieldSubmitted,
+    this.onTapCalendar,
+    this.onTap,
+  }) : super(key: key);
 
   String? label;
   String? defaultText;
@@ -30,6 +31,7 @@ class Input extends StatelessWidget {
   final height;
   final Function(String)? onFieldSubmitted;
   final onTapCalendar;
+  final onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,11 @@ class Input extends StatelessWidget {
             suffixIcon: icon != null
                 ? Transform.scale(
                     scale: 0.45,
-                    child: BrandIcon(icon: icon, onTapCalendar: onTapCalendar))
+                    child: BrandIcon(
+                      icon: icon,
+                      onTapCalendar: onTapCalendar,
+                      onTap: onTap,
+                    ))
                 : null,
             alignLabelWithHint: true,
             labelText: label ?? '',

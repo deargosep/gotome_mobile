@@ -5,8 +5,9 @@ import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
 import 'package:gotome/widgets/tabbar_switch.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
+import '../../../state/events.dart';
 import '../../../widgets/top_tab.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -108,35 +109,7 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final item = {
-      "id": "123adssdad",
-      "author": "HotLine",
-      "authorId": "12222",
-      "author_role": "Организатор",
-      "author_info": {
-        "author_name": "Игорь",
-        "author_username": "HotLine",
-        "author_age": 24,
-        "author_country": "Россия",
-        "author_city": "Москва",
-        "author_description":
-            "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-      },
-      "name": "Катаемся на велосипедах",
-      "timedate": "03.06.2022 в 15:00",
-      "location": "Наб. Реки Фонтанки, 3",
-      "location_coords": LatLng(59.9386443693454, 30.34124824247019),
-      "description":
-          "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-      "price": "Бесплатно",
-      "members": [
-        {"username": "MajEstic21"},
-        {"username": "Alice18"},
-        {"username": "Pavkl"},
-        {"username": "ForJik"},
-      ],
-      "opened_from_profile": false
-    };
+    var item = Provider.of<Events>(context, listen: true).events[0];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),

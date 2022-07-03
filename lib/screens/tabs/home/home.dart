@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/state/events.dart';
+import 'package:gotome/state/user.dart';
+import 'package:gotome/utils/event.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,65 +18,77 @@ class HomeScreen extends StatelessWidget {
         _Header(),
         // List
         Expanded(
-            child: Content(list: [
-          {
-            "id": "123adssdad",
-            "author": "HotLine",
-            "authorId": "12222",
-            "author_role": "Организатор",
-            "author_info": {
-              "author_name": "Игорь",
-              "author_username": "HotLine",
-              "author_age": 24,
-              "author_country": "Россия",
-              "author_city": "Москва",
-              "author_description":
-                  "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-            },
-            "name": "Катаемся на велосипедах",
-            "timedate": "03.06.2022 в 15:00",
-            "location": "Наб. Реки Фонтанки, 3",
-            "location_coords": LatLng(59.9386443693454, 30.34124824247019),
-            "description":
-                "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-            "price": "Бесплатно",
-            "members": [
-              {"username": "MajEstic21"},
-              {"username": "Alice18"},
-              {"username": "Pavkl"},
-              {"username": "ForJik"},
-            ],
-            "opened_from_profile": false
-          },
-          {
-            "id": "123132sddsad",
-            "author": "HotLine",
-            "authorId": "12222",
-            "author_role": "Организатор",
-            "author_info": {
-              "author_username": "HotLine",
-              "author_name": "Игорь",
-              "author_age": 24,
-              "author_country": "Россия",
-              "author_city": "Москва",
-              "author_description":
-                  "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-            },
-            "name": "Катаемся на велосипедах",
-            "timedate": "03.06.2022 в 15:00",
-            "location": "Наб. Реки Фонтанки, 3",
-            "location_coords": LatLng(59.9386443693454, 30.34124824247019),
-            "description":
-                "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-            "price": "Бесплатно",
-            "members": [
-              {"username": "MajEstic21"},
-              {"username": "Alice18"},
-              {"username": "Pavkl"},
-              {"username": "ForJik"},
-            ],
-            "opened_from_profile": false
-          }
+            child: Content(initList: [
+          EventType(
+              id: "123adssdad",
+              author: Author(
+                id: "12222",
+                username: "HotLine",
+                name: "Игорь",
+                age: 24,
+                country: "Россия",
+                city: "Москва",
+                description:
+                    "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+              ),
+              name: "Катаемся на велосипедах",
+              timedate: "03.06.2022 в 15:00",
+              location: "Наб. Реки Фонтанки, 3",
+              location_coords: LatLng(59.9386443693454, 30.34124824247019),
+              description:
+                  "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
+              price: "Бесплатно",
+              members: [
+                {"username": "MajEstic21"},
+                {"username": "Alice18"},
+                {"username": "Pavkl"},
+                {"username": "ForJik"},
+              ],
+              dot: Dot(
+                latLng: LatLng(59.9386443693454, 30.34124824247019),
+                id: "123adssdad",
+                name: "Катаемся на барсуках",
+                country: "Россия",
+                city: "Москва",
+                locationString: "Наб. Реки Фонтанки, 3",
+                tags: ["Активный отдых"],
+                datetime: "03.06.2022 в 15:00",
+              )),
+          EventType(
+              id: "123adssdad",
+              author: Author(
+                id: "12222",
+                username: "HotLine",
+                name: "Игорь",
+                age: 24,
+                country: "Россия",
+                city: "Москва",
+                description:
+                    "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+              ),
+              name: "Катаемся на велосипедах2",
+              timedate: "03.06.2022 в 15:00",
+              location: "Наб. Реки Фонтанки, 3",
+              location_coords: LatLng(55.76196961326696, 37.627123975766146),
+              description:
+                  "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
+              price: "Бесплатно",
+              members: [
+                {"username": "MajEstic21"},
+                {"username": "Alice18"},
+                {"username": "Pavkl"},
+                {"username": "ForJik"},
+              ],
+              dot: Dot(
+                latLng: LatLng(55.76196961326696, 37.627123975766146),
+                id: "123adssdad",
+                name: "Катаемся на велосипедах2",
+                country: "Россия",
+                city: "Москва",
+                locationString: "Наб. Реки Фонтанки, 3",
+                tags: ["Активный отдых", "Путешествия"],
+                datetime: "03.06.2022 в 15:00",
+              ))
         ]))
       ],
     );
@@ -80,10 +96,13 @@ class HomeScreen extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  Content({Key? key, required this.list}) : super(key: key);
-  List<Map<String, dynamic>> list;
+  const Content({Key? key, required this.initList}) : super(key: key);
+  final List<EventType> initList;
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<Events>(context).setEvents(initList);
+    var list = Provider.of<Events>(context, listen: true).events;
     if (list.isNotEmpty) {
       return ListView.builder(
           itemCount: list.length,
@@ -129,7 +148,7 @@ class _Header extends StatelessWidget {
               style: textStyle,
             ),
             Text(
-              'Москва',
+              Provider.of<User>(context, listen: true).user.city,
               style: textStyleBold,
             )
           ],

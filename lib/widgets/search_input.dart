@@ -10,7 +10,7 @@ class SearchInput extends StatelessWidget {
       : super(key: key);
   final onChanged;
   final controller;
-  final Function(String)? onComplete;
+  final onComplete;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,12 +19,16 @@ class SearchInput extends StatelessWidget {
         children: [
           Expanded(
             child: Input(
+              controller: controller,
               onFieldSubmitted: (text) {
-                onComplete!(text);
+                onComplete!();
               },
               borderRadius: BorderRadius.all(Radius.circular(20)),
               height: 40.0,
               label: 'Поиск',
+              onTap: () {
+                onComplete!();
+              },
               icon: 'search_input',
             ),
           ),

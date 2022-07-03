@@ -4,8 +4,9 @@ import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:gotome/widgets/top_tab.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
+import '../state/events.dart';
 import '../widgets/tabbar_switch.dart';
 
 class ProfileOtherScreen extends StatefulWidget {
@@ -190,36 +191,6 @@ class History extends StatelessWidget {
   final fromMyProfile;
   @override
   Widget build(BuildContext context) {
-    print(fromMyProfile);
-    var item = {
-      "id": "123adssdad",
-      "author": "HotLine",
-      "authorId": "12222",
-      "author_role": "Организатор",
-      "author_info": {
-        "author_name": "Игорь",
-        "author_username": "HotLine",
-        "author_age": 24,
-        "author_country": "Россия",
-        "author_city": "Москва",
-        "author_description":
-            "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-      },
-      "name": "Катаемся на велосипедах",
-      "timedate": "03.06.2022 в 15:00",
-      "location": "Наб. Реки Фонтанки, 3",
-      "location_coords": LatLng(59.9386443693454, 30.34124824247019),
-      "description":
-          "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-      "price": "Бесплатно",
-      "members": [
-        {"username": "MajEstic21"},
-        {"username": "Alice18"},
-        {"username": "Pavkl"},
-        {"username": "ForJik"},
-      ],
-      "opened_from_profile": true
-    };
     //TODO
     return ListView(
       children: [
@@ -238,7 +209,9 @@ class History extends StatelessWidget {
             physics: ScrollPhysics(),
             itemCount: 1,
             itemBuilder: (context, index) {
-              return EventCard();
+              return EventCard(
+                item: Provider.of<Events>(context).events[index],
+              );
             }),
         SizedBox(
           height: 32,
@@ -261,7 +234,8 @@ class History extends StatelessWidget {
               return Opacity(
                   opacity: 0.35,
                   child: EventCard(
-                    item: fromMyProfile == true ? item : null,
+                    item: Provider.of<Events>(context, listen: true)
+                        .events[index],
                   ));
             }),
       ],

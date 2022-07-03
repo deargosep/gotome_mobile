@@ -8,15 +8,20 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:gotome/state/filter.dart';
 import 'package:gotome/utils/bitmap.dart';
 import 'package:gotome/utils/calculate_distance.dart';
 import 'package:gotome/utils/event.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:latlong2/latlong.dart' as l;
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 class GeoMap extends StatefulWidget {
-  const GeoMap({Key? key, this.selectedLocation}) : super(key: key);
+  const GeoMap({Key? key, this.selectedLocation, required this.dots})
+      : super(key: key);
   final selectedLocation;
+  final List<Dot> dots;
   @override
   State<GeoMap> createState() => GeoMapState();
 }
@@ -32,6 +37,8 @@ class GeoMapState extends State<GeoMap> {
 
   var currentGeo;
 
+  late List<Dot> locations;
+
   Completer<GoogleMapController> _controller = Completer();
   Location location = new Location();
   late StreamSubscription<LocationData> locationSubscription;
@@ -43,29 +50,32 @@ class GeoMapState extends State<GeoMap> {
     zoom: 14.4746,
   );
 
-  List<Event> locations = [
-    Event(
-        id: "311",
-        name: "Катаемся на велосипедах",
-        latLng: LatLng(55.7629454067186, 37.560531197596134),
-        datetime: "03.06.2022 в 15:00"),
-    Event(
-        id: "122",
-        name: "Катаемся на велосипедах2",
-        latLng: LatLng(59.9386443693454, 30.34124824247019),
-        datetime: "03.06.2022 в 15:00"),
-  ];
-
   @override
   void initState() {
     super.initState();
+    locations = [
+      ...widget.dots,
+    ];
     _manager = _initClusterManager();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      locations =
+          Provider.of<FiltersModel>(context, listen: false).filteredDots;
+      var newLocations =
+          Provider.of<FiltersModel>(context, listen: false).filteredDots;
+      print(newLocations);
+      _manager.setItems(newLocations);
+    });
     locationSubscription = location.onLocationChanged.listen((event) {
+      locations =
+          Provider.of<FiltersModel>(context, listen: false).filteredDots;
       if (mounted) {
         setState(() {
           currentGeo = LatLng(event.latitude!, event.longitude!);
         });
-        _updateUserMarker(LatLng(event.latitude!, event.longitude!));
+        var newLocations =
+            Provider.of<FiltersModel>(context, listen: false).filteredDots;
+        _manager.setItems(newLocations);
+        _updateUserMarker(l.LatLng(event.latitude!, event.longitude!));
       }
     });
   }
@@ -78,26 +88,33 @@ class GeoMapState extends State<GeoMap> {
   }
 
   ClusterManager _initClusterManager() {
-    return ClusterManager<Event>(
+    return ClusterManager<Dot>(
       locations,
       _updateMarkers,
       markerBuilder: _markerBuilder,
     );
   }
 
-  void _updateUserMarker(LatLng myGeo) {
-    var userEvent = Event(isUser: true, id: "user", latLng: myGeo);
-    var element = locations.firstWhereOrNull((element) => element.id == "user");
+  void _updateUserMarker(l.LatLng myGeo) {
+    var localLocations = [
+      ...Provider.of<FiltersModel>(context, listen: false).filteredDots
+    ];
+
+    var userEvent =
+        Dot(isUser: true, id: "user", latLng: myGeo, locationString: "HotLine");
+    var element =
+        localLocations.firstWhereOrNull((element) => element.id == "user");
     if (element == null) {
-      locations.add(userEvent);
+      localLocations.add(userEvent);
     }
     if (element != null) {
-      var index = locations.indexOf(element);
-      locations[index] = userEvent;
+      var index = localLocations.indexOf(element);
+      localLocations[index] = userEvent;
     }
-    _manager.setItems(locations);
+    _manager.setItems(localLocations);
     if (distanceId != "0") {
-      var myLoc = locations.firstWhere((element) => element.id == distanceId);
+      var myLoc =
+          localLocations.firstWhere((element) => element.id == distanceId);
       var calculatedDistance = calculateDistance(
           currentGeo.latitude,
           currentGeo.longitude,
@@ -139,20 +156,19 @@ class GeoMapState extends State<GeoMap> {
                     return Container();
                   return GoogleMap(
                       mapType: MapType.normal,
-                      initialCameraPosition: snapshot.data ==
-                                  PermissionStatus.granted ||
-                              snapshot.data == PermissionStatus.grantedLimited
+                      initialCameraPosition: widget.selectedLocation != null
                           ? CameraPosition(
-                              target: LatLng(
-                                secSnapshot.data!.latitude!,
-                                secSnapshot.data!.longitude!,
-                              ),
+                              target: LatLng(widget.selectedLocation.latitude,
+                                  widget.selectedLocation.longitude),
                               zoom: 14)
-                          : widget.selectedLocation != null
+                          : snapshot.data == PermissionStatus.granted ||
+                                  snapshot.data ==
+                                      PermissionStatus.grantedLimited
                               ? CameraPosition(
                                   target: LatLng(
-                                      widget.selectedLocation.latitude,
-                                      widget.selectedLocation.longitude),
+                                    secSnapshot.data!.latitude!,
+                                    secSnapshot.data!.longitude!,
+                                  ),
                                   zoom: 14)
                               : _moscow,
                       markers: markers,
@@ -163,6 +179,9 @@ class GeoMapState extends State<GeoMap> {
                         _manager.setMapId(controller.mapId);
                       },
                       onTap: (LatLng loc) {
+                        setState(() {
+                          distanceOverlay = false;
+                        });
                         _customInfoWindowController.hideInfoWindow!();
                       },
                       onCameraMove: (position) {
@@ -221,10 +240,9 @@ class GeoMapState extends State<GeoMap> {
     // ),
   }
 
-  Future<Marker> Function(Cluster<Event>) get _markerBuilder =>
-      (cluster) async {
+  Future<Marker> Function(Cluster<Dot>) get _markerBuilder => (cluster) async {
         List<dynamic> localList = [...cluster.items];
-        Event currentElement = localList.first;
+        Dot currentElement = localList.first;
         return Marker(
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
@@ -310,29 +328,34 @@ class GeoMapState extends State<GeoMap> {
               ? await getMarkerIcon(
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuIavvjuQFB38Se2ZNa0GkZ1Gol3C5OwioHA&usqp=CAU",
                   context)
-              : await _getMarkerBitmap(cluster.isMultiple ? 125 : 75,
+              : await _getMarkerBitmap(
+                  cluster.isMultiple ? 125 : 75, cluster.isMultiple,
                   text: cluster.isMultiple ? cluster.count.toString() : null),
         );
       };
 
-  Future<BitmapDescriptor> _getMarkerBitmap(int size, {String? text}) async {
+  Future<BitmapDescriptor> _getMarkerBitmap(int size, bool isMultiple,
+      {String? text}) async {
     if (kIsWeb) size = (size / 2).floor();
 
     final PictureRecorder pictureRecorder = PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint1 = Paint()
-      ..color = Theme.of(context).primaryColor.withOpacity(0.65);
+      ..color =
+          Theme.of(context).primaryColor.withOpacity(isMultiple ? 0.65 : 0.25);
     final Paint paint2 = Paint()..color = Theme.of(context).primaryColor;
 
+    final paint2Size = isMultiple ? 2.5 : 3.2;
+
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 3, paint2);
+    canvas.drawCircle(Offset(size / 2, size / 2), size / paint2Size, paint2);
 
     if (text != null) {
       TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
       painter.text = TextSpan(
         text: text,
         style: TextStyle(
-            fontSize: size / 2.5,
+            fontSize: size / 2,
             color: Colors.white,
             fontWeight: FontWeight.bold),
       );

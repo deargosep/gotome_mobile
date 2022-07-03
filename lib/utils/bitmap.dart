@@ -40,8 +40,8 @@ Future<BitmapDescriptor> createCustomMarkerBitmapWithNameAndImage(
   ui.PictureRecorder recorder = new ui.PictureRecorder();
   Canvas canvas = new Canvas(recorder);
 
-  final double shadowWidth = 15.0;
-  final double borderWidth = 2.5;
+  final double shadowWidth = 13.0;
+  final double borderWidth = 2.0;
   final double imageOffset = shadowWidth + borderWidth;
 
   final Radius radius = Radius.circular(size.width / 2);
@@ -61,7 +61,7 @@ Future<BitmapDescriptor> createCustomMarkerBitmapWithNameAndImage(
       shadowCirclePaint);
 
   Rect oval = Rect.fromLTWH(
-      35, 78, size.width - (imageOffset * 2), size.height - (imageOffset * 2));
+      31, 76, size.width - (imageOffset * 2), size.height - (imageOffset * 2));
 
   // ADD  PATH TO OVAL IMAGE
   canvas.clipPath(Path()..addOval(oval));

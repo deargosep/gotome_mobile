@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/state/filter.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
@@ -7,6 +8,7 @@ import 'package:gotome/widgets/checkboxes_list.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/input.dart';
 import 'package:gotome/widgets/select_list.dart';
+import 'package:provider/provider.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
@@ -16,14 +18,11 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  TextEditingController date = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
 
   var checkedGender = 'none';
-  void selectGender(gender) {
-    setState(() {
-      checkedGender = gender;
-    });
-  }
 
   Map<String, bool> checkboxes = {
     'Активный отдых': true,
@@ -39,9 +38,23 @@ class _FiltersScreenState extends State<FiltersScreen> {
     'Аренда': false,
     'Экскурсия': false,
   };
-  void changeCheckboxesState(newState) {
+
+  List<String> checkboxesList = [];
+
+  void selectGender(gender) {
     setState(() {
-      checkboxes = newState;
+      checkedGender = gender;
+    });
+  }
+
+  void changeCheckboxesState(Map<String, bool> newCheckboxesState) {
+    List<String> newCheckboxesList = [];
+    newCheckboxesState.forEach((key, value) {
+      if (value) checkboxesList.add(key);
+    });
+    setState(() {
+      checkboxes = newCheckboxesState;
+      checkboxesList = newCheckboxesList;
     });
   }
 
@@ -70,12 +83,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   ),
                   Input(
                     label: 'Страна',
+                    controller: countryController,
                   ),
                   SizedBox(
                     height: 16,
                   ),
                   Input(
                     label: 'Город',
+                    controller: cityController,
                   ),
                   SizedBox(
                     height: 16,
@@ -83,9 +98,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   Input(
                     label: 'Дата проведения',
                     icon: 'calendar',
-                    controller: date,
+                    controller: dateController,
                     onTapCalendar: (text) {
-                      date.text = text;
+                      dateController.text = text;
                     },
                   ),
                   SizedBox(
@@ -108,6 +123,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   SizedBox(
                     height: 32,
                   ),
+                  Text(
+                    'Категории',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
                   CheckboxesList(
                     checkboxes: checkboxes,
                     changeCheckbox: changeCheckboxesState,
@@ -122,6 +147,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
               child: BrandButton(
                 text: 'Применить',
                 onPressed: () {
+                  Meta meta = Meta(
+                      city: cityController.text,
+                      date: dateController.text,
+                      gender: checkedGender,
+                      country: countryController.text);
+                  Provider.of<FiltersModel>(context, listen: false)
+                      .setFilters(checkboxesList);
+                  Provider.of<FiltersModel>(context, listen: false)
+                      .setMeta(meta);
                   Get.back();
                 },
               ),

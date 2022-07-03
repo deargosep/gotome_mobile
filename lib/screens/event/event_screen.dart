@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/state/events.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 
 class EventScreen extends StatelessWidget {
   EventScreen({Key? key}) : super(key: key);
-  final Map item = Get.arguments;
+  final EventType item = Get.arguments;
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       bottomNavigationBar: BottomPanel(
-        height: item["author"] == 'HotLine' ? 146.0 : 83.0,
-        child: item["author"] == 'HotLine'
+        height: item.author.username == 'HotLine' ? 146.0 : 83.0,
+        child: item.author.username == 'HotLine'
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -21,9 +22,10 @@ class EventScreen extends StatelessWidget {
                     text: 'Список желающих',
                     type: 'primary',
                     onPressed: () {
-                      var localItem = {...item};
-                      localItem["isOwner"] = true;
-                      Get.toNamed('/members', arguments: localItem);
+                      Get.toNamed('/members', arguments: {
+                        "members": item.members,
+                        "isChat": false
+                      });
                     },
                   ),
                   BrandButton(
@@ -81,7 +83,7 @@ class EventScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          item['name'] ?? "",
+                          item.name ?? "",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -102,7 +104,7 @@ class EventScreen extends StatelessWidget {
                             width: 12,
                           ),
                           Text(
-                            item["timedate"] ?? "",
+                            item.timedate ?? "",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -128,7 +130,7 @@ class EventScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item["location"] ?? "",
+                                item.location ?? "",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -139,7 +141,7 @@ class EventScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Get.toNamed('/search/map',
-                                      arguments: item["location_coords"]);
+                                      arguments: item.location_coords);
                                 },
                                 child: Text(
                                   'Смотреть на карте',
@@ -167,7 +169,7 @@ class EventScreen extends StatelessWidget {
                             width: 12,
                           ),
                           Text(
-                            item["price"] ?? "",
+                            item.price ?? "",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -194,7 +196,7 @@ class EventScreen extends StatelessWidget {
                         height: 16,
                       ),
                       Text(
-                        item['description'],
+                        item.description,
                         style:
                             TextStyle(fontSize: 14, color: Color(0xFF6A7592)),
                       )
@@ -219,7 +221,7 @@ class EventScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Get.toNamed('/profile_others',
-                              arguments: item["author_info"]);
+                              arguments: item.author);
                         },
                         child: Row(
                           children: [
@@ -235,7 +237,7 @@ class EventScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  item["author"]!,
+                                  item.author.username,
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -247,7 +249,7 @@ class EventScreen extends StatelessWidget {
                                   height: 4,
                                 ),
                                 Text(
-                                  item["author_role"]!,
+                                  "Организатор",
                                   style: TextStyle(
                                       color: Color(0xFF9FA6BA), fontSize: 14),
                                 )
@@ -302,7 +304,10 @@ class EventScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.toNamed('/members', arguments: item);
+                              Get.toNamed('/members', arguments: {
+                                "members": item.members,
+                                "isChat": false
+                              });
                             },
                             child: Row(
                               children: [

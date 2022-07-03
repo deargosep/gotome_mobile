@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:gotome/state/filter.dart';
 import 'package:gotome/utils/bottombar_wrap.dart';
+import 'package:gotome/utils/event.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
 import 'package:gotome/widgets/tabbar_switch.dart';
+import 'package:provider/provider.dart';
 
+import '../../../state/events.dart';
 import '../../../widgets/geomap.dart';
 
 class MapScreen extends StatefulWidget {
@@ -16,6 +20,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   late TabController controller;
+  TextEditingController textController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -29,10 +34,23 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    void filterDots(query) {
-      print(query);
+    List<Dot> dots = Provider.of<Events>(context, listen: true)
+        .events
+        .map((e) => e.dot)
+        .toList();
+    // List categories = Provider.of<FiltersModel>(context).categories;
+    // var meta = Provider.of<FiltersModel>(context).meta;
+    void filterDots() {
+      Provider.of<FiltersModel>(context, listen: false)
+          .filterDots(dots, textController.text);
+      // return Provider.of<FiltersModel>(context, listen: false)
+      //         .filteredDots
+      //         .isEmpty
+      //     ? dots
+      //     : Provider.of<FiltersModel>(context, listen: true).filteredDots;
     }
 
+    filterDots();
     return Scaffold(
       bottomNavigationBar: BottomBarWrap(
         currentTab: 1,
@@ -63,7 +81,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                             SizedBox(
                               height: 24,
                             ),
-                            SearchInput(onComplete: filterDots)
+                            SearchInput(
+                              onComplete: filterDots,
+                              controller: textController,
+                            )
                           ],
                         ),
                       ),
@@ -76,9 +97,21 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
           Expanded(
               child: coords != null && coords != ''
                   ? GeoMap(
+                      dots: Provider.of<FiltersModel>(context, listen: true)
+                              .filteredDots
+                              .isEmpty
+                          ? dots
+                          : Provider.of<FiltersModel>(context, listen: true)
+                              .filteredDots,
                       selectedLocation: coords,
                     )
-                  : GeoMap()
+                  : GeoMap(
+                      dots: Provider.of<FiltersModel>(context, listen: true)
+                              .filteredDots
+                              .isEmpty
+                          ? dots
+                          : Provider.of<FiltersModel>(context, listen: true)
+                              .filteredDots)
               // GeoMap(locations: locationList, withLocation: false)
               )
         ],

@@ -55,6 +55,7 @@ dependencies:
   fluster: ^1.2.0
   google_geocoding: ^0.2.0
   dio: ^4.0.6
+  provider: ^6.0.3
 
 dev_dependencies:
   icons_launcher: ^1.1.9
