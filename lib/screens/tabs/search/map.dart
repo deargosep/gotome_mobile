@@ -43,6 +43,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     void filterDots() {
       Provider.of<FiltersModel>(context, listen: false)
           .filterDots(dots, textController.text);
+      print('tappd');
       // return Provider.of<FiltersModel>(context, listen: false)
       //         .filteredDots
       //         .isEmpty
@@ -84,6 +85,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                             SearchInput(
                               onComplete: filterDots,
                               controller: textController,
+                              onTap: () {
+                                filterDots();
+                              },
                             )
                           ],
                         ),

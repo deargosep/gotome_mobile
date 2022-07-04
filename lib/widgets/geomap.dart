@@ -60,10 +60,8 @@ class GeoMapState extends State<GeoMap> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       locations =
           Provider.of<FiltersModel>(context, listen: false).filteredDots;
-      var newLocations =
-          Provider.of<FiltersModel>(context, listen: false).filteredDots;
-      print(newLocations);
-      _manager.setItems(newLocations);
+      print(locations);
+      _manager.setItems(locations);
     });
     locationSubscription = location.onLocationChanged.listen((event) {
       locations =
@@ -96,10 +94,8 @@ class GeoMapState extends State<GeoMap> {
   }
 
   void _updateUserMarker(l.LatLng myGeo) {
-    var localLocations = [
-      ...Provider.of<FiltersModel>(context, listen: false).filteredDots
-    ];
-
+    var localLocations =
+        Provider.of<FiltersModel>(context, listen: false).filteredDots;
     var userEvent =
         Dot(isUser: true, id: "user", latLng: myGeo, locationString: "HotLine");
     var element =
@@ -142,14 +138,12 @@ class GeoMapState extends State<GeoMap> {
     return FutureBuilder<PermissionStatus>(
         future: location.requestPermission(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return Container();
           return Stack(
             children: [
               FutureBuilder<LocationData>(
                 future: location.getLocation(),
                 builder: (context, secSnapshot) {
                   print(secSnapshot.data);
-                  print(snapshot.data);
                   if (!secSnapshot.hasData &&
                       (snapshot.data == PermissionStatus.granted ||
                           snapshot.data == PermissionStatus.grantedLimited))
@@ -160,7 +154,7 @@ class GeoMapState extends State<GeoMap> {
                           ? CameraPosition(
                               target: LatLng(widget.selectedLocation.latitude,
                                   widget.selectedLocation.longitude),
-                              zoom: 14)
+                              zoom: 10)
                           : snapshot.data == PermissionStatus.granted ||
                                   snapshot.data ==
                                       PermissionStatus.grantedLimited
@@ -169,7 +163,7 @@ class GeoMapState extends State<GeoMap> {
                                     secSnapshot.data!.latitude!,
                                     secSnapshot.data!.longitude!,
                                   ),
-                                  zoom: 14)
+                                  zoom: 10)
                               : _moscow,
                       markers: markers,
                       onMapCreated: (GoogleMapController controller) {

@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 description:
                     "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
               ),
-              name: "Катаемся на велосипедах",
+              name: "Катаемся на барсуках",
               timedate: "03.06.2022 в 15:00",
               location: "Наб. Реки Фонтанки, 3",
               location_coords: LatLng(59.9386443693454, 30.34124824247019),
@@ -45,15 +45,16 @@ class HomeScreen extends StatelessWidget {
                 {"username": "ForJik"},
               ],
               dot: Dot(
-                latLng: LatLng(59.9386443693454, 30.34124824247019),
-                id: "123adssdad",
-                name: "Катаемся на барсуках",
-                country: "Россия",
-                city: "Москва",
-                locationString: "Наб. Реки Фонтанки, 3",
-                tags: ["Активный отдых"],
-                datetime: "03.06.2022 в 15:00",
-              )),
+                  latLng: LatLng(59.9386443693454, 30.34124824247019),
+                  id: "123adssdad",
+                  name: "Катаемся на барсуках",
+                  country: "Россия",
+                  city: "Москва",
+                  locationString: "Наб. Реки Фонтанки, 3",
+                  tags: ["Активный отдых"],
+                  gender: 'female',
+                  datetime: "03.06.2022 в 15:00",
+                  date: '03.06.2022')),
           EventType(
               id: "123adssdad",
               author: Author(
@@ -80,15 +81,16 @@ class HomeScreen extends StatelessWidget {
                 {"username": "ForJik"},
               ],
               dot: Dot(
-                latLng: LatLng(55.76196961326696, 37.627123975766146),
-                id: "123adssdad",
-                name: "Катаемся на велосипедах2",
-                country: "Россия",
-                city: "Москва",
-                locationString: "Наб. Реки Фонтанки, 3",
-                tags: ["Активный отдых", "Путешествия"],
-                datetime: "03.06.2022 в 15:00",
-              ))
+                  latLng: LatLng(55.76196961326696, 37.627123975766146),
+                  id: "123adssdad",
+                  name: "Катаемся на велосипедах2",
+                  country: "Россия",
+                  city: "Москва",
+                  gender: 'male',
+                  locationString: "Наб. Реки Фонтанки, 3",
+                  tags: ["Активный отдых", "Путешествия"],
+                  datetime: "01.06.2022 в 15:00",
+                  date: '01.06.2022'))
         ]))
       ],
     );
@@ -101,7 +103,7 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Events>(context).setEvents(initList);
+    Provider.of<Events>(context, listen: false).setEvents(initList);
     var list = Provider.of<Events>(context, listen: true).events;
     if (list.isNotEmpty) {
       return ListView.builder(

@@ -9,7 +9,6 @@ class Events extends ChangeNotifier {
 
   void setEvents(List<EventType> events) {
     _events = events;
-    notifyListeners();
   }
 
   /// Removes all items from the cart.

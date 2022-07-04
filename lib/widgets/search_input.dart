@@ -6,11 +6,12 @@ import 'input.dart';
 
 class SearchInput extends StatelessWidget {
   const SearchInput(
-      {Key? key, this.onChanged, this.controller, this.onComplete})
+      {Key? key, this.onChanged, this.controller, this.onComplete, this.onTap})
       : super(key: key);
   final onChanged;
   final controller;
   final onComplete;
+  final onTap;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -44,7 +45,7 @@ class SearchInput extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(16))),
             child: GestureDetector(
               onTap: () {
-                Get.toNamed('/filters');
+                Get.toNamed('/filters', arguments: onTap);
               },
               child: BrandIcon(
                 icon: 'filters',

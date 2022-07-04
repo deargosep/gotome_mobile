@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/brand_checkbox_listtile.dart';
 import 'package:gotome/state/filter.dart';
+import 'package:gotome/state/user.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
-import 'package:gotome/widgets/checkboxes_list.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/input.dart';
 import 'package:gotome/widgets/select_list.dart';
@@ -23,21 +24,32 @@ class _FiltersScreenState extends State<FiltersScreen> {
   TextEditingController cityController = TextEditingController();
 
   var checkedGender = 'none';
+  @override
+  void initState() {
+    super.initState();
+    checkedGender =
+        Provider.of<FiltersModel>(context, listen: false).meta.gender;
+    countryController.text =
+        Provider.of<User>(context, listen: false).user.country;
+    cityController.text = Provider.of<User>(context, listen: false).user.city;
+    // dateController.text =
+    //     '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}';
+  }
 
-  Map<String, bool> checkboxes = {
-    'Активный отдых': true,
-    'Спорт': false,
-    'Кино': false,
-    'Концерт': false,
-    'Культура': false,
-    'Образование': true,
-    'Прогулка': false,
-    'Клуб/бар/тусовка': false,
-    'Игра/квест': false,
-    'Путешествия': false,
-    'Аренда': false,
-    'Экскурсия': false,
-  };
+  List<String> checkboxes = [
+    'Активный отдых',
+    'Спорт',
+    'Кино',
+    'Концерт',
+    'Культура',
+    'Образование',
+    'Прогулка',
+    'Клуб/бар/тусовка',
+    'Игра/квест',
+    'Путешествия',
+    'Аренда',
+    'Экскурсия'
+  ];
 
   List<String> checkboxesList = [];
 
@@ -47,10 +59,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
     });
   }
 
-  void changeCheckboxesState(Map<String, bool> newCheckboxesState) {
+  void changeCheckboxesState(List<String> newCheckboxesState) {
     List<String> newCheckboxesList = [];
-    newCheckboxesState.forEach((key, value) {
-      if (value) checkboxesList.add(key);
+    newCheckboxesState.forEach((value) {
+      checkboxesList.add(value);
     });
     setState(() {
       checkboxes = newCheckboxesState;
@@ -133,7 +145,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   SizedBox(
                     height: 24,
                   ),
-                  CheckboxesList(
+                  _CheckboxesList(
                     checkboxes: checkboxes,
                     changeCheckbox: changeCheckboxesState,
                   ),
@@ -156,11 +168,59 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       .setFilters(checkboxesList);
                   Provider.of<FiltersModel>(context, listen: false)
                       .setMeta(meta);
+                  Get.arguments();
                   Get.back();
                 },
               ),
             )
           ],
         ));
+  }
+}
+
+class _CheckboxesList extends StatelessWidget {
+  const _CheckboxesList(
+      {Key? key, required this.checkboxes, required this.changeCheckbox})
+      : super(key: key);
+  final List<String> checkboxes;
+  final changeCheckbox;
+  @override
+  Widget build(BuildContext context) {
+    var enabledCheckboxes = Provider.of<FiltersModel>(context).categories;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListView.builder(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            itemCount: checkboxes.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  BrandCheckboxListTile(
+                      title: checkboxes.elementAt(index),
+                      value: enabledCheckboxes
+                          .contains(checkboxes.elementAt(index)),
+                      onChanged: (title, val) {
+                        var localCheckboxes = [...enabledCheckboxes];
+                        if (val != false)
+                          localCheckboxes.add(title);
+                        else
+                          localCheckboxes.remove(title);
+                        Provider.of<FiltersModel>(context, listen: false)
+                            .setFilters(localCheckboxes);
+                        // localCheckboxes.update(
+                        //     checkboxes.keys.elementAt(index), (value) => val);
+                        // changeCheckbox(localCheckboxes);
+                      }),
+                  SizedBox(
+                    height: 16,
+                  )
+                ],
+              );
+            })
+      ],
+    );
   }
 }

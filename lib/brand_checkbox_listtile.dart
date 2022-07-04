@@ -18,7 +18,7 @@ class BrandCheckboxListTile extends StatelessWidget {
         BrandCheckbox(
           checked: value,
           onChanged: () {
-            onChanged(!value);
+            onChanged(title, !value);
           },
         ),
         SizedBox(

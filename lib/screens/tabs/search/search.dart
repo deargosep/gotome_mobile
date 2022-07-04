@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/tabs/search/map.dart';
+import 'package:gotome/state/filter.dart';
 import 'package:gotome/widgets/event_card.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/search_input.dart';
@@ -104,65 +105,69 @@ class _SearchScreenState extends State<SearchScreen>
   }
 }
 
-class Search extends StatelessWidget {
+class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
+
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var item = Provider.of<Events>(context, listen: true).events[0];
+    Provider.of<FiltersModel>(context, listen: false).filterEvents(
+        Provider.of<Events>(context, listen: false).events,
+        textController.text);
+    List<Widget> generateList() {
+      return Provider.of<Events>(context).events.map((e) {
+        return Column(
+          children: [
+            EventCard(item: e),
+            SizedBox(
+              height: 24,
+            )
+          ],
+        );
+      }).toList();
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SearchInput(),
+          SearchInput(
+            controller: textController,
+            onComplete: () {
+              Provider.of<FiltersModel>(context, listen: false).filterEvents(
+                  Provider.of<Events>(context, listen: false).events,
+                  textController.text);
+            },
+          ),
           SizedBox(
             height: 24,
           ),
-          Expanded(
-            // TODO: turn into builder, when there will be backend
-            child: ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                EventCard(item: item),
-                SizedBox(
-                  height: 24,
-                ),
-                EventCard(item: item),
-                SizedBox(
-                  height: 24,
-                ),
-                EventCard(item: item),
-                SizedBox(
-                  height: 24,
-                ),
-                EventCard(item: item),
-                SizedBox(
-                  height: 24,
-                ),
-                EventCard(item: item),
-                SizedBox(
-                  height: 24,
-                ),
-              ],
-            ),
-          )
-          // ListView.builder(
-          //     // shrinkWrap: true,
-          //     physics: NeverScrollableScrollPhysics(),
-          //     itemCount: 2,
-          //     itemBuilder: (context, index) {
-          //       return Column(
-          //         children: [
-          //           EventCard(item: item),
-          //           SizedBox(
-          //             height: 24,
-          //           )
-          //         ],
-          //       );
-          //     })
+          Expanded(child: Consumer<FiltersModel>(
+            builder: (context, eventsm, child) {
+              return ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: eventsm.filteredEvents.map((e) {
+                  return Column(
+                    children: [
+                      EventCard(item: e),
+                      SizedBox(
+                        height: 24,
+                      )
+                    ],
+                  );
+                }).toList(),
+              );
+            },
+          ))
         ],
       ),
     );

@@ -9,9 +9,11 @@ class Dot with ClusterItem {
   final String country;
   final String city;
   final String datetime;
+  final date;
   List<String> tags;
   final String locationString;
   final l.LatLng latLng;
+  final gender;
 
   Dot(
       {this.id = '',
@@ -20,9 +22,11 @@ class Dot with ClusterItem {
       this.country = '',
       this.city = '',
       this.datetime = '',
+      this.date = '',
       List<String>? tags,
       required this.latLng,
-      required this.locationString})
+      required this.locationString,
+      this.gender = 'none'})
       : tags = tags ?? [];
 
   @override
