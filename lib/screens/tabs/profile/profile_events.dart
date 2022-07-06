@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:gotome/screens/profile_other.dart';
 import 'package:gotome/widgets/header.dart';
 
+import '../../../state/events.dart';
+
 class ProfileEventsScreen extends StatelessWidget {
   const ProfileEventsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var user = Get.arguments;
+    final Author user = Get.arguments;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +40,7 @@ class ProfileEventsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user["username"],
+                          user.username,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -48,7 +50,7 @@ class ProfileEventsScreen extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Дата регистрации: ${user["registration_date"]}",
+                          "Дата регистрации: ${user.registration_date}",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -64,14 +66,17 @@ class ProfileEventsScreen extends StatelessWidget {
               ],
             ),
           ),
-          Divider(thickness: 2, color: Color(0xFFF8F8F8),),
+          Divider(
+            thickness: 2,
+            color: Color(0xFFF8F8F8),
+          ),
           SizedBox(
             height: 32,
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: History(fromMyProfile: true),
+              child: History(items: user.events),
             ),
           )
         ],

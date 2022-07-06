@@ -32,11 +32,11 @@ class EventCard extends StatelessWidget {
               // Header
               GestureDetector(
                 onTap: () {
-                  Get.toNamed('/profile_others', arguments: item.author.id);
+                  Get.toNamed('/profile_others', arguments: item.author);
                 },
                 child: GestureDetector(
                   onTap: () {
-                    Get.toNamed('/profile_others', arguments: item);
+                    Get.toNamed('/profile_others', arguments: item.author);
                   },
                   child: Row(
                     children: [

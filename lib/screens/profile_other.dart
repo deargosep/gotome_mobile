@@ -18,7 +18,7 @@ class ProfileOtherScreen extends StatefulWidget {
 
 class _ProfileOtherScreenState extends State<ProfileOtherScreen>
     with TickerProviderStateMixin {
-  final author = Get.arguments;
+  final Author author = Get.arguments;
   late TabController controller;
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _ProfileOtherScreenState extends State<ProfileOtherScreen>
               height: 24,
             ),
             Text(
-              author["author_username"]!,
+              author.username,
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -64,7 +64,6 @@ class _ProfileOtherScreenState extends State<ProfileOtherScreen>
               height: 24,
             ),
             TabsSwitch(
-              controller: controller,
               children: [
                 TopTab(
                   text: 'Информация',
@@ -82,7 +81,9 @@ class _ProfileOtherScreenState extends State<ProfileOtherScreen>
               Info(
                 author: author,
               ),
-              History()
+              History(
+                items: author.events,
+              )
             ])),
           ],
         ),
@@ -93,7 +94,7 @@ class _ProfileOtherScreenState extends State<ProfileOtherScreen>
 
 class Info extends StatelessWidget {
   const Info({Key? key, required this.author}) : super(key: key);
-  final author;
+  final Author author;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -107,7 +108,7 @@ class Info extends StatelessWidget {
           height: 8,
         ),
         Text(
-          author["author_name"]!,
+          author.name,
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
@@ -124,7 +125,7 @@ class Info extends StatelessWidget {
           height: 8,
         ),
         Text(
-          author["author_age"].toString(),
+          author.age.toString(),
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
@@ -141,7 +142,7 @@ class Info extends StatelessWidget {
           height: 8,
         ),
         Text(
-          author["author_country"],
+          author.country,
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
@@ -158,7 +159,7 @@ class Info extends StatelessWidget {
           height: 8,
         ),
         Text(
-          author["author_city"],
+          author.city,
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
@@ -175,7 +176,7 @@ class Info extends StatelessWidget {
           height: 8,
         ),
         Text(
-          author["author_description"]!,
+          author.description,
           style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16,
@@ -187,8 +188,8 @@ class Info extends StatelessWidget {
 }
 
 class History extends StatelessWidget {
-  const History({Key? key, this.fromMyProfile}) : super(key: key);
-  final fromMyProfile;
+  const History({Key? key, required this.items}) : super(key: key);
+  final List<EventType> items;
   @override
   Widget build(BuildContext context) {
     //TODO
@@ -207,11 +208,13 @@ class History extends StatelessWidget {
         ListView.builder(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemCount: 1,
+            itemCount: items.length,
             itemBuilder: (context, index) {
-              return EventCard(
-                item: Provider.of<Events>(context).events[index],
-              );
+              if (!items[index].isComplete)
+                return EventCard(
+                  item: items[index],
+                );
+              return Container();
             }),
         SizedBox(
           height: 32,
@@ -229,14 +232,16 @@ class History extends StatelessWidget {
         ListView.builder(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemCount: 1,
+            itemCount: items.length,
             itemBuilder: (context, index) {
-              return Opacity(
-                  opacity: 0.35,
-                  child: EventCard(
-                    item: Provider.of<Events>(context, listen: true)
-                        .events[index],
-                  ));
+              if (items[index].isComplete)
+                return Opacity(
+                    opacity: 0.35,
+                    child: EventCard(
+                      item: Provider.of<Events>(context, listen: true)
+                          .events[index],
+                    ));
+              return Container();
             }),
       ],
     );

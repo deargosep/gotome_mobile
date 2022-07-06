@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/profile_other.dart';
+import 'package:gotome/state/events.dart';
 import 'package:gotome/utils/bottombar_wrap.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/header.dart';
@@ -10,7 +11,7 @@ class ProfileInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Get.arguments;
+    final Author user = Get.arguments;
     return CustomScaffold(
       bottomNavigationBar: BottomBarWrap(currentTab: 3),
       noPadding: true,
@@ -42,7 +43,7 @@ class ProfileInfoScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user["username"],
+                          user.username,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -52,7 +53,7 @@ class ProfileInfoScreen extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Дата регистрации: ${user["registration_date"]}",
+                          "Дата регистрации: ${user.registration_date}",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,

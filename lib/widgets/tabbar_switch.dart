@@ -7,13 +7,13 @@ class TabsSwitch extends StatefulWidget {
       this.labels,
       this.children,
       this.initialIndex,
-      required this.controller,
+      this.controller,
       this.mockupOnly})
       : super(key: key);
   final labels;
   final children;
   final initialIndex;
-  final TabController controller;
+  final TabController? controller;
   final mockupOnly;
   @override
   State<TabsSwitch> createState() => _TabsSwitchState();

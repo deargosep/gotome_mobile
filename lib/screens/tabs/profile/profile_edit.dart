@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/state/events.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
@@ -15,10 +16,10 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   final TextEditingController birthday =
-      TextEditingController(text: Get.arguments["birthday"]);
+      TextEditingController(text: Get.arguments.birthday);
   @override
   Widget build(BuildContext context) {
-    final user = Get.arguments;
+    final Author user = Get.arguments;
     return CustomScaffold(
       noPadding: true,
       scrollable: true,
@@ -51,7 +52,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user["username"],
+                          user.username,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -61,7 +62,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           height: 8,
                         ),
                         Text(
-                          "Дата регистрации: ${user["registration_date"]}",
+                          "Дата регистрации: ${user.registration_date}",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -86,13 +87,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   height: 32,
                 ),
                 Input(
-                  defaultText: user["name"],
+                  defaultText: user.name,
                 ),
                 SizedBox(
                   height: 16,
                 ),
                 Input(
-                  defaultText: user["gender"],
+                  defaultText: user.gender,
                 ),
                 SizedBox(
                   height: 16,
@@ -103,26 +104,26 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   onTapCalendar: (value) {
                     birthday.text = value;
                   },
-                  defaultText: user["birthday"],
+                  defaultText: user.birthday,
                 ),
                 SizedBox(
                   height: 16,
                 ),
                 Input(
-                  defaultText: user["country"],
+                  defaultText: user.country,
                 ),
                 SizedBox(
                   height: 16,
                 ),
                 Input(
-                  defaultText: user["city"],
+                  defaultText: user.city,
                 ),
                 SizedBox(
                   height: 16,
                 ),
                 Input(
                   expanded: true,
-                  defaultText: user["description"],
+                  defaultText: user.description,
                 ),
               ],
             ),
