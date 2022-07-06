@@ -117,7 +117,6 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    var item = Provider.of<Events>(context, listen: true).events[0];
     void filterEvents() {
       Provider.of<FiltersModel>(context, listen: false).filterEvents(
           Provider.of<Events>(context, listen: false).events,
@@ -125,6 +124,7 @@ class _SearchState extends State<Search> {
     }
 
     filterEvents();
+
     List<Widget> generateList() {
       return Provider.of<Events>(context).events.map((e) {
         return Column(

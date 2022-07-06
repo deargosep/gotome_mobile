@@ -64,8 +64,9 @@ class GeoMapState extends State<GeoMap> {
       _manager.setItems(locations);
     });
     locationSubscription = location.onLocationChanged.listen((event) {
-      locations =
-          Provider.of<FiltersModel>(context, listen: false).filteredDots;
+      if (currentGeo == LatLng(event.latitude!, event.longitude!)) return;
+      // locations =
+      //     Provider.of<FiltersModel>(context, listen: false).filteredDots;
       if (mounted) {
         setState(() {
           currentGeo = LatLng(event.latitude!, event.longitude!);
@@ -127,10 +128,13 @@ class GeoMapState extends State<GeoMap> {
     Set<Marker> markers,
   ) async {
     print('Updated ${markers.length} markers');
-    if (mounted)
+    if (mounted) {
+      // _customInfoWindowController.hideInfoWindow!();
       setState(() {
         this.markers = markers;
+        // distanceOverlay = false;
       });
+    }
   }
 
   @override
@@ -150,6 +154,7 @@ class GeoMapState extends State<GeoMap> {
                     return Container();
                   return GoogleMap(
                       mapType: MapType.normal,
+                      myLocationButtonEnabled: false,
                       initialCameraPosition: widget.selectedLocation != null
                           ? CameraPosition(
                               target: LatLng(widget.selectedLocation.latitude,
@@ -169,8 +174,15 @@ class GeoMapState extends State<GeoMap> {
                       onMapCreated: (GoogleMapController controller) {
                         _customInfoWindowController.googleMapController =
                             controller;
-                        _controller.complete(controller);
+                        if (!_controller.isCompleted) {
+                          _controller.complete(controller);
+                        } else {}
                         _manager.setMapId(controller.mapId);
+                        controller.animateCamera(CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                                target: LatLng(secSnapshot.data!.latitude!,
+                                    secSnapshot.data!.longitude!),
+                                zoom: 10)));
                       },
                       onTap: (LatLng loc) {
                         setState(() {
@@ -185,13 +197,11 @@ class GeoMapState extends State<GeoMap> {
                       onCameraIdle: _manager.updateMap);
                 },
               ),
-              Container(
-                child: CustomInfoWindow(
-                  controller: _customInfoWindowController,
-                  height: 60,
-                  width: 171,
-                  offset: 50,
-                ),
+              CustomInfoWindow(
+                controller: _customInfoWindowController,
+                height: 60,
+                width: 171,
+                offset: 50,
               ),
               distanceOverlay != true
                   ? Container()
@@ -241,6 +251,10 @@ class GeoMapState extends State<GeoMap> {
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
           onTap: () {
+            _customInfoWindowController.hideInfoWindow!();
+            setState(() {
+              distanceOverlay = false;
+            });
             if (!cluster.isMultiple &&
                 localList.firstWhere((element) => element.isUser,
                         orElse: () => null) ==

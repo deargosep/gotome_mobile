@@ -105,5 +105,9 @@ class Meta {
   String date;
   String gender;
 
-  Meta({this.city = '', this.date = '', this.gender = '', this.country = ''});
+  Meta(
+      {this.city = '',
+      this.date = '',
+      this.gender = 'none',
+      this.country = ''});
 }

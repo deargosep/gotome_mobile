@@ -79,6 +79,31 @@ class _FiltersScreenState extends State<FiltersScreen> {
     };
     return CustomScaffold(
         noPadding: true,
+        appBar: AppHeader(
+          text: 'Фильтр',
+          onTap: () {
+            Provider.of<FiltersModel>(context, listen: false).setFilters([]);
+            Provider.of<FiltersModel>(context, listen: false).setMeta(Meta());
+          },
+        ),
+        bottomNavigationBar: BottomPanel(
+          child: BrandButton(
+            text: 'Применить',
+            onPressed: () {
+              Meta meta = Meta(
+                  city: cityController.text,
+                  date: dateController.text,
+                  gender: checkedGender,
+                  country: countryController.text);
+              // DIsabled because setting is done already
+              // Provider.of<FiltersModel>(context, listen: false)
+              //     .setFilters(checkboxesList);
+              Provider.of<FiltersModel>(context, listen: false).setMeta(meta);
+              Get.arguments();
+              Get.back();
+            },
+          ),
+        ),
         body: ListView(
           children: [
             Padding(
@@ -86,10 +111,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Header(
-                    withPadding: false,
-                    text: 'Фильтр',
-                  ),
                   SizedBox(
                     height: 32,
                   ),
@@ -155,24 +176,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 ],
               ),
             ),
-            BottomPanel(
-              child: BrandButton(
-                text: 'Применить',
-                onPressed: () {
-                  Meta meta = Meta(
-                      city: cityController.text,
-                      date: dateController.text,
-                      gender: checkedGender,
-                      country: countryController.text);
-                  Provider.of<FiltersModel>(context, listen: false)
-                      .setFilters(checkboxesList);
-                  Provider.of<FiltersModel>(context, listen: false)
-                      .setMeta(meta);
-                  Get.arguments();
-                  Get.back();
-                },
-              ),
-            )
           ],
         ));
   }
