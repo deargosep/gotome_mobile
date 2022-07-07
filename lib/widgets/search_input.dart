@@ -34,7 +34,7 @@ class SearchInput extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 8,
+            width: 20,
           ),
           Container(
             height: 40,

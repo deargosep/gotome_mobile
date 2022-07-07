@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/brand_checkbox_listtile.dart';
 import 'package:gotome/state/filter.dart';
-import 'package:gotome/state/user.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
@@ -30,8 +29,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
     checkedGender =
         Provider.of<FiltersModel>(context, listen: false).meta.gender;
     countryController.text =
-        Provider.of<User>(context, listen: false).user.country;
-    cityController.text = Provider.of<User>(context, listen: false).user.city;
+        Provider.of<FiltersModel>(context, listen: false).meta.country;
+    cityController.text =
+        Provider.of<FiltersModel>(context, listen: false).meta.city;
     // dateController.text =
     //     '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}';
   }
@@ -111,9 +111,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 32,
-                  ),
+                  // SizedBox(
+                  //   height: 0,
+                  // ),
                   Input(
                     label: 'Страна',
                     controller: countryController,
@@ -202,6 +202,7 @@ class _CheckboxesList extends StatelessWidget {
               return Column(
                 children: [
                   BrandCheckboxListTile(
+                      use_title: true,
                       title: checkboxes.elementAt(index),
                       value: enabledCheckboxes
                           .contains(checkboxes.elementAt(index)),

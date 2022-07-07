@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:provider/provider.dart';
 
+import '../../../state/events.dart';
 import '../../../widgets/input.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -269,6 +271,9 @@ class _Header extends StatelessWidget {
               onTap: () {
                 Get.toNamed('/members', arguments: {
                   // "id":asdsad,
+                  "members": Provider.of<Events>(context, listen: false)
+                      .events[0]
+                      .members,
                   "isChat": true,
                 });
               },

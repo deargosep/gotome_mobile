@@ -159,7 +159,7 @@ class GeoMapState extends State<GeoMap> {
                           ? CameraPosition(
                               target: LatLng(widget.selectedLocation.latitude,
                                   widget.selectedLocation.longitude),
-                              zoom: 10)
+                              zoom: 14)
                           : snapshot.data == PermissionStatus.granted ||
                                   snapshot.data ==
                                       PermissionStatus.grantedLimited
@@ -168,7 +168,7 @@ class GeoMapState extends State<GeoMap> {
                                     secSnapshot.data!.latitude!,
                                     secSnapshot.data!.longitude!,
                                   ),
-                                  zoom: 10)
+                                  zoom: 14)
                               : _moscow,
                       markers: markers,
                       onMapCreated: (GoogleMapController controller) {
@@ -178,11 +178,12 @@ class GeoMapState extends State<GeoMap> {
                           _controller.complete(controller);
                         } else {}
                         _manager.setMapId(controller.mapId);
-                        controller.animateCamera(CameraUpdate.newCameraPosition(
-                            CameraPosition(
-                                target: LatLng(secSnapshot.data!.latitude!,
-                                    secSnapshot.data!.longitude!),
-                                zoom: 10)));
+                        if (widget.selectedLocation == null)
+                          controller.animateCamera(
+                              CameraUpdate.newCameraPosition(CameraPosition(
+                                  target: LatLng(secSnapshot.data!.latitude!,
+                                      secSnapshot.data!.longitude!),
+                                  zoom: 14)));
                       },
                       onTap: (LatLng loc) {
                         setState(() {
@@ -250,6 +251,15 @@ class GeoMapState extends State<GeoMap> {
         return Marker(
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
+          icon: !cluster.isMultiple &&
+                  localList.firstWhere((el) => el.isUser, orElse: () => null) !=
+                      null
+              ? await getMarkerIcon(
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuIavvjuQFB38Se2ZNa0GkZ1Gol3C5OwioHA&usqp=CAU",
+                  context)
+              : await _getMarkerBitmap(
+                  cluster.isMultiple ? 170 : 75, cluster.isMultiple,
+                  text: cluster.isMultiple ? cluster.count.toString() : null),
           onTap: () {
             _customInfoWindowController.hideInfoWindow!();
             setState(() {
@@ -330,15 +340,6 @@ class GeoMapState extends State<GeoMap> {
               }
             }
           },
-          icon: !cluster.isMultiple &&
-                  localList.firstWhere((el) => el.isUser, orElse: () => null) !=
-                      null
-              ? await getMarkerIcon(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuIavvjuQFB38Se2ZNa0GkZ1Gol3C5OwioHA&usqp=CAU",
-                  context)
-              : await _getMarkerBitmap(
-                  cluster.isMultiple ? 125 : 75, cluster.isMultiple,
-                  text: cluster.isMultiple ? cluster.count.toString() : null),
         );
       };
 

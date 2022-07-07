@@ -6,11 +6,13 @@ class BrandCheckboxListTile extends StatelessWidget {
       {Key? key,
       required this.value,
       required this.title,
-      required this.onChanged})
+      required this.onChanged,
+      this.use_title = false})
       : super(key: key);
   final value;
   final title;
   final onChanged;
+  final bool use_title;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,7 +20,11 @@ class BrandCheckboxListTile extends StatelessWidget {
         BrandCheckbox(
           checked: value,
           onChanged: () {
-            onChanged(title, !value);
+            if (use_title) {
+              onChanged(title, !value);
+            } else {
+              onChanged(!value);
+            }
           },
         ),
         SizedBox(

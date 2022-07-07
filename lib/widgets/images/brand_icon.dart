@@ -26,6 +26,7 @@ class BrandIcon extends StatelessWidget {
     if (icon == 'calendar')
       return InkWell(
         onTap: () async {
+          if (onTap != null) onTap();
           final DateTime? picked = await showDatePicker(
               context: context,
               initialDate: selectedDate,
@@ -46,6 +47,7 @@ class BrandIcon extends StatelessWidget {
     if (icon == 'back_arrow')
       return InkWell(
         onTap: () {
+          if (onTap != null) onTap();
           Get.back();
         },
         child: SvgPicture.asset(

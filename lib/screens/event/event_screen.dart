@@ -5,16 +5,24 @@ import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 
-class EventScreen extends StatelessWidget {
+class EventScreen extends StatefulWidget {
   EventScreen({Key? key}) : super(key: key);
+
+  @override
+  State<EventScreen> createState() => _EventScreenState();
+}
+
+class _EventScreenState extends State<EventScreen> {
   final EventType item = Get.arguments;
+  var isAuthor = false;
+
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       bottomNavigationBar: BottomPanel(
-        height: item.author.username == 'HotLine' ? 146.0 : 83.0,
-        child: item.author.username == 'HotLine'
+        height: isAuthor ? 146.0 : 83.0,
+        child: isAuthor
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -24,11 +32,17 @@ class EventScreen extends StatelessWidget {
                     onPressed: () {
                       Get.toNamed('/members', arguments: {
                         "members": item.members,
+                        "isOwner": isAuthor,
                         "isChat": false
                       });
                     },
                   ),
                   BrandButton(
+                    onPressed: () {
+                      setState(() {
+                        isAuthor = false;
+                      });
+                    },
                     text: 'Редактировать событие',
                     type: 'secondary',
                   )
@@ -43,6 +57,11 @@ class EventScreen extends StatelessWidget {
                     width: 161.0,
                   ),
                   BrandButton(
+                    onPressed: () {
+                      setState(() {
+                        isAuthor = true;
+                      });
+                    },
                     text: 'Поделиться',
                     type: 'secondary',
                     width: 161.0,
@@ -50,31 +69,34 @@ class EventScreen extends StatelessWidget {
                 ],
               ),
       ),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 197,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20))),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                    20, 38 + MediaQuery.of(context).viewInsets.top, 0, 0),
-                child: BrandIcon(
-                  icon: 'back_arrow',
-                  color: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 197,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20))),
                 ),
-              ),
-            ],
-          ),
-          // meta info
-          Expanded(
-            child: ListView(
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      20, 38 + MediaQuery.of(context).viewInsets.top, 0, 0),
+                  child: BrandIcon(
+                    icon: 'back_arrow',
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            // meta info
+            Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -95,10 +117,14 @@ class EventScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          BrandIcon(
-                            icon: 'clock',
+                          Container(
                             height: 20,
                             width: 20,
+                            child: BrandIcon(
+                              icon: 'clock',
+                              height: 20,
+                              width: 20,
+                            ),
                           ),
                           SizedBox(
                             width: 12,
@@ -118,10 +144,14 @@ class EventScreen extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BrandIcon(
-                            icon: 'geo',
+                          Container(
                             height: 20,
                             width: 20,
+                            child: BrandIcon(
+                              icon: 'geo',
+                              height: 20,
+                              width: 20,
+                            ),
                           ),
                           SizedBox(
                             width: 12,
@@ -160,10 +190,14 @@ class EventScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          BrandIcon(
-                            icon: 'payment',
+                          Container(
                             height: 20,
                             width: 20,
+                            child: BrandIcon(
+                              icon: 'payment',
+                              height: 20,
+                              width: 20,
+                            ),
                           ),
                           SizedBox(
                             width: 12,
@@ -306,7 +340,8 @@ class EventScreen extends StatelessWidget {
                             onTap: () {
                               Get.toNamed('/members', arguments: {
                                 "members": item.members,
-                                "isChat": false
+                                "isChat": false,
+                                "isOwner": isAuthor,
                               });
                             },
                             child: Row(
@@ -329,10 +364,13 @@ class EventScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 44,
+                )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

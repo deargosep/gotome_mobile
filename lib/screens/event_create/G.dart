@@ -65,7 +65,12 @@ class _GCEScreenState extends State<GCEScreen> {
                 //TODO: upload event
                 //
                 // ----
-                Get.offAllNamed('/bar', arguments: {"image": '', ...prevData});
+                Get.offAllNamed(
+                  '/bar',
+                  //     arguments: {
+                  //   "image": '', ...prevData
+                  // }
+                );
               },
             ))
           ],

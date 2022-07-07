@@ -21,22 +21,28 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   Widget build(BuildContext context) {
     final Author user = Get.arguments;
     return CustomScaffold(
+      appBar: AppHeader(
+        text: "Редактирование анкеты",
+      ),
+      bottomNavigationBar: BottomPanel(
+        child: BrandButton(
+            onPressed: () {
+              Get.back();
+            },
+            text: 'Применить'),
+      ),
       noPadding: true,
       scrollable: true,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 24,
+          ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Column(
               children: [
-                Header(
-                  withPadding: false,
-                  text: "Редактирование анкеты",
-                ),
-                SizedBox(
-                  height: 33,
-                ),
                 Row(
                   children: [
                     Container(
@@ -128,12 +134,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               ],
             ),
           ),
-          BottomPanel(
-            child: BrandButton(
-                onPressed: () {
-                  Get.back();
-                },
-                text: 'Применить'),
+          SizedBox(
+            height: 81,
           )
         ],
       ),

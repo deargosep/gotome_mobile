@@ -16,7 +16,7 @@ class BottomBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.07),
+          color: Colors.grey.withOpacity(0.1),
           spreadRadius: 8,
           blurRadius: 15,
           offset: Offset(0, 8),

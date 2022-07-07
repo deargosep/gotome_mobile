@@ -10,8 +10,8 @@ class BottomPanel extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.07),
-            spreadRadius: 8,
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 15,
             blurRadius: 15,
             offset: Offset(0, 8),
           )

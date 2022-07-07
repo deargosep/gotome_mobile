@@ -64,18 +64,21 @@ class _SearchScreenState extends State<SearchScreen>
               headerSliverBuilder: (context, value) {
                 return [
                   SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          Header(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Header(
                             withPadding: false,
                             text: 'Поиск',
                           ),
-                          SizedBox(
-                            height: 57,
-                          ),
-                          TabsSwitch(
+                        ),
+                        SizedBox(
+                          height: 57,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TabsSwitch(
                             controller: controller,
                             children: [
                               TopTab(
@@ -86,11 +89,11 @@ class _SearchScreenState extends State<SearchScreen>
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 24,
-                          )
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 24,
+                        )
+                      ],
                     ),
                   )
                 ];
@@ -125,25 +128,25 @@ class _SearchState extends State<Search> {
 
     filterEvents();
 
-    List<Widget> generateList() {
-      return Provider.of<Events>(context).events.map((e) {
-        return Column(
-          children: [
-            EventCard(item: e),
-            SizedBox(
-              height: 24,
-            )
-          ],
-        );
-      }).toList();
-    }
+    // List<Widget> generateList() {
+    //   return Provider.of<Events>(context).events.map((e) {
+    //     return Column(
+    //       children: [
+    //         EventCard(item: e),
+    //         SizedBox(
+    //           height: 24,
+    //         )
+    //       ],
+    //     );
+    //   }).toList();
+    // }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SearchInput(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SearchInput(
             controller: textController,
             onTap: () {
               filterEvents();
@@ -154,29 +157,45 @@ class _SearchState extends State<Search> {
                   textController.text);
             },
           ),
-          SizedBox(
-            height: 24,
-          ),
-          Expanded(child: Consumer<FiltersModel>(
-            builder: (context, eventsm, child) {
-              return ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: eventsm.filteredEvents.map((e) {
-                  return Column(
-                    children: [
-                      EventCard(item: e),
-                      SizedBox(
-                        height: 24,
-                      )
-                    ],
-                  );
-                }).toList(),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Expanded(child: Consumer<FiltersModel>(
+          builder: (context, eventsm, child) {
+            if (eventsm.filteredEvents.isEmpty)
+              return Center(
+                child: Container(
+                  width: 236,
+                  child: Text(
+                    'По заданным критериям события не найдены',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                ),
               );
-            },
-          ))
-        ],
-      ),
+            return ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: eventsm.filteredEvents.map((e) {
+                return Column(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: EventCard(item: e)),
+                    SizedBox(
+                      height: 24,
+                    )
+                  ],
+                );
+              }).toList(),
+            );
+          },
+        ))
+      ],
     );
   }
 }
