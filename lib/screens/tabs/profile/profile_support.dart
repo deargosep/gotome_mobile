@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotome/state/events.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
@@ -10,7 +11,7 @@ class ProfileSupportScreen extends StatelessWidget {
   const ProfileSupportScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var user = Get.arguments;
+    Author user = Get.arguments;
     return CustomScaffold(
       noPadding: true,
       body: Column(
@@ -42,7 +43,7 @@ class ProfileSupportScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user["username"],
+                          user.username,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -52,7 +53,7 @@ class ProfileSupportScreen extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Дата регистрации: ${user["registration_date"]}",
+                          "Дата регистрации: ${user.registration_date}",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
