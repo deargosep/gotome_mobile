@@ -151,9 +151,21 @@ class StoryItem extends StatelessWidget {
           : '${myString.substring(0, cutoff)}...';
     }
 
+    var list = Provider.of<StoriesState>(context).stories;
+    if (list.firstWhereOrNull((element) =>
+            element.author.username ==
+            Provider.of<User>(context).userMeta.username) !=
+        null) {
+      var element = list.firstWhere((element) =>
+          element.author.username ==
+          Provider.of<User>(context).userMeta.username);
+      list.remove(element);
+      list.insert(0, element);
+    }
+    var index = list.indexOf(event);
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/story', arguments: event);
+        Get.toNamed('/story', arguments: index);
       },
       child: Container(
         height: 85,
