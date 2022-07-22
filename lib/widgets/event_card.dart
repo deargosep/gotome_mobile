@@ -52,27 +52,12 @@ class EventCard extends StatelessWidget {
                     SizedBox(
                       width: 12,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.author.username,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "Организатор",
-                          style: TextStyle(
-                              color: Color(0xFF9FA6BA),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
+                    Text(
+                      item.author.username,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500),
                     )
                   ],
                 ),
@@ -98,7 +83,7 @@ class EventCard extends StatelessWidget {
                     child: Text(
                       item.name,
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color: Theme.of(context).colorScheme.secondary),
                     ),
@@ -108,7 +93,15 @@ class EventCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      BrandIcon(icon: 'clock'),
+                      Container(
+                        height: 16,
+                        width: 16,
+                        child: BrandIcon(
+                          icon: 'clock',
+                          height: 16,
+                          width: 16,
+                        ),
+                      ),
                       SizedBox(
                         width: 12,
                       ),
@@ -126,7 +119,15 @@ class EventCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      BrandIcon(icon: 'geo'),
+                      Container(
+                        height: 16,
+                        width: 16,
+                        child: BrandIcon(
+                          icon: 'geo',
+                          height: 16,
+                          width: 16,
+                        ),
+                      ),
                       SizedBox(
                         width: 12,
                       ),

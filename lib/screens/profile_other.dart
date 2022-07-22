@@ -82,7 +82,10 @@ class _ProfileOtherScreenState extends State<ProfileOtherScreen>
                 author: author,
               ),
               History(
-                items: author.events,
+                items: Provider.of<Events>(context)
+                    .events
+                    .where((e) => e.author.username == author.username)
+                    .toList(),
               )
             ])),
           ],

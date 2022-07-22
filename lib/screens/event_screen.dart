@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/state/events.dart';
+import 'package:gotome/state/user.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:provider/provider.dart';
 
 class EventScreen extends StatefulWidget {
   EventScreen({Key? key}) : super(key: key);
@@ -14,10 +16,11 @@ class EventScreen extends StatefulWidget {
 
 class _EventScreenState extends State<EventScreen> {
   final EventType item = Get.arguments;
-  var isAuthor = false;
 
   @override
   Widget build(BuildContext context) {
+    var isAuthor =
+        Provider.of<User>(context).userMeta.username == item.author.username;
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       bottomNavigationBar: BottomPanel(
@@ -38,11 +41,6 @@ class _EventScreenState extends State<EventScreen> {
                     },
                   ),
                   BrandButton(
-                    onPressed: () {
-                      setState(() {
-                        isAuthor = false;
-                      });
-                    },
                     text: 'Редактировать событие',
                     type: 'secondary',
                   )
@@ -57,11 +55,6 @@ class _EventScreenState extends State<EventScreen> {
                     width: 161.0,
                   ),
                   BrandButton(
-                    onPressed: () {
-                      setState(() {
-                        isAuthor = true;
-                      });
-                    },
                     text: 'Поделиться',
                     type: 'secondary',
                     width: 161.0,

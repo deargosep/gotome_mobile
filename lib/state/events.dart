@@ -5,94 +5,18 @@ import 'package:latlong2/latlong.dart';
 class Events extends ChangeNotifier {
   List<EventType> _events = [
     EventType(
+        isComplete: true,
         id: "123adssdad",
         author: Author(
-            id: "12222",
-            username: "HotLine",
-            name: "Игорь",
-            age: 24,
-            country: "Россия",
-            city: "Москва",
-            description:
-                "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-            events: [
-              EventType(
-                  isComplete: true,
-                  id: "123adssdad",
-                  author: Author(
-                      id: "12222",
-                      username: "HotLine",
-                      name: "Игорь",
-                      age: 24,
-                      country: "Россия",
-                      city: "Москва",
-                      description:
-                          "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-                      events: []),
-                  name: "Катаемся на велосипедах2",
-                  timedate: "03.06.2022 в 15:00",
-                  location: "Наб. Реки Фонтанки, 3",
-                  location_coords:
-                      LatLng(55.76196961326696, 37.627123975766146),
-                  description:
-                      "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-                  price: "Бесплатно",
-                  members: [
-                    {"username": "MajEstic21"},
-                    {"username": "Alice18"},
-                    {"username": "Pavkl"},
-                    {"username": "ForJik"},
-                  ],
-                  dot: Dot(
-                      latLng: LatLng(55.76196961326696, 37.627123975766146),
-                      id: "123adssdad",
-                      name: "Катаемся на велосипедах2",
-                      country: "Россия",
-                      city: "Москва",
-                      gender: 'male',
-                      locationString: "Наб. Реки Фонтанки, 3",
-                      tags: ["Активный отдых", "Путешествия"],
-                      datetime: "01.06.2022 в 15:00",
-                      date: '01.06.2022')),
-              EventType(
-                  isComplete: false,
-                  id: "123adssdad",
-                  author: Author(
-                      id: "12222",
-                      username: "HotLine",
-                      name: "Игорь",
-                      age: 24,
-                      country: "Россия",
-                      city: "Москва",
-                      description:
-                          "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-                      events: []),
-                  name: "Катаемся на велосипедах2",
-                  timedate: "03.06.2022 в 15:00",
-                  location: "Наб. Реки Фонтанки, 3",
-                  location_coords:
-                      LatLng(55.76196961326696, 37.627123975766146),
-                  description:
-                      "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-                  price: "Бесплатно",
-                  members: [
-                    {"username": "MajEstic21"},
-                    {"username": "Alice18"},
-                    {"username": "Pavkl"},
-                    {"username": "ForJik"},
-                  ],
-                  dot: Dot(
-                      latLng: LatLng(55.76196961326696, 37.627123975766146),
-                      id: "123adssdad",
-                      name: "Катаемся на велосипедах2",
-                      country: "Россия",
-                      city: "Москва",
-                      gender: 'male',
-                      locationString: "Наб. Реки Фонтанки, 3",
-                      tags: ["Активный отдых", "Путешествия"],
-                      datetime: "01.06.2022 в 15:00",
-                      date: '01.06.2022'))
-            ]),
+          id: "12222",
+          username: "HotLine",
+          name: "Игорь",
+          age: 24,
+          country: "Россия",
+          city: "Москва",
+          description:
+              "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+        ),
         name: "Катаемся на барсуках",
         timedate: "03.06.2022 в 15:00",
         location: "Наб. Реки Фонтанки, 3",
@@ -118,95 +42,19 @@ class Events extends ChangeNotifier {
             datetime: "03.06.2022 в 15:00",
             date: '03.06.2022')),
     EventType(
+        isComplete: false,
         id: "123adssdad",
         author: Author(
-            id: "12222",
-            username: "HotLine",
-            name: "Игорь",
-            age: 24,
-            country: "Россия",
-            city: "Москва",
-            description:
-                "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-            events: [
-              EventType(
-                  isComplete: true,
-                  id: "123adssdad",
-                  author: Author(
-                      id: "12222",
-                      username: "HotLine",
-                      name: "Игорь",
-                      age: 24,
-                      country: "Россия",
-                      city: "Москва",
-                      description:
-                          "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-                      events: []),
-                  name: "Катаемся на велосипедах2",
-                  timedate: "03.06.2022 в 15:00",
-                  location: "Наб. Реки Фонтанки, 3",
-                  location_coords:
-                      LatLng(55.76196961326696, 37.627123975766146),
-                  description:
-                      "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-                  price: "Бесплатно",
-                  members: [
-                    {"username": "MajEstic21"},
-                    {"username": "Alice18"},
-                    {"username": "Pavkl"},
-                    {"username": "ForJik"},
-                  ],
-                  dot: Dot(
-                      latLng: LatLng(55.76196961326696, 37.627123975766146),
-                      id: "123adssdad",
-                      name: "Катаемся на велосипедах2",
-                      country: "Россия",
-                      city: "Москва",
-                      gender: 'male',
-                      locationString: "Наб. Реки Фонтанки, 3",
-                      tags: ["Активный отдых", "Путешествия"],
-                      datetime: "01.06.2022 в 15:00",
-                      date: '01.06.2022')),
-              EventType(
-                  isComplete: false,
-                  id: "123adssdad",
-                  author: Author(
-                      id: "12222",
-                      username: "HotLine",
-                      name: "Игорь",
-                      age: 24,
-                      country: "Россия",
-                      city: "Москва",
-                      description:
-                          "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
-                      events: []),
-                  name: "Катаемся на велосипедах2",
-                  timedate: "03.06.2022 в 15:00",
-                  location: "Наб. Реки Фонтанки, 3",
-                  location_coords:
-                      LatLng(55.76196961326696, 37.627123975766146),
-                  description:
-                      "Приглашаем тебя покататься с нами по городу! Компания веселая! Обещаем, что будет весело, ждем тебя с нетерпением!!!",
-                  price: "Бесплатно",
-                  members: [
-                    {"username": "MajEstic21"},
-                    {"username": "Alice18"},
-                    {"username": "Pavkl"},
-                    {"username": "ForJik"},
-                  ],
-                  dot: Dot(
-                      latLng: LatLng(55.76196961326696, 37.627123975766146),
-                      id: "123adssdad",
-                      name: "Катаемся на велосипедах2",
-                      country: "Россия",
-                      city: "Москва",
-                      gender: 'male',
-                      locationString: "Наб. Реки Фонтанки, 3",
-                      tags: ["Активный отдых", "Путешествия"],
-                      datetime: "01.06.2022 в 15:00",
-                      date: '01.06.2022'))
-            ]),
-        name: "Катаемся на велосипедах2",
+          id: "12222",
+          username: "fdfdfdfdfdfdfd",
+          name: "Игорь",
+          age: 24,
+          country: "Россия",
+          city: "Москва",
+          description:
+              "С другой стороны, экономическая повестка сегодняшнего дня предоставляет широкие возможности для существующих финансовых и административных условий.",
+        ),
+        name: "Катаемся на барсуках2",
         timedate: "03.06.2022 в 15:00",
         location: "Наб. Реки Фонтанки, 3",
         location_coords: LatLng(55.76196961326696, 37.627123975766146),
@@ -229,7 +77,7 @@ class Events extends ChangeNotifier {
             locationString: "Наб. Реки Фонтанки, 3",
             tags: ["Активный отдых", "Путешествия"],
             datetime: "01.06.2022 в 15:00",
-            date: '01.06.2022'))
+            date: '01.06.2022')),
   ];
 
   List<EventType> get events => _events;

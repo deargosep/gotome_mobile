@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotome/screens/profile_other.dart';
 import 'package:gotome/widgets/header.dart';
+import 'package:provider/provider.dart';
 
 import '../../../state/events.dart';
 
@@ -76,7 +77,11 @@ class ProfileEventsScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: History(items: user.events),
+              child: History(
+                  items: Provider.of<Events>(context)
+                      .events
+                      .where((e) => e.author.username == user.username)
+                      .toList()),
             ),
           )
         ],
