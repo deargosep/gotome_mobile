@@ -47,195 +47,208 @@ class _StoryScreenState extends State<StoryScreen>
     }
 
     return Scaffold(
-      body: StoryPageView(
-        // indicatorDuration: Duration(seconds: 70),
-        initialPage: Get.arguments,
-        indicatorPadding: EdgeInsets.only(left: 20, right: 20, top: 40),
-        // backgroundColor: Color(0xFFF8F8F8).withOpacity(0.6),
-        itemBuilder: (context, pageIndex, storyIndex) {
-          final event = list[pageIndex];
-          final story = event;
-
-          var isAuthor = Provider.of<User>(context).userMeta.username ==
-              event.author.username;
-
-          return Stack(
-            children: [
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  child: Image.network(
-                    story.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 52, left: 20, right: 20),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 32,
-                      width: 32,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(event.imageUrl),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      event.author.username,
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      '20 мин.',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFFFFFFFF).withOpacity(0.75)),
-                    )
-                  ],
-                ),
-              ),
-              Positioned(
-                left: 180,
-                bottom: 130,
-                child: AnimatedBuilder(
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: _animationFadeInOut.value,
-                      child: CustomPaint(
-                        painter: customStyleArrow(),
-                        child: Container(
-                          width: 197,
-                          padding: EdgeInsets.only(
-                              left: 16, right: 16, bottom: 16, top: 16),
-                          child: Column(
-                            children: [
-                              Text("Заявка успешно отправлена!",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500)),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text("Ожидайте ответ от организатора",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500))
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  animation: _animationController,
-                ),
-              )
-            ],
-          );
-        },
-        gestureItemBuilder: (context, pageIndex, storyIndex) {
-          final event = list[pageIndex];
-          final story = event;
-
-          var isAuthor = Provider.of<User>(context).userMeta.username ==
-              event.author.username;
-
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: BottomPanel(
-                child: BrandButton(
-              text: isAuthor != true ? 'Присоединиться' : 'Список желающих',
-              type: isAuthor == true ? 'secondary' : 'primary',
-              onPressed: () {
-                if (isAuthor) {
-                  Get.toNamed('/members',
-                      arguments: {"members": event.members, "isChat": false});
-                } else {
-                  _animationController.forward().then((value) {
-                    if (mounted) {
-                      setState(() {
-                        isJoined = true;
-                      });
-                      Future.delayed(const Duration(milliseconds: 1000), () {
-                        //wait a little for text can be read
-                        if (mounted) {
-                          setState(() {
-                            isJoined = false;
-                          });
-                        }
-                      }).then((value) {
-                        if (mounted) {
-                          _animationController.reverse();
-                        }
-                      });
-                    }
-                  });
-                  // setState(() {
-                  //   isJoined = true;
-                  // });
-                }
-              },
-            )),
-          );
-        },
-        // gestureItemBuilder: (context, pageIndex, storyIndex) {
-        //   final event = list[pageIndex];
-        //   final story = event;
-        //   var isAuthor = Provider
-        //       .of<User>(context)
-        //       .userMeta
-        //       .username ==
-        //       event.author.username;
-        //   return Align(
-        //     alignment: Alignment.bottomCenter,
-        //     child: Stack(
-        //       children: [
-        //         BottomPanel(child: BrandButton(text: 'Присоединиться')),
-        //         Positioned(
-        //             bottom: 50,
-        //             child: CustomPaint(
-        //               painter: customStyleArrow(),
-        //               child: Container(
-        //                 padding: EdgeInsets.only(
-        //                     left: 15, right: 15, bottom: 20, top: 20),
-        //                 child: Text(
-        //                     "This is the custom painter for arrow down curve",
-        //                     style: TextStyle(
-        //                       color: Colors.black,
-        //                     )),
-        //               ),
-        //             )),
-        //       ],
-        //     ),
-        //   );
-        // },
-        storyLength: (int) => 1,
-        onPageLimitReached: () {
+      body: GestureDetector(
+        onVerticalDragEnd: (t){
           Get.back();
         },
-        pageLength: list.length,
+        child: StoryPageView(
+          // indicatorDuration: Duration(seconds: 70),
+          initialPage: Get.arguments,
+          indicatorPadding: EdgeInsets.only(left: 20, right: 20, top: 40),
+          // backgroundColor: Color(0xFFF8F8F8).withOpacity(0.6),
+          itemBuilder: (context, pageIndex, storyIndex) {
+            final event = list[pageIndex];
+            final story = event;
+
+            var isAuthor = Provider.of<User>(context).userMeta.username ==
+                event.author.username;
+
+            // borderRadius: BorderRadius.only(
+            //     bottomRight: Radius.circular(15),
+            //     bottomLeft: Radius.circular(15)),
+
+            return Stack(
+              children: [
+                Positioned(
+                  bottom: 82,
+                  left: 0,
+                  right: 0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
+                    child: Image.network(
+                      story.imageUrl,
+                      height: MediaQuery.of(context).size.height - 82,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 52, left: 20, right: 20),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 32,
+                        width: 32,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(event.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        event.author.username,
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        '20 мин.',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFFFFFFF).withOpacity(0.75)),
+                      )
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 180,
+                  bottom: 130,
+                  child: AnimatedBuilder(
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: _animationFadeInOut.value,
+                        child: CustomPaint(
+                          painter: customStyleArrow(),
+                          child: Container(
+                            width: 197,
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, bottom: 16, top: 16),
+                            child: Column(
+                              children: [
+                                Text("Заявка успешно отправлена!",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500)),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text("Ожидайте ответ от организатора",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500))
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    animation: _animationController,
+                  ),
+                )
+              ],
+            );
+          },
+          gestureItemBuilder: (context, pageIndex, storyIndex) {
+            final event = list[pageIndex];
+            final story = event;
+
+            var isAuthor = Provider.of<User>(context).userMeta.username ==
+                event.author.username;
+
+            return Align(
+              alignment: Alignment.bottomCenter,
+              child: BottomPanel(
+                  child: BrandButton(
+                text: isAuthor != true ? 'Присоединиться' : 'Список желающих',
+                type: isAuthor == true ? 'secondary' : 'primary',
+                onPressed: () {
+                  if (isAuthor) {
+                    Get.toNamed('/members',
+                        arguments: {"members": event.members, "isChat": false});
+                  } else {
+                    _animationController.forward().then((value) {
+                      if (mounted) {
+                        setState(() {
+                          isJoined = true;
+                        });
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          //wait a little for text can be read
+                          if (mounted) {
+                            setState(() {
+                              isJoined = false;
+                            });
+                          }
+                        }).then((value) {
+                          if (mounted) {
+                            _animationController.reverse();
+                          }
+                        });
+                      }
+                    });
+                    // setState(() {
+                    //   isJoined = true;
+                    // });
+                  }
+                },
+              )),
+            );
+          },
+          // gestureItemBuilder: (context, pageIndex, storyIndex) {
+          //   final event = list[pageIndex];
+          //   final story = event;
+          //   var isAuthor = Provider
+          //       .of<User>(context)
+          //       .userMeta
+          //       .username ==
+          //       event.author.username;
+          //   return Align(
+          //     alignment: Alignment.bottomCenter,
+          //     child: Stack(
+          //       children: [
+          //         BottomPanel(child: BrandButton(text: 'Присоединиться')),
+          //         Positioned(
+          //             bottom: 50,
+          //             child: CustomPaint(
+          //               painter: customStyleArrow(),
+          //               child: Container(
+          //                 padding: EdgeInsets.only(
+          //                     left: 15, right: 15, bottom: 20, top: 20),
+          //                 child: Text(
+          //                     "This is the custom painter for arrow down curve",
+          //                     style: TextStyle(
+          //                       color: Colors.black,
+          //                     )),
+          //               ),
+          //             )),
+          //       ],
+          //     ),
+          //   );
+          // },
+          storyLength: (int) => 1,
+          onPageLimitReached: () {
+            Get.back();
+          },
+          pageLength: list.length,
+        ),
       ),
     );
   }
