@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gotome/state/stories.dart';
 import 'package:gotome/state/user.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class StoriesList extends StatelessWidget {
@@ -30,7 +31,8 @@ class StoriesList extends StatelessWidget {
             SizedBox(
               width: 20,
             ),
-            list.first.author.username != Provider.of<User>(context).userMeta.username
+            list.first.author.username !=
+                    Provider.of<User>(context).userMeta.username
                 ? AddStoryItem()
                 : Container(),
             ...list.map((e) {
@@ -47,11 +49,15 @@ class StoriesList extends StatelessWidget {
 }
 
 class AddStoryItem extends StatelessWidget {
-  const AddStoryItem({Key? key}) : super(key: key);
+  AddStoryItem({Key? key}) : super(key: key);
+  final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        final XFile? image =
+            await _picker.pickVideo(source: ImageSource.gallery);
+      },
       child: Container(
         height: 85,
         // width: 66,

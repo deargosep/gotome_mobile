@@ -6,6 +6,7 @@ import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
 import 'package:provider/provider.dart';
 import 'package:story_time/story_time.dart';
+import 'package:video_player/video_player.dart';
 
 class StoryScreen extends StatefulWidget {
   const StoryScreen({Key? key}) : super(key: key);
@@ -16,13 +17,23 @@ class StoryScreen extends StatefulWidget {
 
 class _StoryScreenState extends State<StoryScreen>
     with SingleTickerProviderStateMixin {
+  var isJoinedAnim = false;
   var isJoined = false;
   late Animation _animationFadeInOut;
-  late AnimationController _animationController;
   late Animation _animationText;
+  late AnimationController _animationController;
+  final url =
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4';
+  late VideoPlayerController _controller;
   @override
   void initState() {
     super.initState();
+    _controller = VideoPlayerController.network(url,
+        videoPlayerOptions: VideoPlayerOptions())
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
 
@@ -45,15 +56,16 @@ class _StoryScreenState extends State<StoryScreen>
       list.remove(element);
       list.insert(0, element);
     }
+    _controller.play();
 
     return Scaffold(
       body: GestureDetector(
-        onVerticalDragEnd: (t){
+        onVerticalDragEnd: (t) {
           Get.back();
         },
         child: StoryPageView(
           // indicatorDuration: Duration(seconds: 70),
-          initialPage: Get.arguments,
+          initialPage: Get.arguments ?? 0,
           indicatorPadding: EdgeInsets.only(left: 20, right: 20, top: 40),
           // backgroundColor: Color(0xFFF8F8F8).withOpacity(0.6),
           itemBuilder: (context, pageIndex, storyIndex) {
@@ -69,7 +81,7 @@ class _StoryScreenState extends State<StoryScreen>
 
             return Stack(
               children: [
-                Positioned(
+                Positioned.fill(
                   bottom: 82,
                   left: 0,
                   right: 0,
@@ -77,10 +89,17 @@ class _StoryScreenState extends State<StoryScreen>
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(15),
                         bottomLeft: Radius.circular(15)),
-                    child: Image.network(
-                      story.imageUrl,
-                      height: MediaQuery.of(context).size.height - 82,
+                    child: FittedBox(
                       fit: BoxFit.cover,
+                      child: SizedBox(
+                        width: _controller.value.size.width,
+                        height: _controller.value.size.height,
+                        child: VideoPlayer(
+                          _controller,
+                          // height: MediaQuery.of(context).size.height - 82,
+                          // fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -180,21 +199,25 @@ class _StoryScreenState extends State<StoryScreen>
                   child: BrandButton(
                 text: isAuthor != true ? 'Присоединиться' : 'Список желающих',
                 type: isAuthor == true ? 'secondary' : 'primary',
+                disabled: isJoined,
                 onPressed: () {
                   if (isAuthor) {
                     Get.toNamed('/members',
                         arguments: {"members": event.members, "isChat": false});
                   } else {
+                    setState(() {
+                      isJoined = true;
+                    });
                     _animationController.forward().then((value) {
                       if (mounted) {
                         setState(() {
-                          isJoined = true;
+                          isJoinedAnim = true;
                         });
                         Future.delayed(const Duration(milliseconds: 1000), () {
                           //wait a little for text can be read
                           if (mounted) {
                             setState(() {
-                              isJoined = false;
+                              isJoinedAnim = false;
                             });
                           }
                         }).then((value) {
