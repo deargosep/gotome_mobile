@@ -13,7 +13,8 @@ class EventCard extends StatelessWidget {
         Get.toNamed('/event', arguments: item);
       },
       child: Container(
-        height: 335,
+        height: 244,
+        width: 335,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(18)),
           color: Colors.white,

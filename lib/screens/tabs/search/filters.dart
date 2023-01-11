@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gotome/brand_checkbox_listtile.dart';
 import 'package:gotome/state/filter.dart';
 import 'package:gotome/utils/custom_scaffold.dart';
 import 'package:gotome/widgets/bottom_panel.dart';
 import 'package:gotome/widgets/brand_button.dart';
+import 'package:gotome/widgets/brand_checkbox_listtile.dart';
 import 'package:gotome/widgets/header.dart';
 import 'package:gotome/widgets/input.dart';
 import 'package:gotome/widgets/select_list.dart';

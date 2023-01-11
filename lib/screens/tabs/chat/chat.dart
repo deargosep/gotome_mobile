@@ -89,24 +89,27 @@ class _ChatScreenState extends State<ChatScreen> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: messages.length,
-                reverse: true,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  int reverseIndex = messages.length - 1 - index;
-                  return Column(
-                    children: [
-                      Message(item: messages[reverseIndex]),
-                      SizedBox(
-                        height: 16,
-                      )
-                    ],
-                  );
-                },
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: messages.length,
+                  reverse: true,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    int reverseIndex = messages.length - 1 - index;
+                    return Column(
+                      children: [
+                        Message(item: messages[reverseIndex]),
+                        SizedBox(
+                          height: 16,
+                        )
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),

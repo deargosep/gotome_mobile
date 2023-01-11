@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gotome/brand_checkbox_listtile.dart';
+import 'package:gotome/widgets/brand_checkbox_listtile.dart';
 
 class CheckboxesList extends StatelessWidget {
   const CheckboxesList(

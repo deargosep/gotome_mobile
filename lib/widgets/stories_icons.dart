@@ -5,7 +5,6 @@ import 'package:gotome/state/user.dart';
 import 'package:gotome/widgets/images/brand_icon.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
 class StoriesList extends StatelessWidget {
   const StoriesList({Key? key}) : super(key: key);
 
