@@ -67,12 +67,15 @@ flutter {
 }
 
 dependencies {
+    def multidex_version = "2.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 android {
     compileSdkVersion 33
-    defaultConfig {
-        minSdkVersion 31
-    }
+       defaultConfig {
+           multiDexEnabled true
+
+           minSdkVersion 20
+        }
 }
